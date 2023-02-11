@@ -1,6 +1,7 @@
 .coverage
-.mypy_cache
 .pytest_cache
 .vscode
-*.DS_Store
+**/.DS_Store
+**/.mypy_cache
+**/__pycache__
 env
