@@ -2,6 +2,7 @@ import io
 import json
 import zipfile
 
+
 def extract_json(filename: str) -> dict:
     """Extracts the json out of a Mindstorms .lms file
 
