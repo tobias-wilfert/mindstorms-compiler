@@ -5,6 +5,7 @@ name = "pypi"
 
 [packages]
 typer = "*"
+pre-commit = "*"
 
 [dev-packages]
 black = "*"
