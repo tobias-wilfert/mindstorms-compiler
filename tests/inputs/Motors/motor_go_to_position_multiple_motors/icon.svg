@@ -1,0 +1,65 @@
+<svg
+      xmlns="http://www.w3.org/2000/svg"
+      xmlns:xlink="http://www.w3.org/1999/xlink"
+      version="1.1" 
+      preserveAspectRatio="xMidYMid meet"
+      viewBox="0 0 316 87"><style>
+ * {
+   -webkit-font-smoothing: antialiased;
+   text-rendering: optimizeLegibility;
+   word-wrap: break-word;
+ }
+ .blocklyPath {
+   stroke-width: 1px;
+ }
+ .blocklyText {
+   fill: rgb(255, 255, 255);
+   font-family: "Chalet", "Arial", sans-serif;
+   font-size: 12pt;
+   font-weight: 700;
+ }
+ .blocklyDropdownText {
+   fill: rgb(255, 255, 255) !important;
+ }
+ .blocklyNonEditableText > text, .blocklyEditableText > text {
+   fill: rgb(87, 94, 117);
+ }
+ .scratchCommentForeignObject {
+   background-color: #fff9d9;
+ }
+ .scratchCommentTextarea {
+   color: #a9983e;
+   background-color: #fff9d9; 
+   width: 100%;
+   height: 100%;
+   padding: 12px;
+   box-sizing: border-box;
+ }
+ 
+ .scratchCommentText {
+   font-size: 12pt;
+   fill: #fff9d9;
+   font-family: "Chalet", "Arial", sans-serif; 
+ }
+ .scratchCommentBody {
+   background-color: #fff9d9; }
+ .scratchCommentTopBar {
+   fill: #fff2ae;
+   fill-opacity: 0.1}
+ .scratchCommentRect {
+   fill: #fff2ae; }
+ .scratchWorkspaceCommentBorder {
+   stroke: #fff2ae; }
+ .scratchCommentTopBar ~ use, .scratchCommentTopBar ~ image {
+   opacity: 0.4; }
+ .scratchCommentTarget {
+   display: none;
+ }
+ .scratchCommentResizeSE, .scratchCommentResizeSW {
+   fill: transparent;
+ }
+ .blocklyResizeLine {
+   stroke: #888;
+   stroke-width: 1;
+ }
+ </style><g xmlns="http://www.w3.org/2000/svg" class="blocklyWorkspace" transform="translate(-432.25,-189.8625030517578)"><g class="blocklyBlockCanvas" transform="translate(520,119.99999999999989) scale(0.675)"><g data-id="utmKyqMzEQH8XPDat9_w" class="blocklyDraggable" data-shapes="hat" data-category="Events" transform="translate(-130,120)"><path class="blocklyPath blocklyBlockBackground" stroke="#b89a00" fill="#f5c400" fill-opacity="1" d="m 0,0 c 25,-22 71,-22 96,0 H 231.34371948242188 a 4,4 0 0,1 4,4 v 40  a 4,4 0 0,1 -4,4 H 48   c -2,0 -3,1 -4,2 l -4,4 c -1,1 -2,2 -4,2 h -12 c -2,0 -3,-1 -4,-2 l -4,-4 c -1,-1 -2,-2 -4,-2 H 4 a 4,4 0 0,1 -4,-4 z"/><g transform="translate(8, 4) "><use xlink:href="#e8a076ec4729033cc2666b41f0bcfcd7c6ed65fb"/></g><g transform="translate(56, 4) "><line stroke="#d9b100" stroke-linecap="round" x1="0" y1="0" x2="0" y2="36"/></g><text class="blocklyText" y="2" text-anchor="middle" dominant-baseline="middle" dy="0" x="81.17185974121094" transform="translate(65, 24) ">when program starts</text><g data-id="Rq8%.IsxNEb/fzP(Yte+" class="blocklyDraggable" data-shapes="stack" data-category="Motors" transform="translate(0,48)"><path class="blocklyPath blocklyBlockBackground" stroke="#005fa0" fill="#0090f5" fill-opacity="1" d="m 0,4 A 4,4 0 0,1 4,0 H 12 c 2,0 3,1 4,2 l 4,4 c 1,1 2,2 4,2 h 12 c 2,0 3,-1 4,-2 l 4,-4 c 1,-1 2,-2 4,-2 H 463.51261138916016 a 4,4 0 0,1 4,4 v 48  a 4,4 0 0,1 -4,4 H 48   c -2,0 -3,1 -4,2 l -4,4 c -1,1 -2,2 -4,2 h -12 c -2,0 -3,-1 -4,-2 l -4,-4 c -1,-1 -2,-2 -4,-2 H 4 a 4,4 0 0,1 -4,-4 z"/><g data-id="aYk+([O1l6o,?0FW44_?" data-shapes="argument round" transform="translate(65,12)"><path class="blocklyPath blocklyBlockBackground" stroke="#005fa0" fill="#0078cc" fill-opacity="1" d="m 0,0 m 16,0 H 58.413333892822266 a 16 16 0 0 1 0 32 H 16 a 16 16 0 0 1 0 -32 z"/><g class="blocklyEditableText" transform="translate(8, 2) " style="cursor: default;"><text class="blocklyText blocklyDropdownText" x="19.206666946411133" y="16" dominant-baseline="middle" dy="0" text-anchor="middle">A+B</text><use xlink:href="#8cbfc1a380331332267d73cffa30332bc749a148" transform="translate(42.413333892822266,11)"/></g></g><g data-id="eP;N-.O8FqOAU+5jAUXO" data-shapes="argument round" transform="translate(419.51261138916016,12)"><path class="blocklyPath blocklyBlockBackground" stroke="#005fa0" fill="#FFFFFF" fill-opacity="1" d="m 0,0 m 16,0 H 24 a 16 16 0 0 1 0 32 H 16 a 16 16 0 0 1 0 -32 z"/><g class="blocklyEditableText" transform="translate(8, 2) " style="cursor: text;"><text class="blocklyText" x="12" y="16" dominant-baseline="middle" dy="0" text-anchor="middle">0</text></g></g><g transform="translate(8, 12) "><use xlink:href="#73ea79789c2cb85250cbf9d5f1a2ae6dba608042"/></g><g transform="translate(56, 8) "><line stroke="#0078cc" stroke-linecap="round" x1="0" y1="0" x2="0" y2="40"/></g><path class="blocklyPath" style="visibility: hidden" d="" fill="#005fa0"/><text class="blocklyText" y="2" text-anchor="middle" dominant-baseline="middle" dy="0" x="9.957036972045898" transform="translate(147.41333389282227, 28) ">go</text><g data-argument-type="dropdown" class="blocklyEditableText" transform="translate(175.32740783691406, 12) " style="cursor: default;"><rect rx="4" ry="4" x="0" y="0" width="145.53038024902344" height="32" stroke="#005fa0" fill="#0090f5" class="blocklyBlockBackground" fill-opacity="1"/><text class="blocklyText blocklyDropdownText" x="62.76519012451172" y="18" dominant-baseline="middle" dy="0" text-anchor="middle">shortest path</text><use xlink:href="#8cbfc1a380331332267d73cffa30332bc749a148" transform="translate(121.53038024902344,11)"/></g><text class="blocklyText" y="2" text-anchor="middle" dominant-baseline="middle" dy="0" x="41.32741165161133" transform="translate(328.8577880859375, 28) ">to position</text><path class="blocklyPath" style="visibility: hidden" d="" fill="#005fa0"/></g></g></g><g class="blocklyBubbleCanvas" transform="translate(520,119.99999999999989) scale(0.675)"/><defs><image height="40px" width="40px" xlink:href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0NiIgaGVpZ2h0PSI0NiIgdmlld0JveD0iMCAwIDQ2IDQ2IiBmaWxsPSJub25lIj48cGF0aCBkPSJNMzIuMzYgMjMuNDJMMTQgMTFWMzUuODRMMzIuMzYgMjMuNDJaIiBmaWxsPSIjZmZmIi8+PC9zdmc+" xmlns:xlink="http://www.w3.org/1999/xlink" id="e8a076ec4729033cc2666b41f0bcfcd7c6ed65fb"/><image height="12px" width="12px" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAYAAABWdVznAAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAADKADAAQAAAABAAAADAAAAAATDPpdAAABKElEQVQoFWNkYGBgVFdX5/n79y8H+58/zH/Y2ZmAYnDA8vPnv58sLH+ZmZl/3Lx58wuLg4MDu4eHh1xYWJgTLy+vDFCCH4jZQTqAhvwE4o+fP39+smrVqn07duy4y2BsbMz//fv3Hf8JAJAakFomoAmMQBPl4W7AwQCqkQOpZeL+/v3v169fj+FQBxcGqjkOUsv0g4fnR1dXV/e/f/9ewGXRGCC53t7eHpBasJSBgoLA5cuXY3F548qVK3EgNXBzGhoamHQUFcWBobECXRNQbBVIDqQGrgHEUFFRYS8rK1MHeuwpTBOQ/bympkYTJIeiGMYBWXvp0qUomAYMp8AUwmiY0x49elQExCXYnMIIUwyjtbW12Ri/fRME8f9zcb2/evXqL5gciAYALAjfGulmbSEAAAAASUVORK5CYII=" xmlns:xlink="http://www.w3.org/1999/xlink" id="8cbfc1a380331332267d73cffa30332bc749a148"/><image height="40px" width="40px" xlink:href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNSIgaGVpZ2h0PSIyNSIgdmlld0JveD0iMCAwIDI1IDI1IiBmaWxsPSJub25lIj48ZyBjbGlwLXBhdGg9InVybCgjYmxvY2tzX21vdG9yX2EpIj48cGF0aCBkPSJNMTIuNSAyNUMxOS40MDM2IDI1IDI1IDE5LjQwMzYgMjUgMTIuNUMyNSA1LjU5NjQ0IDE5LjQwMzYgMCAxMi41IDBDNS41OTY0NCAwIDAgNS41OTY0NCAwIDEyLjVDMCAxOS40MDM2IDUuNTk2NDQgMjUgMTIuNSAyNVoiIGZpbGw9IiMwMDc4Y2MiLz48cGF0aCBkPSJNMTIuNTAwMyAwLjg1MjA1MUMxOC45MjMgMC44NTIwNTEgMjQuMTQ4IDYuMDc3MDUgMjQuMTQ4IDEyLjQ5OThDMjQuMTQ4IDE4LjkyMjUgMTguOTIzIDI0LjE0NzUgMTIuNTAwMyAyNC4xNDc1QzYuMDc3NTQgMjQuMTQ3NSAwLjg1MjUzOSAxOC45MjI1IDAuODUyNTM5IDEyLjQ5OThDMC44NTI1MzkgNi4wNzcwNSA2LjA3NzU0IDAuODUyMDUxIDEyLjUwMDMgMC44NTIwNTFaTTEyLjUwMDMgMTYuMDUwOUMxMC42OTYgMTYuMDUwOSA5LjIzMzIyIDE3LjUxMzUgOS4yMzMyMiAxOS4zMThDOS4yMzMyMiAyMS4xMjI0IDEwLjY5NiAyMi41ODUgMTIuNTAwMyAyMi41ODVDMTQuMzA0NSAyMi41ODUgMTUuNzY3MyAyMS4xMjI0IDE1Ljc2NzMgMTkuMzE4QzE1Ljc2NzMgMTcuNTEzNSAxNC4zMDQ1IDE2LjA1MDkgMTIuNTAwMyAxNi4wNTA5Wk01LjY4MjA4IDkuMjMyNzNDMy44Nzc4IDkuMjMyNzMgMi40MTUwNCAxMC42OTUzIDIuNDE1MDQgMTIuNDk5OEMyLjQxNTA0IDE0LjMwNDMgMy44Nzc4IDE1Ljc2NjggNS42ODIwOCAxNS43NjY4QzcuNDg2MzcgMTUuNzY2OCA4Ljk0OTEzIDE0LjMwNDMgOC45NDkxMyAxMi40OTk4QzguOTQ5MTMgMTAuNjk1MyA3LjQ4NjM3IDkuMjMyNzMgNS42ODIwOCA5LjIzMjczWk0xOS4zMTg0IDkuMjMyNzNDMTcuNTE0MiA5LjIzMjczIDE2LjA1MTQgMTAuNjk1MyAxNi4wNTE0IDEyLjQ5OThDMTYuMDUxNCAxNC4zMDQzIDE3LjUxNDIgMTUuNzY2OCAxOS4zMTg0IDE1Ljc2NjhDMjEuMTIyNyAxNS43NjY4IDIyLjU4NTUgMTQuMzA0MyAyMi41ODU1IDEyLjQ5OThDMjIuNTg1NSAxMC42OTUzIDIxLjEyMjcgOS4yMzI3MyAxOS4zMTg0IDkuMjMyNzNaTTEyLjQ5MTQgMTAuMjI3MUwxMi40MjUxIDEwLjIzMDlMMTIuMzMzNSAxMC4yNDkzQzEyLjEyNjEgMTAuMzA5MSAxMS45Njc1IDEwLjQ4MzkgMTEuOTMxMSAxMC43MDAyTDExLjkyMzIgMTAuNzk1MkwxMS45MjMgMTEuOTE0NkwxMC43NzgxIDExLjkxNDlMMTAuNzExOCAxMS45MTg4QzEwLjQ2MDcgMTEuOTQ3OSAxMC4yNTk0IDEyLjE0MDkgMTAuMjE3OCAxMi4zODgxTDEwLjIwOTkgMTIuNDgzMUwxMC4yMTM3IDEyLjU0OTRDMTAuMjQyOSAxMi44MDA2IDEwLjQzNTkgMTMuMDAxOCAxMC42ODMxIDEzLjA0MzRMMTAuNzc4MSAxMy4wNTEzTDExLjkyMyAxMy4wNTA5TDExLjkyMzIgMTQuMjA0M0wxMS45MjcgMTQuMjcwNkMxMS45NTYyIDE0LjUyMTggMTIuMTQ5MiAxNC43MjMgMTIuMzk2NCAxNC43NjQ2TDEyLjQ5MTQgMTQuNzcyNUwxMi41NTc3IDE0Ljc2ODdDMTIuODA4OCAxNC43Mzk1IDEzLjAxMDEgMTQuNTQ2NSAxMy4wNTE3IDE0LjI5OTNMMTMuMDU5NiAxNC4yMDQzTDEzLjA1OTQgMTMuMDUwOUwxNC4yMDQ4IDEzLjA1MTNMMTQuMjcxMSAxMy4wNDc1QzE0LjUyMjMgMTMuMDE4MyAxNC43MjM1IDEyLjgyNTMgMTQuNzY1MSAxMi41NzgxTDE0Ljc3MyAxMi40ODMxTDE0Ljc2OTIgMTIuNDE2OUMxNC43NCAxMi4xNjU3IDE0LjU0NyAxMS45NjQ1IDE0LjI5OTggMTEuOTIyOUwxNC4yMDQ4IDExLjkxNDlMMTMuMDU5NCAxMS45MTQ2TDEzLjA1OTYgMTAuNzk1MkwxMy4wNTU4IDEwLjcyOUMxMy4wMjY2IDEwLjQ3NzggMTIuODMzNiAxMC4yNzY2IDEyLjU4NjQgMTAuMjM1TDEyLjQ5MTQgMTAuMjI3MVpNMTIuNTAwMyAyLjQxNDU1QzEwLjY5NiAyLjQxNDU1IDkuMjMzMjIgMy44NzcxMSA5LjIzMzIyIDUuNjgxNkM5LjIzMzIyIDcuNDg2MDggMTAuNjk2IDguOTQ4NjQgMTIuNTAwMyA4Ljk0ODY0QzE0LjMwNDUgOC45NDg2NCAxNS43NjczIDcuNDg2MDggMTUuNzY3MyA1LjY4MTZDMTUuNzY3MyAzLjg3NzExIDE0LjMwNDUgMi40MTQ1NSAxMi41MDAzIDIuNDE0NTVaIiBmaWxsPSIjZmZmIi8+PC9nPjxkZWZzPjxjbGlwUGF0aCBpZD0iYmxvY2tzX21vdG9yX2EiPjxwYXRoIGZpbGw9IiNmZmYiIGQ9Ik0wIDBIMjVWMjVIMHoiLz48L2NsaXBQYXRoPjwvZGVmcz48L3N2Zz4=" xmlns:xlink="http://www.w3.org/1999/xlink" id="73ea79789c2cb85250cbf9d5f1a2ae6dba608042"/></defs></g></svg>

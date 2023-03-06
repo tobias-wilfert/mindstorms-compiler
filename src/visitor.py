@@ -37,7 +37,10 @@ class Visitor:
         :rtype: list
         """
         # TODO: This will need to be more suffisticated but this works for now
-        return [next(iter(self.cst))]
+        if self.cst:
+            return [next(iter(self.cst))]
+        else:
+            return []
 
     def visit_node(self, node: dict) -> Node:
         """Checks the type of the node and calls the appropriate visit function.
