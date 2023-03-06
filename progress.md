@@ -10,3 +10,7 @@ hence it was important to get the AST working + a visual representation to test 
 - Time: 8:00  
 Worked on the construction of the AST as well as the visual representation of it + was able to test it against the first few test cases.
 ---
+### Added Arithmatic Nodes + next motor node
+- Date: 06/03
+- Time: 8:00
+Add suport for 5 more blocks, added test for the previous block + slighlty updated the visual representation generation.
