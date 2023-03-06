@@ -43,3 +43,27 @@ def test_extract_json_run_motor_for_duration_seconds():
 
 def test_extract_json_when_program_starts():
     extract_helper("when_program_starts")
+
+
+def test_extract_json_run_motor_for_duration_value_node():
+    extract_helper("run_motor_for_duration_value_node")
+
+
+def test_extract_json_arithmatic():
+    extract_helper("arithmatic")
+
+
+def test_extract_json_divide():
+    extract_helper("divide")
+
+
+def test_extract_json_minus():
+    extract_helper("minus")
+
+
+def test_extract_json_multiply():
+    extract_helper("multiply")
+
+
+def test_extract_json_plus():
+    extract_helper("plus")

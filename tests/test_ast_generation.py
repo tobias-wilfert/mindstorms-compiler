@@ -84,10 +84,118 @@ def test_ast_run_motor_for_duration_seconds():
     )
 
 
-def test_extract_json_when_program_starts():
+def test_ast_when_program_starts():
     assert (
         ast_helper("when_program_starts")
         == """digraph {rankdir="TB"
 0 [label="WhenProgramStartsNode"]
 }"""
+    )
+
+
+def test_ast_run_motor_for_duration_value_node():
+    assert (
+        ast_helper("run_motor_for_duration_value_node")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="RunMotorForDurationNode(ports:'['A']', direction:'Direction.CLOCKWISE', unit:'Unit.ROTATIONS',)"]
+2 [label="ArithmaticalNode(op:'Operation.PLUS')"]
+3 [label="NumericalNode(1.0)"]
+4 [label="NumericalNode(2.0)"]
+0 -> 1
+1 -> 2
+2 -> 3
+2 -> 4}"""
+    )
+
+
+def test_ast_arithmatic():
+    assert (
+        ast_helper("arithmatic")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="RunMotorForDurationNode(ports:'['A']', direction:'Direction.CLOCKWISE', unit:'Unit.ROTATIONS',)"]
+2 [label="ArithmaticalNode(op:'Operation.PLUS')"]
+3 [label="NumericalNode(1.0)"]
+4 [label="ArithmaticalNode(op:'Operation.MINUS')"]
+5 [label="NumericalNode(2.0)"]
+6 [label="ArithmaticalNode(op:'Operation.MULTIPLY')"]
+7 [label="NumericalNode(3.0)"]
+8 [label="ArithmaticalNode(op:'Operation.DIVIDE')"]
+9 [label="NumericalNode(4.0)"]
+10 [label="NumericalNode(5.0)"]
+0 -> 1
+1 -> 2
+2 -> 3
+2 -> 4
+4 -> 5
+4 -> 6
+6 -> 7
+6 -> 8
+8 -> 9
+8 -> 10}"""
+    )
+
+
+def test_ast_divide():
+    assert (
+        ast_helper("divide")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="RunMotorForDurationNode(ports:'['A']', direction:'Direction.CLOCKWISE', unit:'Unit.ROTATIONS',)"]
+2 [label="ArithmaticalNode(op:'Operation.DIVIDE')"]
+3 [label="NumericalNode(1.0)"]
+4 [label="NumericalNode(2.0)"]
+0 -> 1
+1 -> 2
+2 -> 3
+2 -> 4}"""
+    )
+
+
+def test_ast_minus():
+    assert (
+        ast_helper("minus")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="RunMotorForDurationNode(ports:'['A']', direction:'Direction.CLOCKWISE', unit:'Unit.ROTATIONS',)"]
+2 [label="ArithmaticalNode(op:'Operation.MINUS')"]
+3 [label="NumericalNode(1.0)"]
+4 [label="NumericalNode(2.0)"]
+0 -> 1
+1 -> 2
+2 -> 3
+2 -> 4}"""
+    )
+
+
+def test_ast_multiply():
+    assert (
+        ast_helper("multiply")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="RunMotorForDurationNode(ports:'['A']', direction:'Direction.CLOCKWISE', unit:'Unit.ROTATIONS',)"]
+2 [label="ArithmaticalNode(op:'Operation.MULTIPLY')"]
+3 [label="NumericalNode(1.0)"]
+4 [label="NumericalNode(2.0)"]
+0 -> 1
+1 -> 2
+2 -> 3
+2 -> 4}"""
+    )
+
+
+def test_ast_plus():
+    assert (
+        ast_helper("plus")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="RunMotorForDurationNode(ports:'['A']', direction:'Direction.CLOCKWISE', unit:'Unit.ROTATIONS',)"]
+2 [label="ArithmaticalNode(op:'Operation.PLUS')"]
+3 [label="NumericalNode(1.0)"]
+4 [label="NumericalNode(2.0)"]
+0 -> 1
+1 -> 2
+2 -> 3
+2 -> 4}"""
     )

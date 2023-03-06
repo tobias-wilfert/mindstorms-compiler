@@ -1,8 +1,10 @@
 from src.abstract_syntax_tree.abstract_syntax_tree import (
     AST,
+    ArithmaticalNode,
     Direction,
     Node,
     NumericalNode,
+    Operation,
     RunMotorForDurationNode,
     Unit,
     WhenProgramStartsNode,
@@ -54,6 +56,14 @@ class Visitor:
             return self.visit_when_program_starts(node)
         elif opcode == "flippermotor_motorTurnForDirection":
             return self.visit_run_motor_for_duration(node)
+        elif opcode == "operator_add":
+            return self.visit_operator(Operation.PLUS, node)
+        elif opcode == "operator_subtract":
+            return self.visit_operator(Operation.MINUS, node)
+        elif opcode == "operator_divide":
+            return self.visit_operator(Operation.DIVIDE, node)
+        elif opcode == "operator_multiply":
+            return self.visit_operator(Operation.MULTIPLY, node)
         else:
             raise NotImplementedError
 
@@ -74,7 +84,6 @@ class Visitor:
         :return: The AST representation.
         :rtype: RunMotorForDurationNode
         """
-        # TODO: Need test cases here for the case in which the value is a numerical block rather than just a value
         ports = self.visit_run_motor_for_duration_port(node)
         direction = self.visit_run_motor_for_duration_direction(node)
         value = self.visit_run_motor_for_duration_value(node)
@@ -116,18 +125,40 @@ class Visitor:
         unit = node["fields"]["UNIT"][0]
         return Unit[unit.upper()]
 
-    def visit_run_motor_for_duration_value(self, node) -> Node:
+    def visit_input(self, val) -> Node:
+        """Visits the input field of a node.
+        Val can be 2 things, if it is a list, than the 2 items is a string representation of a float or an int.
+        If it is a string it is the identifier of a another node that needs to be parsed.
+
+        :param val: Input representation.
+        :type val: str or list
+        :return: AST representation of the input.
+        :rtype: Node
+        """
+        if isinstance(val, list):
+            return NumericalNode(float(val[1]))
+        else:
+            return self.visit_node(val)
+
+    def visit_run_motor_for_duration_value(self, node: dict) -> Node:
         """Parses the value that is being used by the RunMotorForDurationNode.
         :param node: The Node representation.
         :type node: dict
         :return: The node that that specifies the value that should be used. (Could be an entrie subtree, in the case of an equation).
         :rtype: Node
         """
-        # Need to check if there are underlying nodes or if it is just a constant.
-        val = node["inputs"]["VALUE"][1][1]
+        val = node["inputs"]["VALUE"][1]
+        return self.visit_input(val)
 
-        # TODO: This entire check is very unelegant and as such it should be done differently because it is probably also dangerous
-        try:
-            return NumericalNode(float(val))
-        except ValueError:
-            return None  # TODO: Need to add the logic to explore the node here.
+    def visit_operator(self, op: Operation, node: dict) -> ArithmaticalNode:
+        """Constructs the AST representation of the Arithmatics node.
+        :param op: The operation of the arithmatic block
+        :type op: Operation
+        :param node: The Node representation.
+        :type node: dict
+        :return: The AST representation.
+        :rtype: ArithmaticalNode
+        """
+        left_hand = self.visit_input(node["inputs"]["NUM1"][1])
+        right_hand = self.visit_input(node["inputs"]["NUM2"][1])
+        return ArithmaticalNode(op, left_hand, right_hand)
