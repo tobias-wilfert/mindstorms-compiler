@@ -72,6 +72,30 @@ def test_ast_run_motor_for_duration_multiple_motors():
     )
 
 
+def test_ast_run_motor_for_duration_multiple_motors3():
+    assert (
+        ast_helper("run_motor_for_duration_multiple_motors3")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="RunMotorForDurationNode(ports:'['A', 'B', 'C']', direction:'Direction.CLOCKWISE', unit:'Unit.ROTATIONS',)"]
+2 [label="NumericalNode(1.0)"]
+0 -> 1
+1 -> 2}"""
+    )
+
+
+def test_ast_run_motor_for_duration_all_motors():
+    assert (
+        ast_helper("run_motor_for_duration_all_motors")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="RunMotorForDurationNode(ports:'['A', 'B', 'C', 'D', 'E', 'F']', direction:'Direction.CLOCKWISE', unit:'Unit.ROTATIONS',)"]
+2 [label="NumericalNode(1.0)"]
+0 -> 1
+1 -> 2}"""
+    )
+
+
 def test_ast_run_motor_for_duration_seconds():
     assert (
         ast_helper("run_motor_for_duration_seconds")

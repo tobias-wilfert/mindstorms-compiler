@@ -37,6 +37,14 @@ def test_extract_json_run_motor_for_duration_multiple_motors():
     extract_helper("run_motor_for_duration_multiple_motors")
 
 
+def test_extract_json_run_motor_for_duration_multiple_motors3():
+    extract_helper("run_motor_for_duration_multiple_motors3")
+
+
+def test_extract_json_run_motor_for_duration_all_motors():
+    extract_helper("run_motor_for_duration_all_motors")
+
+
 def test_extract_json_run_motor_for_duration_seconds():
     extract_helper("run_motor_for_duration_seconds")
 
