@@ -1,11 +1,13 @@
 from src.abstract_syntax_tree.abstract_syntax_tree import (
     AST,
     ArithmaticalNode,
-    Direction,
+    GoDirection,
+    MotorGoToPositionNode,
     Node,
     NumericalNode,
     Operation,
     RunMotorForDurationNode,
+    TurnDirection,
     Unit,
     WhenProgramStartsNode,
 )
@@ -59,6 +61,10 @@ class Visitor:
             return self.visit_when_program_starts(node)
         elif opcode == "flippermotor_motorTurnForDirection":
             return self.visit_run_motor_for_duration(node)
+        elif opcode == "flippermotor_motorGoDirectionToPosition":
+            return self.visit_motor_go_to_position(node)
+        elif opcode == "flippermotor_custom-angle":
+            return self.visit_motor_custom_anlge(node)
         elif opcode == "operator_add":
             return self.visit_operator(Operation.PLUS, node)
         elif opcode == "operator_subtract":
@@ -106,7 +112,7 @@ class Visitor:
         ][0]
         return list(ports)
 
-    def visit_run_motor_for_duration_direction(self, node: dict) -> Direction:
+    def visit_run_motor_for_duration_direction(self, node: dict) -> TurnDirection:
         """Parses the direction that is being used by the RunMotorForDurationNode.
         :param node: The Node representation.
         :type node: dict
@@ -116,7 +122,7 @@ class Visitor:
         direction = self.cst[node["inputs"]["DIRECTION"][1]]["fields"][
             "field_flippermotor_custom-icon-direction"
         ][0]
-        return Direction[direction.upper()]
+        return TurnDirection[direction.upper()]
 
     def visit_run_motor_for_duration_unit(self, node: dict) -> Unit:
         """Parses the unit that is being used by the RunMotorForDurationNode.
@@ -165,3 +171,49 @@ class Visitor:
         left_hand = self.visit_input(node["inputs"]["NUM1"][1])
         right_hand = self.visit_input(node["inputs"]["NUM2"][1])
         return ArithmaticalNode(op, left_hand, right_hand)
+
+    def visit_motor_go_to_position(self, node: dict) -> MotorGoToPositionNode:
+        """Constructs the AST representation of the MotorGoToPosition node.
+        :param node: The Node representation.
+        :type node: dict
+        :return: The AST representation.
+        :rtype: MotorGoToPositionNode
+        """
+        ports = self.visit_run_motor_for_duration_port(node)
+        direction = self.visit_motor_go_to_position_direction(node)
+        value = self.visit_motor_go_to_position_value(node)
+        next_node = self.visit_node(node["next"])
+        return MotorGoToPositionNode(ports, direction, value, next_node)
+
+    def visit_motor_go_to_position_direction(self, node: dict) -> GoDirection:
+        """Parse the direction used by the MotorGoToPositionNode.
+
+        :param node: The Node representation.
+        :type node: dict
+        :return: The direction that is being used.
+        :rtype: GoDirection
+        """
+        direction = node["fields"]["DIRECTION"][0]
+        return GoDirection[direction.upper()]
+
+    def visit_motor_go_to_position_value(self, node: dict) -> Node:
+        """Parse the value used by the MotorGoToPositionNode.
+
+        :param node: The Node representation.
+        :type node: dict
+        :return: The value that is being used.
+        :rtype: GoDirection
+        """
+        return self.visit_node(node["inputs"]["POSITION"][1])
+
+    def visit_motor_custom_anlge(self, node: dict) -> NumericalNode:
+        """Parse the MotorCustomAngleNode.
+
+        :param node: The Node representation.
+        :type node: dict
+        :return: The AST representation.
+        :rtype: NumericalNode
+        """
+        return NumericalNode(
+            float(node["fields"]["field_flippermotor_custom-angle"][0])
+        )

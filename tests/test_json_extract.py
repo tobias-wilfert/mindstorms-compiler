@@ -30,6 +30,7 @@ def test_extract_json_when_program_starts():
 
 
 # ---------- Motors ----------
+# - Run Motor for duration
 def test_extract_json_run_motor_for_duration_base():
     extract_helper("run_motor_for_duration_base", "Motors")
 
@@ -60,6 +61,27 @@ def test_extract_json_run_motor_for_duration_seconds():
 
 def test_extract_json_run_motor_for_duration_value_node():
     extract_helper("run_motor_for_duration_value_node", "Motors")
+
+
+# - Motor Go to Position
+def test_extract_json_motor_go_to_position_base():
+    extract_helper("motor_go_to_position_base", "Motors")
+
+
+def test_extract_json_motor_go_to_position_clockwise():
+    extract_helper("motor_go_to_position_clockwise", "Motors")
+
+
+def test_extract_json_motor_go_to_position_counterclockwise():
+    extract_helper("motor_go_to_position_counterclockwise", "Motors")
+
+
+def test_extract_json_motor_go_to_position_multiple_motors():
+    extract_helper("motor_go_to_position_multiple_motors", "Motors")
+
+
+def test_extract_json_motor_go_to_position_value_node():
+    extract_helper("motor_go_to_position_value_node", "Motors")
 
 
 # ---------- Operators ----------

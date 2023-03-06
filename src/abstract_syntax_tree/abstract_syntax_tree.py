@@ -121,21 +121,6 @@ class WhenProgramStartsNode(StackNode):
             )
 
 
-class Direction(Enum):
-    """Enum for the directions that can be used in the RunMotor blocks."""
-
-    CLOCKWISE = 1
-    COUNTERCLOCKWISE = 2
-
-
-class Unit(Enum):
-    """Enum for the units that can be used in the RunMotor blocks."""
-
-    ROTATIONS = 1
-    SECONDS = 2
-    DEGREES = 3
-
-
 class Operation(Enum):
     PLUS = 1
     MINUS = 2
@@ -195,11 +180,26 @@ class NumericalNode(Node):
         nodes.append(f'{node_id} [label="{self}"]')
 
 
+class TurnDirection(Enum):
+    """Enum for the directions that can be used in the RunMotor blocks."""
+
+    CLOCKWISE = 1
+    COUNTERCLOCKWISE = 2
+
+
+class Unit(Enum):
+    """Enum for the units that can be used in the RunMotor blocks."""
+
+    ROTATIONS = 1
+    SECONDS = 2
+    DEGREES = 3
+
+
 class RunMotorForDurationNode(StackNode):
     """Class to represent RunMotorForDuration blocks."""
 
     def __init__(
-        self, ports: list, direction: Direction, value: Node, unit: Unit, next: Node
+        self, ports: list, direction: TurnDirection, value: Node, unit: Unit, next: Node
     ) -> None:
         super().__init__(next)
         self.ports = ports
@@ -228,6 +228,52 @@ class RunMotorForDurationNode(StackNode):
         if (
             self.next
         ):  # If there is a connection add it and epxlore further into the tree
+            self.next.genereate_tree_representation(
+                nodes, connections, node_id, uid_generator
+            )
+
+
+class GoDirection(Enum):
+    """Enum for the directions that can be used in the MotorGoToPosition blocks."""
+
+    SHORTEST = 1
+    CLOCKWISE = 2
+    COUNTERCLOCKWISE = 3
+
+
+class MotorGoToPositionNode(StackNode):
+    """Class to represent MotorGoToPosition block."""
+
+    def __init__(
+        self, ports: list, direction: GoDirection, value: Node, next: Node
+    ) -> None:
+        super().__init__(next)
+        self.ports = ports
+        self.direction = direction
+        self.value = value
+
+    def __str__(self) -> str:
+        return (
+            f"MotorGoToPositionNode(ports:'{self.ports}', direction:'{self.direction}')"
+        )
+
+    def genereate_tree_representation(
+        self,
+        nodes: list,
+        connections: list,
+        parent_id: int,
+        uid_generator: UIDGenerator,
+    ):
+        node_id = uid_generator.get_uid()
+
+        connections.append(f"{parent_id} -> {node_id}")
+        nodes.append(f'{node_id} [label="{self}"]')
+
+        self.value.genereate_tree_representation(
+            nodes, connections, node_id, uid_generator
+        )
+        # If there is a connection add it and epxlore further into the tree
+        if self.next:
             self.next.genereate_tree_representation(
                 nodes, connections, node_id, uid_generator
             )
