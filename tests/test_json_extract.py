@@ -2,7 +2,7 @@
 
 import json
 
-from src.extract_json import extract_json
+from src.json_parser import extract_json
 
 
 def extract_helper(filename: str):
