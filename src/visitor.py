@@ -7,6 +7,7 @@ from src.abstract_syntax_tree.abstract_syntax_tree import (
     NumericalNode,
     Operation,
     RunMotorForDurationNode,
+    StartMotorNode,
     TurnDirection,
     Unit,
     WhenProgramStartsNode,
@@ -65,6 +66,8 @@ class Visitor:
             return self.visit_motor_go_to_position(node)
         elif opcode == "flippermotor_custom-angle":
             return self.visit_motor_custom_anlge(node)
+        elif opcode == "flippermotor_motorStartDirection":
+            return self.visit_start_motor(node)
         elif opcode == "operator_add":
             return self.visit_operator(Operation.PLUS, node)
         elif opcode == "operator_subtract":
@@ -217,3 +220,16 @@ class Visitor:
         return NumericalNode(
             float(node["fields"]["field_flippermotor_custom-angle"][0])
         )
+
+    def visit_start_motor(self, node: dict) -> StartMotorNode:
+        """Constructs the AST representation of the StartMotor node.
+
+        :param node: The Node representation.
+        :type node: dict
+        :return: The AST representation.
+        :rtype: StartMotorNode
+        """
+        ports = self.visit_run_motor_for_duration_port(node)
+        direction = self.visit_run_motor_for_duration_direction(node)
+        next_node = self.visit_node(node["next"])
+        return StartMotorNode(ports, direction, next_node)

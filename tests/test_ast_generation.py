@@ -207,6 +207,47 @@ def test_extract_json_motor_go_to_position_value_node():
     )
 
 
+# - Start Motor
+def test_extract_json_start_motor_base():
+    assert (
+        ast_helper("start_motor_base", "Motors")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="StartMotorNode(ports:'['A']', direction:'TurnDirection.CLOCKWISE')"]
+0 -> 1}"""
+    )
+
+
+def test_extract_json_start_motor_all_motors():
+    assert (
+        ast_helper("start_motor_all_motors", "Motors")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="StartMotorNode(ports:'['A', 'B', 'C', 'D', 'E', 'F']', direction:'TurnDirection.CLOCKWISE')"]
+0 -> 1}"""
+    )
+
+
+def test_extract_json_start_motor_multiple_motors():
+    assert (
+        ast_helper("start_motor_multiple_motors", "Motors")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="StartMotorNode(ports:'['A', 'B']', direction:'TurnDirection.CLOCKWISE')"]
+0 -> 1}"""
+    )
+
+
+def test_extract_json_start_motor_counterclockwise():
+    assert (
+        ast_helper("start_motor_counterclockwise", "Motors")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="StartMotorNode(ports:'['A']', direction:'TurnDirection.COUNTERCLOCKWISE')"]
+0 -> 1}"""
+    )
+
+
 # ---------- Operators ----------
 def test_ast_arithmatic():
     assert (

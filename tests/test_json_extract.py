@@ -84,6 +84,23 @@ def test_extract_json_motor_go_to_position_value_node():
     extract_helper("motor_go_to_position_value_node", "Motors")
 
 
+# - Start Motor
+def test_extract_json_start_motor_base():
+    extract_helper("start_motor_base", "Motors")
+
+
+def test_extract_json_start_motor_all_motors():
+    extract_helper("start_motor_all_motors", "Motors")
+
+
+def test_extract_json_start_motor_multiple_motors():
+    extract_helper("start_motor_multiple_motors", "Motors")
+
+
+def test_extract_json_start_motor_counterclockwise():
+    extract_helper("start_motor_counterclockwise", "Motors")
+
+
 # ---------- Operators ----------
 def test_extract_json_arithmatic():
     extract_helper("arithmatic", "Operators")

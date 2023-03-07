@@ -225,9 +225,8 @@ class RunMotorForDurationNode(StackNode):
             nodes, connections, node_id, uid_generator
         )
 
-        if (
-            self.next
-        ):  # If there is a connection add it and epxlore further into the tree
+        # If there is a connection add it and epxlore further into the tree
+        if self.next:
             self.next.genereate_tree_representation(
                 nodes, connections, node_id, uid_generator
             )
@@ -272,6 +271,36 @@ class MotorGoToPositionNode(StackNode):
         self.value.genereate_tree_representation(
             nodes, connections, node_id, uid_generator
         )
+        # If there is a connection add it and epxlore further into the tree
+        if self.next:
+            self.next.genereate_tree_representation(
+                nodes, connections, node_id, uid_generator
+            )
+
+
+class StartMotorNode(StackNode):
+    """Class to represent StartMotor block."""
+
+    def __init__(self, ports: list, direction: TurnDirection, next: Node) -> None:
+        super().__init__(next)
+        self.ports = ports
+        self.direction = direction
+
+    def __str__(self) -> str:
+        return f"StartMotorNode(ports:'{self.ports}', direction:'{self.direction}')"
+
+    def genereate_tree_representation(
+        self,
+        nodes: list,
+        connections: list,
+        parent_id: int,
+        uid_generator: UIDGenerator,
+    ):
+        node_id = uid_generator.get_uid()
+
+        connections.append(f"{parent_id} -> {node_id}")
+        nodes.append(f'{node_id} [label="{self}"]')
+
         # If there is a connection add it and epxlore further into the tree
         if self.next:
             self.next.genereate_tree_representation(
