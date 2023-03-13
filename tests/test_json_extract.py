@@ -101,6 +101,19 @@ def test_extract_json_start_motor_counterclockwise():
     extract_helper("start_motor_counterclockwise", "Motors")
 
 
+# - Stop Motor
+def test_extract_json_stop_motor_base():
+    extract_helper("stop_motor_base", "Motors")
+
+
+def test_extract_json_stop_motor_all_motors():
+    extract_helper("stop_motor_all_motors", "Motors")
+
+
+def test_extract_json_stop_motor_multiple_motors():
+    extract_helper("stop_motor_multiple_motors", "Motors")
+
+
 # ---------- Operators ----------
 def test_extract_json_arithmatic():
     extract_helper("arithmatic", "Operators")

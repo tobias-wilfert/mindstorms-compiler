@@ -143,7 +143,7 @@ def test_ast_run_motor_for_duration_value_node():
 
 
 # - Motor Go to Position
-def test_extract_json_motor_go_to_position_base():
+def test_ast_motor_go_to_position_base():
     assert (
         ast_helper("motor_go_to_position_base", "Motors")
         == """digraph {rankdir="TB"
@@ -155,7 +155,7 @@ def test_extract_json_motor_go_to_position_base():
     )
 
 
-def test_extract_json_motor_go_to_position_clockwise():
+def test_ast_motor_go_to_position_clockwise():
     assert (
         ast_helper("motor_go_to_position_clockwise", "Motors")
         == """digraph {rankdir="TB"
@@ -167,7 +167,7 @@ def test_extract_json_motor_go_to_position_clockwise():
     )
 
 
-def test_extract_json_motor_go_to_position_counterclockwise():
+def test_ast_motor_go_to_position_counterclockwise():
     assert (
         ast_helper("motor_go_to_position_counterclockwise", "Motors")
         == """digraph {rankdir="TB"
@@ -179,7 +179,7 @@ def test_extract_json_motor_go_to_position_counterclockwise():
     )
 
 
-def test_extract_json_motor_go_to_position_multiple_motors():
+def test_ast_motor_go_to_position_multiple_motors():
     assert (
         ast_helper("motor_go_to_position_multiple_motors", "Motors")
         == """digraph {rankdir="TB"
@@ -191,7 +191,7 @@ def test_extract_json_motor_go_to_position_multiple_motors():
     )
 
 
-def test_extract_json_motor_go_to_position_value_node():
+def test_ast_motor_go_to_position_value_node():
     assert (
         ast_helper("motor_go_to_position_value_node", "Motors")
         == """digraph {rankdir="TB"
@@ -208,7 +208,7 @@ def test_extract_json_motor_go_to_position_value_node():
 
 
 # - Start Motor
-def test_extract_json_start_motor_base():
+def test_ast_start_motor_base():
     assert (
         ast_helper("start_motor_base", "Motors")
         == """digraph {rankdir="TB"
@@ -218,7 +218,7 @@ def test_extract_json_start_motor_base():
     )
 
 
-def test_extract_json_start_motor_all_motors():
+def test_ast_start_motor_all_motors():
     assert (
         ast_helper("start_motor_all_motors", "Motors")
         == """digraph {rankdir="TB"
@@ -228,7 +228,7 @@ def test_extract_json_start_motor_all_motors():
     )
 
 
-def test_extract_json_start_motor_multiple_motors():
+def test_ast_start_motor_multiple_motors():
     assert (
         ast_helper("start_motor_multiple_motors", "Motors")
         == """digraph {rankdir="TB"
@@ -238,12 +238,43 @@ def test_extract_json_start_motor_multiple_motors():
     )
 
 
-def test_extract_json_start_motor_counterclockwise():
+def test_ast_start_motor_counterclockwise():
     assert (
         ast_helper("start_motor_counterclockwise", "Motors")
         == """digraph {rankdir="TB"
 0 [label="WhenProgramStartsNode"]
 1 [label="StartMotorNode(ports:'['A']', direction:'TurnDirection.COUNTERCLOCKWISE')"]
+0 -> 1}"""
+    )
+
+
+# - Stop Motor
+def test_ast_stop_motor_base():
+    assert (
+        ast_helper("stop_motor_base", "Motors")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="StopMotorNode(ports:'['A']')"]
+0 -> 1}"""
+    )
+
+
+def test_ast_stop_motor_all_motors():
+    assert (
+        ast_helper("stop_motor_all_motors", "Motors")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="StopMotorNode(ports:'['A', 'B', 'C', 'D', 'E', 'F']')"]
+0 -> 1}"""
+    )
+
+
+def test_ast_stop_motor_multiple_motors():
+    assert (
+        ast_helper("stop_motor_multiple_motors", "Motors")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="StopMotorNode(ports:'['A', 'B']')"]
 0 -> 1}"""
     )
 
