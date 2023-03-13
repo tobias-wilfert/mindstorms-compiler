@@ -335,3 +335,36 @@ class StopMotorNode(StackNode):
             self.next.genereate_tree_representation(
                 nodes, connections, node_id, uid_generator
             )
+
+
+class SetMotorSpeedNode(StackNode):
+    """Class to represent SetMotorSpeed block."""
+
+    def __init__(self, ports: list, value: Node, next: Node) -> None:
+        super().__init__(next)
+        self.ports = ports
+        self.value = value
+
+    def __str__(self) -> str:
+        return f"SetMotorSpeedNode(ports:'{self.ports}')"
+
+    def genereate_tree_representation(
+        self,
+        nodes: list,
+        connections: list,
+        parent_id: int,
+        uid_generator: UIDGenerator,
+    ):
+        node_id = uid_generator.get_uid()
+
+        connections.append(f"{parent_id} -> {node_id}")
+        nodes.append(f'{node_id} [label="{self}"]')
+
+        self.value.genereate_tree_representation(
+            nodes, connections, node_id, uid_generator
+        )
+        # If there is a connection add it and epxlore further into the tree
+        if self.next:
+            self.next.genereate_tree_representation(
+                nodes, connections, node_id, uid_generator
+            )

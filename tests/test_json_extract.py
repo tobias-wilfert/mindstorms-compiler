@@ -114,6 +114,23 @@ def test_extract_json_stop_motor_multiple_motors():
     extract_helper("stop_motor_multiple_motors", "Motors")
 
 
+# - Set Motor Speed
+def test_extract_json_set_motor_speed_base():
+    extract_helper("set_motor_speed_base", "Motors")
+
+
+def test_extract_json_set_motor_speed_all_motors():
+    extract_helper("set_motor_speed_all_motors", "Motors")
+
+
+def test_extract_json_set_motor_speed_multiple_motors():
+    extract_helper("set_motor_speed_multiple_motors", "Motors")
+
+
+def test_extract_json_set_motor_speed_value_node():
+    extract_helper("set_motor_speed_value_node", "Motors")
+
+
 # ---------- Operators ----------
 def test_extract_json_arithmatic():
     extract_helper("arithmatic", "Operators")

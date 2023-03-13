@@ -7,6 +7,7 @@ from src.abstract_syntax_tree.abstract_syntax_tree import (
     NumericalNode,
     Operation,
     RunMotorForDurationNode,
+    SetMotorSpeedNode,
     StartMotorNode,
     StopMotorNode,
     TurnDirection,
@@ -71,6 +72,8 @@ class Visitor:
             return self.visit_start_motor(node)
         elif opcode == "flippermotor_motorStop":
             return self.visit_stop_motor(node)
+        elif opcode == "flippermotor_motorSetSpeed":
+            return self.visit_set_motor_speed(node)
         elif opcode == "operator_add":
             return self.visit_operator(Operation.PLUS, node)
         elif opcode == "operator_subtract":
@@ -237,7 +240,7 @@ class Visitor:
         next_node = self.visit_node(node["next"])
         return StartMotorNode(ports, direction, next_node)
 
-    def visit_stop_motor(self, node) -> StopMotorNode:
+    def visit_stop_motor(self, node: dict) -> StopMotorNode:
         """Constructs the AST representation of the StopMotor node.
 
         :param node: The Node representation.
@@ -248,3 +251,24 @@ class Visitor:
         ports = self.visit_run_motor_for_duration_port(node)
         next_node = self.visit_node(node["next"])
         return StopMotorNode(ports, next_node)
+
+    def visit_set_motor_speed(self, node) -> SetMotorSpeedNode:
+        """Constructs the AST representation of the SetMotorSpeed node.
+        :param node: The Node representation.
+        :type node: dict
+        :return: The AST representation.
+        :rtype: MotorGoToPositionNode
+        """
+        ports = self.visit_run_motor_for_duration_port(node)
+        value = self.visit_set_motor_speed_value(node)
+        next_node = self.visit_node(node["next"])
+        return SetMotorSpeedNode(ports, value, next_node)
+
+    def visit_set_motor_speed_value(self, node: dict) -> Node:
+        """Parse the value used by the SetMotorSpeedNode.
+        :param node: The Node representation.
+        :type node: dict
+        :return: The value that is being used.
+        :rtype: GoDirection
+        """
+        return self.visit_input(node["inputs"]["SPEED"][1])

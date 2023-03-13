@@ -279,6 +279,59 @@ def test_ast_stop_motor_multiple_motors():
     )
 
 
+# - Set Motor Speed
+def test_ast_set_motor_speed_base():
+    assert (
+        ast_helper("set_motor_speed_base", "Motors")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="SetMotorSpeedNode(ports:'['A']')"]
+2 [label="NumericalNode(75.0)"]
+0 -> 1
+1 -> 2}"""
+    )
+
+
+def test_ast_set_motor_speed_all_motors():
+    assert (
+        ast_helper("set_motor_speed_all_motors", "Motors")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="SetMotorSpeedNode(ports:'['A', 'B', 'C', 'D', 'E', 'F']')"]
+2 [label="NumericalNode(75.0)"]
+0 -> 1
+1 -> 2}"""
+    )
+
+
+def test_ast_set_motor_speed_multiple_motors():
+    assert (
+        ast_helper("set_motor_speed_multiple_motors", "Motors")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="SetMotorSpeedNode(ports:'['A', 'B']')"]
+2 [label="NumericalNode(75.0)"]
+0 -> 1
+1 -> 2}"""
+    )
+
+
+def test_ast_set_motor_speed_value_node():
+    assert (
+        ast_helper("set_motor_speed_value_node", "Motors")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="SetMotorSpeedNode(ports:'['A']')"]
+2 [label="ArithmaticalNode(op:'Operation.PLUS')"]
+3 [label="NumericalNode(25.0)"]
+4 [label="NumericalNode(50.0)"]
+0 -> 1
+1 -> 2
+2 -> 3
+2 -> 4}"""
+    )
+
+
 # ---------- Operators ----------
 def test_ast_arithmatic():
     assert (
