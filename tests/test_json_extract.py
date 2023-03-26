@@ -132,8 +132,8 @@ def test_extract_json_set_motor_speed_value_node():
 
 
 # ---------- Operators ----------
-def test_extract_json_arithmatic():
-    extract_helper("arithmatic", "Operators")
+def test_extract_json_arithmetic():
+    extract_helper("arithmetic", "Operators")
 
 
 def test_extract_json_divide():
@@ -150,3 +150,16 @@ def test_extract_json_multiply():
 
 def test_extract_json_plus():
     extract_helper("plus", "Operators")
+
+
+# ---------- Variables ----------
+def test_extract_json_change_variable_by():
+    extract_helper("change_variable_by", "Variables")
+
+
+def test_extract_json_variable_num():
+    extract_helper("variable_num", "Variables")
+
+
+def test_extract_json_variable_string():
+    extract_helper("variable_string", "Variables")

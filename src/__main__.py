@@ -4,8 +4,8 @@ from src.json_parser import extract_json, filter_json
 from src.visitor import Visitor
 
 
-# TODO: Also consider if having colour in the output is worth it
-# TODO: This is super basic for now add more functionality later via optional flags to allow for different behaviour
+# TODO: Also consider if having color in the output is worth it
+# TODO: This is super basic for now add more functionality later via optional flags to allow for different behavior
 def main(
     filename: str = typer.Argument(
         ..., help="The path to the file that should be converted."
@@ -17,8 +17,8 @@ def main(
 
     # Generate the AST
     visitor = Visitor()
-    abstract_sytnax_tree = visitor.visit(concrete_syntax_tree)
-    print(abstract_sytnax_tree.tree_representation())
+    abstract_syntax_tree = visitor.visit(concrete_syntax_tree)
+    print(abstract_syntax_tree.tree_representation())
 
     # TODO: Do the conversion (Back-end) (AST -> Python code)
     # TODO: Write the code to the file or output it

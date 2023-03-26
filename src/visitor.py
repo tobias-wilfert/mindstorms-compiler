@@ -1,17 +1,20 @@
 from src.abstract_syntax_tree.abstract_syntax_tree import (
     AST,
-    ArithmaticalNode,
+    ArithmeticalNode,
     GoDirection,
+    LiteralNode,
     MotorGoToPositionNode,
     Node,
     NumericalNode,
     Operation,
     RunMotorForDurationNode,
     SetMotorSpeedNode,
+    SetVariableToNode,
     StartMotorNode,
     StopMotorNode,
     TurnDirection,
     Unit,
+    Variable,
     WhenProgramStartsNode,
 )
 
@@ -41,7 +44,7 @@ class Visitor:
         :return: List of all the root nodes.
         :rtype: list
         """
-        # TODO: This will need to be more suffisticated but this works for now
+        # TODO: This will need to be more sophisticated but this works for now
         if self.cst:
             return [next(iter(self.cst))]
         else:
@@ -57,7 +60,9 @@ class Visitor:
         """
         if not node:  # There is no node return None
             return None
-        node = self.cst[node]
+        node = self.cst[
+            node
+        ]  # TODO: This can and will now break if the thing being references is a variable :/
 
         opcode = node["opcode"]
         if opcode == "flipperevents_whenProgramStarts":
@@ -67,13 +72,15 @@ class Visitor:
         elif opcode == "flippermotor_motorGoDirectionToPosition":
             return self.visit_motor_go_to_position(node)
         elif opcode == "flippermotor_custom-angle":
-            return self.visit_motor_custom_anlge(node)
+            return self.visit_motor_custom_angle(node)
         elif opcode == "flippermotor_motorStartDirection":
             return self.visit_start_motor(node)
         elif opcode == "flippermotor_motorStop":
             return self.visit_stop_motor(node)
         elif opcode == "flippermotor_motorSetSpeed":
             return self.visit_set_motor_speed(node)
+        elif opcode == "data_setvariableto":
+            return self.visit_set_variable_to(node)
         elif opcode == "operator_add":
             return self.visit_operator(Operation.PLUS, node)
         elif opcode == "operator_subtract":
@@ -116,6 +123,7 @@ class Visitor:
         :return: List of all the port names (single characters).
         :rtype: list
         """
+        # TODO: It could be that this is also a node, so need to make some changes
         ports = self.cst[node["inputs"]["PORT"][1]]["fields"][
             "field_flippermotor_multiple-port-selector"
         ][0]
@@ -154,7 +162,12 @@ class Visitor:
         :rtype: Node
         """
         if isinstance(val, list):
-            return NumericalNode(float(val[1]))
+            try:
+                return NumericalNode(float(val[1]))
+            except ValueError:
+                return LiteralNode(
+                    val[1]
+                )  # TODO: So this currently causes the issue :/
         else:
             return self.visit_node(val)
 
@@ -162,24 +175,32 @@ class Visitor:
         """Parses the value that is being used by the RunMotorForDurationNode.
         :param node: The Node representation.
         :type node: dict
-        :return: The node that that specifies the value that should be used. (Could be an entrie subtree, in the case of an equation).
+        :return: The node that that specifies the value that should be used. (Could be an entire subtree, in the case of an equation).
         :rtype: Node
         """
-        val = node["inputs"]["VALUE"][1]
+        # So while this is disgusting it seems to work :/
+        # Would need to check if the length is 3
+        if len(node["inputs"]["VALUE"][1]) == 3:
+            return Variable(
+                node["inputs"]["VALUE"][1][1]
+            )  # TODO: Need to change this to also hold the id
+        val = node["inputs"]["VALUE"][
+            1
+        ]  # TODO: This is also no longer working, which is a bit sad
         return self.visit_input(val)
 
-    def visit_operator(self, op: Operation, node: dict) -> ArithmaticalNode:
-        """Constructs the AST representation of the Arithmatics node.
-        :param op: The operation of the arithmatic block
+    def visit_operator(self, op: Operation, node: dict) -> ArithmeticalNode:
+        """Constructs the AST representation of the Arithmetics node.
+        :param op: The operation of the arithmetic block
         :type op: Operation
         :param node: The Node representation.
         :type node: dict
         :return: The AST representation.
-        :rtype: ArithmaticalNode
+        :rtype: ArithmeticalNode
         """
         left_hand = self.visit_input(node["inputs"]["NUM1"][1])
         right_hand = self.visit_input(node["inputs"]["NUM2"][1])
-        return ArithmaticalNode(op, left_hand, right_hand)
+        return ArithmeticalNode(op, left_hand, right_hand)
 
     def visit_motor_go_to_position(self, node: dict) -> MotorGoToPositionNode:
         """Constructs the AST representation of the MotorGoToPosition node.
@@ -215,7 +236,7 @@ class Visitor:
         """
         return self.visit_node(node["inputs"]["POSITION"][1])
 
-    def visit_motor_custom_anlge(self, node: dict) -> NumericalNode:
+    def visit_motor_custom_angle(self, node: dict) -> NumericalNode:
         """Parse the MotorCustomAngleNode.
 
         :param node: The Node representation.
@@ -272,3 +293,15 @@ class Visitor:
         :rtype: GoDirection
         """
         return self.visit_input(node["inputs"]["SPEED"][1])
+
+    def visit_set_variable_to(self, node: dict) -> SetVariableToNode:
+        # TODO: Add documentation
+        # TODO: here we see that the id and the name of the variable is probably interesting to have
+        variable = node["fields"]["VARIABLE"][
+            0
+        ]  # This the  name of the variable, the id is at 1
+        value = self.visit_run_motor_for_duration_value(
+            node
+        )  # TODO: Need our own here?
+        next_node = self.visit_node(node["next"])
+        return SetVariableToNode(variable, value, next_node)

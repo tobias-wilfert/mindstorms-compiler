@@ -5,7 +5,7 @@ from src.visitor import Visitor
 
 
 def ast_helper(filename: str, directory: str = ".") -> str:
-    """Helper function that contains thee logic to test if the ast for a certain file is generated corrertly.
+    """Helper function that contains thee logic to test if the ast for a certain file is generated correctly.
 
     :param filename: The name of the file that should be checked.
     :type filename: str
@@ -16,8 +16,8 @@ def ast_helper(filename: str, directory: str = ".") -> str:
         extract_json(f"tests/inputs/{directory}/{filename}/{filename}.lms")
     )
     visitor = Visitor()
-    abstract_sytnax_tree = visitor.visit(concrete_syntax_tree)
-    return abstract_sytnax_tree.tree_representation()
+    abstract_syntax_tree = visitor.visit(concrete_syntax_tree)
+    return abstract_syntax_tree.tree_representation()
 
 
 # ---------- Base ----------
@@ -132,7 +132,7 @@ def test_ast_run_motor_for_duration_value_node():
         == """digraph {rankdir="TB"
 0 [label="WhenProgramStartsNode"]
 1 [label="RunMotorForDurationNode(ports:'['A']', direction:'TurnDirection.CLOCKWISE', unit:'Unit.ROTATIONS',)"]
-2 [label="ArithmaticalNode(op:'Operation.PLUS')"]
+2 [label="ArithmeticalNode(op:'Operation.PLUS')"]
 3 [label="NumericalNode(1.0)"]
 4 [label="NumericalNode(2.0)"]
 0 -> 1
@@ -197,7 +197,7 @@ def test_ast_motor_go_to_position_value_node():
         == """digraph {rankdir="TB"
 0 [label="WhenProgramStartsNode"]
 1 [label="MotorGoToPositionNode(ports:'['A']', direction:'GoDirection.SHORTEST')"]
-2 [label="ArithmaticalNode(op:'Operation.PLUS')"]
+2 [label="ArithmeticalNode(op:'Operation.PLUS')"]
 3 [label="NumericalNode(1.0)"]
 4 [label="NumericalNode(2.0)"]
 0 -> 1
@@ -322,7 +322,7 @@ def test_ast_set_motor_speed_value_node():
         == """digraph {rankdir="TB"
 0 [label="WhenProgramStartsNode"]
 1 [label="SetMotorSpeedNode(ports:'['A']')"]
-2 [label="ArithmaticalNode(op:'Operation.PLUS')"]
+2 [label="ArithmeticalNode(op:'Operation.PLUS')"]
 3 [label="NumericalNode(25.0)"]
 4 [label="NumericalNode(50.0)"]
 0 -> 1
@@ -333,19 +333,19 @@ def test_ast_set_motor_speed_value_node():
 
 
 # ---------- Operators ----------
-def test_ast_arithmatic():
+def test_ast_arithmetic():
     assert (
-        ast_helper("arithmatic", "Operators")
+        ast_helper("arithmetic", "Operators")
         == """digraph {rankdir="TB"
 0 [label="WhenProgramStartsNode"]
 1 [label="RunMotorForDurationNode(ports:'['A']', direction:'TurnDirection.CLOCKWISE', unit:'Unit.ROTATIONS',)"]
-2 [label="ArithmaticalNode(op:'Operation.PLUS')"]
+2 [label="ArithmeticalNode(op:'Operation.PLUS')"]
 3 [label="NumericalNode(1.0)"]
-4 [label="ArithmaticalNode(op:'Operation.MINUS')"]
+4 [label="ArithmeticalNode(op:'Operation.MINUS')"]
 5 [label="NumericalNode(2.0)"]
-6 [label="ArithmaticalNode(op:'Operation.MULTIPLY')"]
+6 [label="ArithmeticalNode(op:'Operation.MULTIPLY')"]
 7 [label="NumericalNode(3.0)"]
-8 [label="ArithmaticalNode(op:'Operation.DIVIDE')"]
+8 [label="ArithmeticalNode(op:'Operation.DIVIDE')"]
 9 [label="NumericalNode(4.0)"]
 10 [label="NumericalNode(5.0)"]
 0 -> 1
@@ -367,7 +367,7 @@ def test_ast_divide():
         == """digraph {rankdir="TB"
 0 [label="WhenProgramStartsNode"]
 1 [label="RunMotorForDurationNode(ports:'['A']', direction:'TurnDirection.CLOCKWISE', unit:'Unit.ROTATIONS',)"]
-2 [label="ArithmaticalNode(op:'Operation.DIVIDE')"]
+2 [label="ArithmeticalNode(op:'Operation.DIVIDE')"]
 3 [label="NumericalNode(1.0)"]
 4 [label="NumericalNode(2.0)"]
 0 -> 1
@@ -383,7 +383,7 @@ def test_ast_minus():
         == """digraph {rankdir="TB"
 0 [label="WhenProgramStartsNode"]
 1 [label="RunMotorForDurationNode(ports:'['A']', direction:'TurnDirection.CLOCKWISE', unit:'Unit.ROTATIONS',)"]
-2 [label="ArithmaticalNode(op:'Operation.MINUS')"]
+2 [label="ArithmeticalNode(op:'Operation.MINUS')"]
 3 [label="NumericalNode(1.0)"]
 4 [label="NumericalNode(2.0)"]
 0 -> 1
@@ -399,7 +399,7 @@ def test_ast_multiply():
         == """digraph {rankdir="TB"
 0 [label="WhenProgramStartsNode"]
 1 [label="RunMotorForDurationNode(ports:'['A']', direction:'TurnDirection.CLOCKWISE', unit:'Unit.ROTATIONS',)"]
-2 [label="ArithmaticalNode(op:'Operation.MULTIPLY')"]
+2 [label="ArithmeticalNode(op:'Operation.MULTIPLY')"]
 3 [label="NumericalNode(1.0)"]
 4 [label="NumericalNode(2.0)"]
 0 -> 1
@@ -415,7 +415,7 @@ def test_ast_plus():
         == """digraph {rankdir="TB"
 0 [label="WhenProgramStartsNode"]
 1 [label="RunMotorForDurationNode(ports:'['A']', direction:'TurnDirection.CLOCKWISE', unit:'Unit.ROTATIONS',)"]
-2 [label="ArithmaticalNode(op:'Operation.PLUS')"]
+2 [label="ArithmeticalNode(op:'Operation.PLUS')"]
 3 [label="NumericalNode(1.0)"]
 4 [label="NumericalNode(2.0)"]
 0 -> 1
@@ -423,3 +423,58 @@ def test_ast_plus():
 2 -> 3
 2 -> 4}"""
     )
+
+
+# ---------- Variables ----------
+# TODO: This might be an easier fix to get working
+# def test_ast_change_variable_by():
+#     assert (
+#         ast_helper("change_variable_by", "Variables")
+#         == """digraph {rankdir="TB"
+# 0 [label="WhenProgramStartsNode"]
+# 1 [label="SetVariableToNode(variable:'my_variable')"]
+# 2 [label="NumericalNode(0.0)"]
+# 3 [label="ChangeVariableByNode(variable:'my_variable')"]
+# 4 [label="NumericalNode(1.0)"]
+# 5 [label="RunMotorForDurationNode(ports:'['A']', direction:'TurnDirection.CLOCKWISE', unit:'Unit.ROTATIONS',)"]
+# 6 [label="Variable(name:'my_variable')"]
+# 0 -> 1
+# 1 -> 2
+# 1 -> 3
+# 3 -> 4
+# 3 -> 5
+# 5 -> 6}"""
+#     )
+
+
+def test_ast_variable_num():
+    assert (
+        ast_helper("variable_num", "Variables")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="SetVariableToNode(variable:'my_variable')"]
+2 [label="NumericalNode(1.0)"]
+3 [label="RunMotorForDurationNode(ports:'['A']', direction:'TurnDirection.CLOCKWISE', unit:'Unit.ROTATIONS',)"]
+4 [label="Variable(name:'my_variable')"]
+0 -> 1
+1 -> 2
+1 -> 3
+3 -> 4}"""
+    )
+
+
+# TODO: This will require a refactor before working, first need a bit of a clean up in order to get started with this.
+# def test_ast_variable_string():
+#     assert (
+#         ast_helper("variable_string", "Variables")
+#         == """digraph {rankdir="TB"
+# 0 [label="WhenProgramStartsNode"]
+# 1 [label="SetVariableToNode(variable:'my_variable')"]
+# 2 [label="LiteralNode('A')"]
+# 3 [label="RunMotorForDurationNode(ports:'['A']', direction:'TurnDirection.CLOCKWISE', unit:'Unit.ROTATIONS',)"]
+# 4 [label="Variable(name:'my_variable')"]
+# 0 -> 1
+# 1 -> 2
+# 1 -> 3
+# 3 -> 4}"""
+#     )
