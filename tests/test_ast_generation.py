@@ -47,10 +47,12 @@ def test_ast_run_motor_for_duration_base():
         ast_helper("run_motor_for_duration_base", "Motors")
         == """digraph {rankdir="TB"
 0 [label="WhenProgramStartsNode"]
-1 [label="RunMotorForDurationNode(ports:'['A']', direction:'TurnDirection.CLOCKWISE', unit:'Unit.ROTATIONS',)"]
-2 [label="NumericalNode(1.0)"]
+1 [label="RunMotorForDurationNode(direction:'TurnDirection.CLOCKWISE', unit:'Unit.ROTATIONS')"]
+2 [label="ListNode('['A']')"]
+3 [label="NumericalNode(1.0)"]
 0 -> 1
-1 -> 2}"""
+1 -> 2
+1 -> 3}"""
     )
 
 
@@ -59,10 +61,12 @@ def test_ast_run_motor_for_duration_counterclockwise():
         ast_helper("run_motor_for_duration_counterclockwise", "Motors")
         == """digraph {rankdir="TB"
 0 [label="WhenProgramStartsNode"]
-1 [label="RunMotorForDurationNode(ports:'['A']', direction:'TurnDirection.COUNTERCLOCKWISE', unit:'Unit.ROTATIONS',)"]
-2 [label="NumericalNode(1.0)"]
+1 [label="RunMotorForDurationNode(direction:'TurnDirection.COUNTERCLOCKWISE', unit:'Unit.ROTATIONS')"]
+2 [label="ListNode('['A']')"]
+3 [label="NumericalNode(1.0)"]
 0 -> 1
-1 -> 2}"""
+1 -> 2
+1 -> 3}"""
     )
 
 
@@ -71,10 +75,12 @@ def test_ast_run_motor_for_duration_degrees():
         ast_helper("run_motor_for_duration_degrees", "Motors")
         == """digraph {rankdir="TB"
 0 [label="WhenProgramStartsNode"]
-1 [label="RunMotorForDurationNode(ports:'['A']', direction:'TurnDirection.CLOCKWISE', unit:'Unit.DEGREES',)"]
-2 [label="NumericalNode(1.0)"]
+1 [label="RunMotorForDurationNode(direction:'TurnDirection.CLOCKWISE', unit:'Unit.DEGREES')"]
+2 [label="ListNode('['A']')"]
+3 [label="NumericalNode(1.0)"]
 0 -> 1
-1 -> 2}"""
+1 -> 2
+1 -> 3}"""
     )
 
 
@@ -83,10 +89,12 @@ def test_ast_run_motor_for_duration_multiple_motors():
         ast_helper("run_motor_for_duration_multiple_motors", "Motors")
         == """digraph {rankdir="TB"
 0 [label="WhenProgramStartsNode"]
-1 [label="RunMotorForDurationNode(ports:'['A', 'E']', direction:'TurnDirection.CLOCKWISE', unit:'Unit.ROTATIONS',)"]
-2 [label="NumericalNode(1.0)"]
+1 [label="RunMotorForDurationNode(direction:'TurnDirection.CLOCKWISE', unit:'Unit.ROTATIONS')"]
+2 [label="ListNode('['A', 'E']')"]
+3 [label="NumericalNode(1.0)"]
 0 -> 1
-1 -> 2}"""
+1 -> 2
+1 -> 3}"""
     )
 
 
@@ -95,10 +103,12 @@ def test_ast_run_motor_for_duration_multiple_motors3():
         ast_helper("run_motor_for_duration_multiple_motors3", "Motors")
         == """digraph {rankdir="TB"
 0 [label="WhenProgramStartsNode"]
-1 [label="RunMotorForDurationNode(ports:'['A', 'B', 'C']', direction:'TurnDirection.CLOCKWISE', unit:'Unit.ROTATIONS',)"]
-2 [label="NumericalNode(1.0)"]
+1 [label="RunMotorForDurationNode(direction:'TurnDirection.CLOCKWISE', unit:'Unit.ROTATIONS')"]
+2 [label="ListNode('['A', 'B', 'C']')"]
+3 [label="NumericalNode(1.0)"]
 0 -> 1
-1 -> 2}"""
+1 -> 2
+1 -> 3}"""
     )
 
 
@@ -107,10 +117,12 @@ def test_ast_run_motor_for_duration_all_motors():
         ast_helper("run_motor_for_duration_all_motors", "Motors")
         == """digraph {rankdir="TB"
 0 [label="WhenProgramStartsNode"]
-1 [label="RunMotorForDurationNode(ports:'['A', 'B', 'C', 'D', 'E', 'F']', direction:'TurnDirection.CLOCKWISE', unit:'Unit.ROTATIONS',)"]
-2 [label="NumericalNode(1.0)"]
+1 [label="RunMotorForDurationNode(direction:'TurnDirection.CLOCKWISE', unit:'Unit.ROTATIONS')"]
+2 [label="ListNode('['A', 'B', 'C', 'D', 'E', 'F']')"]
+3 [label="NumericalNode(1.0)"]
 0 -> 1
-1 -> 2}"""
+1 -> 2
+1 -> 3}"""
     )
 
 
@@ -119,10 +131,12 @@ def test_ast_run_motor_for_duration_seconds():
         ast_helper("run_motor_for_duration_seconds", "Motors")
         == """digraph {rankdir="TB"
 0 [label="WhenProgramStartsNode"]
-1 [label="RunMotorForDurationNode(ports:'['A']', direction:'TurnDirection.CLOCKWISE', unit:'Unit.SECONDS',)"]
-2 [label="NumericalNode(1.0)"]
+1 [label="RunMotorForDurationNode(direction:'TurnDirection.CLOCKWISE', unit:'Unit.SECONDS')"]
+2 [label="ListNode('['A']')"]
+3 [label="NumericalNode(1.0)"]
 0 -> 1
-1 -> 2}"""
+1 -> 2
+1 -> 3}"""
     )
 
 
@@ -131,14 +145,16 @@ def test_ast_run_motor_for_duration_value_node():
         ast_helper("run_motor_for_duration_value_node", "Motors")
         == """digraph {rankdir="TB"
 0 [label="WhenProgramStartsNode"]
-1 [label="RunMotorForDurationNode(ports:'['A']', direction:'TurnDirection.CLOCKWISE', unit:'Unit.ROTATIONS',)"]
-2 [label="ArithmeticalNode(op:'Operation.PLUS')"]
-3 [label="NumericalNode(1.0)"]
-4 [label="NumericalNode(2.0)"]
+1 [label="RunMotorForDurationNode(direction:'TurnDirection.CLOCKWISE', unit:'Unit.ROTATIONS')"]
+2 [label="ListNode('['A']')"]
+3 [label="ArithmeticalNode(op:'Operation.PLUS')"]
+4 [label="NumericalNode(1.0)"]
+5 [label="NumericalNode(2.0)"]
 0 -> 1
 1 -> 2
-2 -> 3
-2 -> 4}"""
+1 -> 3
+3 -> 4
+3 -> 5}"""
     )
 
 
@@ -148,10 +164,12 @@ def test_ast_motor_go_to_position_base():
         ast_helper("motor_go_to_position_base", "Motors")
         == """digraph {rankdir="TB"
 0 [label="WhenProgramStartsNode"]
-1 [label="MotorGoToPositionNode(ports:'['A']', direction:'GoDirection.SHORTEST')"]
-2 [label="NumericalNode(0.0)"]
+1 [label="MotorGoToPositionNode(direction:'GoDirection.SHORTEST')"]
+2 [label="ListNode('['A']')"]
+3 [label="NumericalNode(0.0)"]
 0 -> 1
-1 -> 2}"""
+1 -> 2
+1 -> 3}"""
     )
 
 
@@ -160,10 +178,12 @@ def test_ast_motor_go_to_position_clockwise():
         ast_helper("motor_go_to_position_clockwise", "Motors")
         == """digraph {rankdir="TB"
 0 [label="WhenProgramStartsNode"]
-1 [label="MotorGoToPositionNode(ports:'['A']', direction:'GoDirection.CLOCKWISE')"]
-2 [label="NumericalNode(0.0)"]
+1 [label="MotorGoToPositionNode(direction:'GoDirection.CLOCKWISE')"]
+2 [label="ListNode('['A']')"]
+3 [label="NumericalNode(0.0)"]
 0 -> 1
-1 -> 2}"""
+1 -> 2
+1 -> 3}"""
     )
 
 
@@ -172,10 +192,12 @@ def test_ast_motor_go_to_position_counterclockwise():
         ast_helper("motor_go_to_position_counterclockwise", "Motors")
         == """digraph {rankdir="TB"
 0 [label="WhenProgramStartsNode"]
-1 [label="MotorGoToPositionNode(ports:'['A']', direction:'GoDirection.COUNTERCLOCKWISE')"]
-2 [label="NumericalNode(0.0)"]
+1 [label="MotorGoToPositionNode(direction:'GoDirection.COUNTERCLOCKWISE')"]
+2 [label="ListNode('['A']')"]
+3 [label="NumericalNode(0.0)"]
 0 -> 1
-1 -> 2}"""
+1 -> 2
+1 -> 3}"""
     )
 
 
@@ -184,10 +206,12 @@ def test_ast_motor_go_to_position_multiple_motors():
         ast_helper("motor_go_to_position_multiple_motors", "Motors")
         == """digraph {rankdir="TB"
 0 [label="WhenProgramStartsNode"]
-1 [label="MotorGoToPositionNode(ports:'['A', 'B']', direction:'GoDirection.SHORTEST')"]
-2 [label="NumericalNode(0.0)"]
+1 [label="MotorGoToPositionNode(direction:'GoDirection.SHORTEST')"]
+2 [label="ListNode('['A', 'B']')"]
+3 [label="NumericalNode(0.0)"]
 0 -> 1
-1 -> 2}"""
+1 -> 2
+1 -> 3}"""
     )
 
 
@@ -196,14 +220,16 @@ def test_ast_motor_go_to_position_value_node():
         ast_helper("motor_go_to_position_value_node", "Motors")
         == """digraph {rankdir="TB"
 0 [label="WhenProgramStartsNode"]
-1 [label="MotorGoToPositionNode(ports:'['A']', direction:'GoDirection.SHORTEST')"]
-2 [label="ArithmeticalNode(op:'Operation.PLUS')"]
-3 [label="NumericalNode(1.0)"]
-4 [label="NumericalNode(2.0)"]
+1 [label="MotorGoToPositionNode(direction:'GoDirection.SHORTEST')"]
+2 [label="ListNode('['A']')"]
+3 [label="ArithmeticalNode(op:'Operation.PLUS')"]
+4 [label="NumericalNode(1.0)"]
+5 [label="NumericalNode(2.0)"]
 0 -> 1
 1 -> 2
-2 -> 3
-2 -> 4}"""
+1 -> 3
+3 -> 4
+3 -> 5}"""
     )
 
 
@@ -213,8 +239,10 @@ def test_ast_start_motor_base():
         ast_helper("start_motor_base", "Motors")
         == """digraph {rankdir="TB"
 0 [label="WhenProgramStartsNode"]
-1 [label="StartMotorNode(ports:'['A']', direction:'TurnDirection.CLOCKWISE')"]
-0 -> 1}"""
+1 [label="StartMotorNode(direction:'TurnDirection.CLOCKWISE')"]
+2 [label="ListNode('['A']')"]
+0 -> 1
+1 -> 2}"""
     )
 
 
@@ -223,8 +251,10 @@ def test_ast_start_motor_all_motors():
         ast_helper("start_motor_all_motors", "Motors")
         == """digraph {rankdir="TB"
 0 [label="WhenProgramStartsNode"]
-1 [label="StartMotorNode(ports:'['A', 'B', 'C', 'D', 'E', 'F']', direction:'TurnDirection.CLOCKWISE')"]
-0 -> 1}"""
+1 [label="StartMotorNode(direction:'TurnDirection.CLOCKWISE')"]
+2 [label="ListNode('['A', 'B', 'C', 'D', 'E', 'F']')"]
+0 -> 1
+1 -> 2}"""
     )
 
 
@@ -233,8 +263,10 @@ def test_ast_start_motor_multiple_motors():
         ast_helper("start_motor_multiple_motors", "Motors")
         == """digraph {rankdir="TB"
 0 [label="WhenProgramStartsNode"]
-1 [label="StartMotorNode(ports:'['A', 'B']', direction:'TurnDirection.CLOCKWISE')"]
-0 -> 1}"""
+1 [label="StartMotorNode(direction:'TurnDirection.CLOCKWISE')"]
+2 [label="ListNode('['A', 'B']')"]
+0 -> 1
+1 -> 2}"""
     )
 
 
@@ -243,8 +275,10 @@ def test_ast_start_motor_counterclockwise():
         ast_helper("start_motor_counterclockwise", "Motors")
         == """digraph {rankdir="TB"
 0 [label="WhenProgramStartsNode"]
-1 [label="StartMotorNode(ports:'['A']', direction:'TurnDirection.COUNTERCLOCKWISE')"]
-0 -> 1}"""
+1 [label="StartMotorNode(direction:'TurnDirection.COUNTERCLOCKWISE')"]
+2 [label="ListNode('['A']')"]
+0 -> 1
+1 -> 2}"""
     )
 
 
@@ -254,8 +288,10 @@ def test_ast_stop_motor_base():
         ast_helper("stop_motor_base", "Motors")
         == """digraph {rankdir="TB"
 0 [label="WhenProgramStartsNode"]
-1 [label="StopMotorNode(ports:'['A']')"]
-0 -> 1}"""
+1 [label="StopMotorNode"]
+2 [label="ListNode('['A']')"]
+0 -> 1
+1 -> 2}"""
     )
 
 
@@ -264,8 +300,10 @@ def test_ast_stop_motor_all_motors():
         ast_helper("stop_motor_all_motors", "Motors")
         == """digraph {rankdir="TB"
 0 [label="WhenProgramStartsNode"]
-1 [label="StopMotorNode(ports:'['A', 'B', 'C', 'D', 'E', 'F']')"]
-0 -> 1}"""
+1 [label="StopMotorNode"]
+2 [label="ListNode('['A', 'B', 'C', 'D', 'E', 'F']')"]
+0 -> 1
+1 -> 2}"""
     )
 
 
@@ -274,8 +312,10 @@ def test_ast_stop_motor_multiple_motors():
         ast_helper("stop_motor_multiple_motors", "Motors")
         == """digraph {rankdir="TB"
 0 [label="WhenProgramStartsNode"]
-1 [label="StopMotorNode(ports:'['A', 'B']')"]
-0 -> 1}"""
+1 [label="StopMotorNode"]
+2 [label="ListNode('['A', 'B']')"]
+0 -> 1
+1 -> 2}"""
     )
 
 
@@ -285,10 +325,12 @@ def test_ast_set_motor_speed_base():
         ast_helper("set_motor_speed_base", "Motors")
         == """digraph {rankdir="TB"
 0 [label="WhenProgramStartsNode"]
-1 [label="SetMotorSpeedNode(ports:'['A']')"]
-2 [label="NumericalNode(75.0)"]
+1 [label="SetMotorSpeedNode"]
+2 [label="ListNode('['A']')"]
+3 [label="NumericalNode(75.0)"]
 0 -> 1
-1 -> 2}"""
+1 -> 2
+1 -> 3}"""
     )
 
 
@@ -297,10 +339,12 @@ def test_ast_set_motor_speed_all_motors():
         ast_helper("set_motor_speed_all_motors", "Motors")
         == """digraph {rankdir="TB"
 0 [label="WhenProgramStartsNode"]
-1 [label="SetMotorSpeedNode(ports:'['A', 'B', 'C', 'D', 'E', 'F']')"]
-2 [label="NumericalNode(75.0)"]
+1 [label="SetMotorSpeedNode"]
+2 [label="ListNode('['A', 'B', 'C', 'D', 'E', 'F']')"]
+3 [label="NumericalNode(75.0)"]
 0 -> 1
-1 -> 2}"""
+1 -> 2
+1 -> 3}"""
     )
 
 
@@ -309,10 +353,12 @@ def test_ast_set_motor_speed_multiple_motors():
         ast_helper("set_motor_speed_multiple_motors", "Motors")
         == """digraph {rankdir="TB"
 0 [label="WhenProgramStartsNode"]
-1 [label="SetMotorSpeedNode(ports:'['A', 'B']')"]
-2 [label="NumericalNode(75.0)"]
+1 [label="SetMotorSpeedNode"]
+2 [label="ListNode('['A', 'B']')"]
+3 [label="NumericalNode(75.0)"]
 0 -> 1
-1 -> 2}"""
+1 -> 2
+1 -> 3}"""
     )
 
 
@@ -321,14 +367,16 @@ def test_ast_set_motor_speed_value_node():
         ast_helper("set_motor_speed_value_node", "Motors")
         == """digraph {rankdir="TB"
 0 [label="WhenProgramStartsNode"]
-1 [label="SetMotorSpeedNode(ports:'['A']')"]
-2 [label="ArithmeticalNode(op:'Operation.PLUS')"]
-3 [label="NumericalNode(25.0)"]
-4 [label="NumericalNode(50.0)"]
+1 [label="SetMotorSpeedNode"]
+2 [label="ListNode('['A']')"]
+3 [label="ArithmeticalNode(op:'Operation.PLUS')"]
+4 [label="NumericalNode(25.0)"]
+5 [label="NumericalNode(50.0)"]
 0 -> 1
 1 -> 2
-2 -> 3
-2 -> 4}"""
+1 -> 3
+3 -> 4
+3 -> 5}"""
     )
 
 
@@ -338,26 +386,28 @@ def test_ast_arithmetic():
         ast_helper("arithmetic", "Operators")
         == """digraph {rankdir="TB"
 0 [label="WhenProgramStartsNode"]
-1 [label="RunMotorForDurationNode(ports:'['A']', direction:'TurnDirection.CLOCKWISE', unit:'Unit.ROTATIONS',)"]
-2 [label="ArithmeticalNode(op:'Operation.PLUS')"]
-3 [label="NumericalNode(1.0)"]
-4 [label="ArithmeticalNode(op:'Operation.MINUS')"]
-5 [label="NumericalNode(2.0)"]
-6 [label="ArithmeticalNode(op:'Operation.MULTIPLY')"]
-7 [label="NumericalNode(3.0)"]
-8 [label="ArithmeticalNode(op:'Operation.DIVIDE')"]
-9 [label="NumericalNode(4.0)"]
-10 [label="NumericalNode(5.0)"]
+1 [label="RunMotorForDurationNode(direction:'TurnDirection.CLOCKWISE', unit:'Unit.ROTATIONS')"]
+2 [label="ListNode('['A']')"]
+3 [label="ArithmeticalNode(op:'Operation.PLUS')"]
+4 [label="NumericalNode(1.0)"]
+5 [label="ArithmeticalNode(op:'Operation.MINUS')"]
+6 [label="NumericalNode(2.0)"]
+7 [label="ArithmeticalNode(op:'Operation.MULTIPLY')"]
+8 [label="NumericalNode(3.0)"]
+9 [label="ArithmeticalNode(op:'Operation.DIVIDE')"]
+10 [label="NumericalNode(4.0)"]
+11 [label="NumericalNode(5.0)"]
 0 -> 1
 1 -> 2
-2 -> 3
-2 -> 4
-4 -> 5
-4 -> 6
-6 -> 7
-6 -> 8
-8 -> 9
-8 -> 10}"""
+1 -> 3
+3 -> 4
+3 -> 5
+5 -> 6
+5 -> 7
+7 -> 8
+7 -> 9
+9 -> 10
+9 -> 11}"""
     )
 
 
@@ -366,14 +416,16 @@ def test_ast_divide():
         ast_helper("divide", "Operators")
         == """digraph {rankdir="TB"
 0 [label="WhenProgramStartsNode"]
-1 [label="RunMotorForDurationNode(ports:'['A']', direction:'TurnDirection.CLOCKWISE', unit:'Unit.ROTATIONS',)"]
-2 [label="ArithmeticalNode(op:'Operation.DIVIDE')"]
-3 [label="NumericalNode(1.0)"]
-4 [label="NumericalNode(2.0)"]
+1 [label="RunMotorForDurationNode(direction:'TurnDirection.CLOCKWISE', unit:'Unit.ROTATIONS')"]
+2 [label="ListNode('['A']')"]
+3 [label="ArithmeticalNode(op:'Operation.DIVIDE')"]
+4 [label="NumericalNode(1.0)"]
+5 [label="NumericalNode(2.0)"]
 0 -> 1
 1 -> 2
-2 -> 3
-2 -> 4}"""
+1 -> 3
+3 -> 4
+3 -> 5}"""
     )
 
 
@@ -382,14 +434,16 @@ def test_ast_minus():
         ast_helper("minus", "Operators")
         == """digraph {rankdir="TB"
 0 [label="WhenProgramStartsNode"]
-1 [label="RunMotorForDurationNode(ports:'['A']', direction:'TurnDirection.CLOCKWISE', unit:'Unit.ROTATIONS',)"]
-2 [label="ArithmeticalNode(op:'Operation.MINUS')"]
-3 [label="NumericalNode(1.0)"]
-4 [label="NumericalNode(2.0)"]
+1 [label="RunMotorForDurationNode(direction:'TurnDirection.CLOCKWISE', unit:'Unit.ROTATIONS')"]
+2 [label="ListNode('['A']')"]
+3 [label="ArithmeticalNode(op:'Operation.MINUS')"]
+4 [label="NumericalNode(1.0)"]
+5 [label="NumericalNode(2.0)"]
 0 -> 1
 1 -> 2
-2 -> 3
-2 -> 4}"""
+1 -> 3
+3 -> 4
+3 -> 5}"""
     )
 
 
@@ -398,14 +452,16 @@ def test_ast_multiply():
         ast_helper("multiply", "Operators")
         == """digraph {rankdir="TB"
 0 [label="WhenProgramStartsNode"]
-1 [label="RunMotorForDurationNode(ports:'['A']', direction:'TurnDirection.CLOCKWISE', unit:'Unit.ROTATIONS',)"]
-2 [label="ArithmeticalNode(op:'Operation.MULTIPLY')"]
-3 [label="NumericalNode(1.0)"]
-4 [label="NumericalNode(2.0)"]
+1 [label="RunMotorForDurationNode(direction:'TurnDirection.CLOCKWISE', unit:'Unit.ROTATIONS')"]
+2 [label="ListNode('['A']')"]
+3 [label="ArithmeticalNode(op:'Operation.MULTIPLY')"]
+4 [label="NumericalNode(1.0)"]
+5 [label="NumericalNode(2.0)"]
 0 -> 1
 1 -> 2
-2 -> 3
-2 -> 4}"""
+1 -> 3
+3 -> 4
+3 -> 5}"""
     )
 
 
@@ -414,37 +470,40 @@ def test_ast_plus():
         ast_helper("plus", "Operators")
         == """digraph {rankdir="TB"
 0 [label="WhenProgramStartsNode"]
-1 [label="RunMotorForDurationNode(ports:'['A']', direction:'TurnDirection.CLOCKWISE', unit:'Unit.ROTATIONS',)"]
-2 [label="ArithmeticalNode(op:'Operation.PLUS')"]
-3 [label="NumericalNode(1.0)"]
-4 [label="NumericalNode(2.0)"]
+1 [label="RunMotorForDurationNode(direction:'TurnDirection.CLOCKWISE', unit:'Unit.ROTATIONS')"]
+2 [label="ListNode('['A']')"]
+3 [label="ArithmeticalNode(op:'Operation.PLUS')"]
+4 [label="NumericalNode(1.0)"]
+5 [label="NumericalNode(2.0)"]
 0 -> 1
 1 -> 2
-2 -> 3
-2 -> 4}"""
+1 -> 3
+3 -> 4
+3 -> 5}"""
     )
 
 
 # ---------- Variables ----------
-# TODO: This might be an easier fix to get working
-# def test_ast_change_variable_by():
-#     assert (
-#         ast_helper("change_variable_by", "Variables")
-#         == """digraph {rankdir="TB"
-# 0 [label="WhenProgramStartsNode"]
-# 1 [label="SetVariableToNode(variable:'my_variable')"]
-# 2 [label="NumericalNode(0.0)"]
-# 3 [label="ChangeVariableByNode(variable:'my_variable')"]
-# 4 [label="NumericalNode(1.0)"]
-# 5 [label="RunMotorForDurationNode(ports:'['A']', direction:'TurnDirection.CLOCKWISE', unit:'Unit.ROTATIONS',)"]
-# 6 [label="Variable(name:'my_variable')"]
-# 0 -> 1
-# 1 -> 2
-# 1 -> 3
-# 3 -> 4
-# 3 -> 5
-# 5 -> 6}"""
-#     )
+def test_ast_change_variable_by():
+    assert (
+        ast_helper("change_variable_by", "Variables")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="SetVariableToNode(variable:'my_variable')"]
+2 [label="NumericalNode(0.0)"]
+3 [label="ChangeVariableByNode(variable:'my_variable')"]
+4 [label="NumericalNode(1.0)"]
+5 [label="RunMotorForDurationNode(direction:'TurnDirection.CLOCKWISE', unit:'Unit.ROTATIONS')"]
+6 [label="ListNode('['A']')"]
+7 [label="Variable(name:'my_variable')"]
+0 -> 1
+1 -> 2
+1 -> 3
+3 -> 4
+3 -> 5
+5 -> 6
+5 -> 7}"""
+    )
 
 
 def test_ast_variable_num():
@@ -454,27 +513,30 @@ def test_ast_variable_num():
 0 [label="WhenProgramStartsNode"]
 1 [label="SetVariableToNode(variable:'my_variable')"]
 2 [label="NumericalNode(1.0)"]
-3 [label="RunMotorForDurationNode(ports:'['A']', direction:'TurnDirection.CLOCKWISE', unit:'Unit.ROTATIONS',)"]
-4 [label="Variable(name:'my_variable')"]
+3 [label="RunMotorForDurationNode(direction:'TurnDirection.CLOCKWISE', unit:'Unit.ROTATIONS')"]
+4 [label="ListNode('['A']')"]
+5 [label="Variable(name:'my_variable')"]
 0 -> 1
 1 -> 2
 1 -> 3
-3 -> 4}"""
+3 -> 4
+3 -> 5}"""
     )
 
 
-# TODO: This will require a refactor before working, first need a bit of a clean up in order to get started with this.
-# def test_ast_variable_string():
-#     assert (
-#         ast_helper("variable_string", "Variables")
-#         == """digraph {rankdir="TB"
-# 0 [label="WhenProgramStartsNode"]
-# 1 [label="SetVariableToNode(variable:'my_variable')"]
-# 2 [label="LiteralNode('A')"]
-# 3 [label="RunMotorForDurationNode(ports:'['A']', direction:'TurnDirection.CLOCKWISE', unit:'Unit.ROTATIONS',)"]
-# 4 [label="Variable(name:'my_variable')"]
-# 0 -> 1
-# 1 -> 2
-# 1 -> 3
-# 3 -> 4}"""
-#     )
+def test_ast_variable_string():
+    assert (
+        ast_helper("variable_string", "Variables")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="SetVariableToNode(variable:'my_variable')"]
+2 [label="LiteralNode('A')"]
+3 [label="RunMotorForDurationNode(direction:'TurnDirection.CLOCKWISE', unit:'Unit.ROTATIONS')"]
+4 [label="Variable(name:'my_variable')"]
+5 [label="NumericalNode(1.0)"]
+0 -> 1
+1 -> 2
+1 -> 3
+3 -> 4
+3 -> 5}"""
+    )

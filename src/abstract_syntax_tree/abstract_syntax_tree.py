@@ -58,6 +58,10 @@ class Node:
     def __init__(self) -> None:
         pass
 
+    def custom_representation(self, nodes, connections, node_id, uid_generator):
+        # Should be called if there is any custom representation logic that needs to be done
+        pass
+
     def generate_tree_representation(
         self,
         nodes: list,
@@ -76,9 +80,15 @@ class Node:
         :param uid_generator: UID-generator so that every node can generates its own uid.
         :type uid_generator: UIDGenerator
         """
-        raise NotImplementedError(
-            "generate_tree_representation() was called in the base class."
-        )
+        # Claim a node_id and update the node_counter
+        node_id = uid_generator.get_uid()
+        # Add the node representation to nodes, based on __str__
+        nodes.append(f'{node_id} [label="{self}"]')
+        # Connect to parent, unless it is the first node
+        if parent_id != -1:
+            connections.append(f"{parent_id} -> {node_id}")
+        # Do any custom logic if necessary
+        self.custom_representation(nodes, connections, node_id, uid_generator)
 
 
 class StackNode(Node):
@@ -87,6 +97,28 @@ class StackNode(Node):
     def __init__(self, next) -> None:
         super().__init__()
         self.next = next
+
+    def generate_tree_representation(
+        self,
+        nodes: list,
+        connections: list,
+        parent_id: int,
+        uid_generator: UIDGenerator,
+    ):
+        # Claim a node_id and update the node_counter
+        node_id = uid_generator.get_uid()
+        # Add the node representation to nodes, based on __str__
+        nodes.append(f'{node_id} [label="{self}"]')
+        # Connect to parent, unless it is the first node
+        if parent_id != -1:
+            connections.append(f"{parent_id} -> {node_id}")
+        # Do any custom logic if necessary
+        self.custom_representation(nodes, connections, node_id, uid_generator)
+        # If there is a next node also generate the representation for it
+        if self.next:
+            self.next.generate_tree_representation(
+                nodes, connections, node_id, uid_generator
+            )
 
 
 class WhenProgramStartsNode(StackNode):
@@ -102,23 +134,6 @@ class WhenProgramStartsNode(StackNode):
 
     def __str__(self) -> str:
         return "WhenProgramStartsNode"
-
-    def generate_tree_representation(
-        self,
-        nodes: list,
-        connections: list,
-        parent_id: int,
-        uid_generator: UIDGenerator,
-    ):
-        # Claim a node_id and update the node_counter
-        node_id = uid_generator.get_uid()
-        # Add the node representation to nodes, based on __str__
-        nodes.append(f'{node_id} [label="{self}"]')
-        # Generate the representation of the next node if there is one
-        if self.next:
-            self.next.generate_tree_representation(
-                nodes, connections, node_id, uid_generator
-            )
 
 
 class Operation(Enum):
@@ -138,17 +153,8 @@ class ArithmeticalNode(Node):
     def __str__(self) -> str:
         return f"ArithmeticalNode(op:'{self.op}')"
 
-    def generate_tree_representation(
-        self,
-        nodes: list,
-        connections: list,
-        parent_id: int,
-        uid_generator: UIDGenerator,
-    ):
-        node_id = uid_generator.get_uid()
-
-        connections.append(f"{parent_id} -> {node_id}")
-        nodes.append(f'{node_id} [label="{self}"]')
+    def custom_representation(self, nodes, connections, node_id, uid_generator):
+        # Generate the representation of the left and right side
         self.left_hand.generate_tree_representation(
             nodes, connections, node_id, uid_generator
         )
@@ -167,18 +173,6 @@ class NumericalNode(Node):
     def __str__(self) -> str:
         return f"NumericalNode({self.value})"
 
-    def generate_tree_representation(
-        self,
-        nodes: list,
-        connections: list,
-        parent_id: int,
-        uid_generator: UIDGenerator,
-    ):
-        node_id = uid_generator.get_uid()
-
-        connections.append(f"{parent_id} -> {node_id}")
-        nodes.append(f'{node_id} [label="{self}"]')
-
 
 class LiteralNode(Node):
     """Class to represent any string literal."""
@@ -188,19 +182,18 @@ class LiteralNode(Node):
         self.value = value  # String
 
     def __str__(self) -> str:
-        return f"LiteralNode({self.value})"
+        return f"LiteralNode('{self.value}')"
 
-    def generate_tree_representation(
-        self,
-        nodes: list,
-        connections: list,
-        parent_id: int,
-        uid_generator: UIDGenerator,
-    ):
-        node_id = uid_generator.get_uid()
 
-        connections.append(f"{parent_id} -> {node_id}")
-        nodes.append(f'{node_id} [label="{self}"]')
+class ListNode(Node):
+    """Class to represent any list literal."""
+
+    def __init__(self, value) -> None:
+        super().__init__()
+        self.value = value  # List
+
+    def __str__(self) -> str:
+        return f"ListNode('{self.value}')"
 
 
 class Variable(Node):
@@ -212,18 +205,6 @@ class Variable(Node):
 
     def __str__(self) -> str:
         return f"Variable(name:'{self.name}')"
-
-    def generate_tree_representation(
-        self,
-        nodes: list,
-        connections: list,
-        parent_id: int,
-        uid_generator: UIDGenerator,
-    ):
-        node_id = uid_generator.get_uid()
-
-        connections.append(f"{parent_id} -> {node_id}")
-        nodes.append(f'{node_id} [label="{self}"]')
 
 
 class SetVariableToNode(StackNode):
@@ -237,26 +218,39 @@ class SetVariableToNode(StackNode):
     def __str__(self) -> str:
         return f"SetVariableToNode(variable:'{self.variable}')"
 
-    def generate_tree_representation(
+    def custom_representation(
         self,
         nodes: list,
         connections: list,
         parent_id: int,
         uid_generator: UIDGenerator,
     ):
-        node_id = uid_generator.get_uid()
-
-        connections.append(f"{parent_id} -> {node_id}")
-        nodes.append(f'{node_id} [label="{self}"]')
-
         self.value.generate_tree_representation(
-            nodes, connections, node_id, uid_generator
+            nodes, connections, parent_id, uid_generator
         )
-        # If there is a connection add it and explore further into the tree
-        if self.next:
-            self.next.generate_tree_representation(
-                nodes, connections, node_id, uid_generator
-            )
+
+
+class ChangeVariableByNode(StackNode):
+    """Class to represent ChangeVariableBy block."""
+
+    def __init__(self, variable: str, value: Node, next: Node) -> None:
+        super().__init__(next)
+        self.variable = variable
+        self.value = value
+
+    def __str__(self) -> str:
+        return f"ChangeVariableByNode(variable:'{self.variable}')"
+
+    def custom_representation(
+        self,
+        nodes: list,
+        connections: list,
+        parent_id: int,
+        uid_generator: UIDGenerator,
+    ):
+        self.value.generate_tree_representation(
+            nodes, connections, parent_id, uid_generator
+        )
 
 
 class TurnDirection(Enum):
@@ -287,28 +281,23 @@ class RunMotorForDurationNode(StackNode):
         self.unit = unit
 
     def __str__(self) -> str:
-        return f"RunMotorForDurationNode(ports:'{self.ports}', direction:'{self.direction}', unit:'{self.unit}',)"
+        return (
+            f"RunMotorForDurationNode(direction:'{self.direction}', unit:'{self.unit}')"
+        )
 
-    def generate_tree_representation(
+    def custom_representation(
         self,
         nodes: list,
         connections: list,
         parent_id: int,
         uid_generator: UIDGenerator,
     ):
-        node_id = uid_generator.get_uid()
-
-        connections.append(f"{parent_id} -> {node_id}")
-        nodes.append(f'{node_id} [label="{self}"]')
-        self.value.generate_tree_representation(
-            nodes, connections, node_id, uid_generator
+        self.ports.generate_tree_representation(
+            nodes, connections, parent_id, uid_generator
         )
-
-        # If there is a connection add it and epxlore further into the tree
-        if self.next:
-            self.next.generate_tree_representation(
-                nodes, connections, node_id, uid_generator
-            )
+        self.value.generate_tree_representation(
+            nodes, connections, parent_id, uid_generator
+        )
 
 
 class GoDirection(Enum):
@@ -331,30 +320,21 @@ class MotorGoToPositionNode(StackNode):
         self.value = value
 
     def __str__(self) -> str:
-        return (
-            f"MotorGoToPositionNode(ports:'{self.ports}', direction:'{self.direction}')"
-        )
+        return f"MotorGoToPositionNode(direction:'{self.direction}')"
 
-    def generate_tree_representation(
+    def custom_representation(
         self,
         nodes: list,
         connections: list,
         parent_id: int,
         uid_generator: UIDGenerator,
     ):
-        node_id = uid_generator.get_uid()
-
-        connections.append(f"{parent_id} -> {node_id}")
-        nodes.append(f'{node_id} [label="{self}"]')
-
-        self.value.generate_tree_representation(
-            nodes, connections, node_id, uid_generator
+        self.ports.generate_tree_representation(
+            nodes, connections, parent_id, uid_generator
         )
-        # If there is a connection add it and explore further into the tree
-        if self.next:
-            self.next.generate_tree_representation(
-                nodes, connections, node_id, uid_generator
-            )
+        self.value.generate_tree_representation(
+            nodes, connections, parent_id, uid_generator
+        )
 
 
 class StartMotorNode(StackNode):
@@ -366,25 +346,18 @@ class StartMotorNode(StackNode):
         self.direction = direction
 
     def __str__(self) -> str:
-        return f"StartMotorNode(ports:'{self.ports}', direction:'{self.direction}')"
+        return f"StartMotorNode(direction:'{self.direction}')"
 
-    def generate_tree_representation(
+    def custom_representation(
         self,
         nodes: list,
         connections: list,
         parent_id: int,
         uid_generator: UIDGenerator,
     ):
-        node_id = uid_generator.get_uid()
-
-        connections.append(f"{parent_id} -> {node_id}")
-        nodes.append(f'{node_id} [label="{self}"]')
-
-        # If there is a connection add it and explore further into the tree
-        if self.next:
-            self.next.generate_tree_representation(
-                nodes, connections, node_id, uid_generator
-            )
+        self.ports.generate_tree_representation(
+            nodes, connections, parent_id, uid_generator
+        )
 
 
 class StopMotorNode(StackNode):
@@ -395,25 +368,18 @@ class StopMotorNode(StackNode):
         self.ports = ports
 
     def __str__(self) -> str:
-        return f"StopMotorNode(ports:'{self.ports}')"
+        return "StopMotorNode"
 
-    def generate_tree_representation(
+    def custom_representation(
         self,
         nodes: list,
         connections: list,
         parent_id: int,
         uid_generator: UIDGenerator,
     ):
-        node_id = uid_generator.get_uid()
-
-        connections.append(f"{parent_id} -> {node_id}")
-        nodes.append(f'{node_id} [label="{self}"]')
-
-        # If there is a connection add it and explore further into the tree
-        if self.next:
-            self.next.generate_tree_representation(
-                nodes, connections, node_id, uid_generator
-            )
+        self.ports.generate_tree_representation(
+            nodes, connections, parent_id, uid_generator
+        )
 
 
 class SetMotorSpeedNode(StackNode):
@@ -425,25 +391,18 @@ class SetMotorSpeedNode(StackNode):
         self.value = value
 
     def __str__(self) -> str:
-        return f"SetMotorSpeedNode(ports:'{self.ports}')"
+        return "SetMotorSpeedNode"
 
-    def generate_tree_representation(
+    def custom_representation(
         self,
         nodes: list,
         connections: list,
         parent_id: int,
         uid_generator: UIDGenerator,
     ):
-        node_id = uid_generator.get_uid()
-
-        connections.append(f"{parent_id} -> {node_id}")
-        nodes.append(f'{node_id} [label="{self}"]')
-
-        self.value.generate_tree_representation(
-            nodes, connections, node_id, uid_generator
+        self.ports.generate_tree_representation(
+            nodes, connections, parent_id, uid_generator
         )
-        # If there is a connection add it and explore further into the tree
-        if self.next:
-            self.next.generate_tree_representation(
-                nodes, connections, node_id, uid_generator
-            )
+        self.value.generate_tree_representation(
+            nodes, connections, parent_id, uid_generator
+        )
