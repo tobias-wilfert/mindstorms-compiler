@@ -163,3 +163,23 @@ def test_extract_json_variable_num():
 
 def test_extract_json_variable_string():
     extract_helper("variable_string", "Variables")
+
+
+def test_extract_json_list():
+    extract_helper("list", "Variables")
+
+
+def test_extract_json_add_item_to_list_base():
+    extract_helper("add_item_to_list_base", "Variables")
+
+
+def test_extract_json_add_item_to_list_int():
+    extract_helper("add_item_to_list_int", "Variables")
+
+
+def test_extract_json_add_item_to_list_list():
+    extract_helper("add_item_to_list_list", "Variables")
+
+
+def test_extract_json_add_item_to_list_variable():
+    extract_helper("add_item_to_list_variable", "Variables")

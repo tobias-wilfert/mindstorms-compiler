@@ -1,9 +1,10 @@
 from src.abstract_syntax_tree.abstract_syntax_tree import (
     AST,
+    AddItemToListNode,
     ArithmeticalNode,
     ChangeVariableByNode,
     GoDirection,
-    ListNode,
+    ListLiteralNode,
     LiteralNode,
     MotorGoToPositionNode,
     Node,
@@ -16,7 +17,7 @@ from src.abstract_syntax_tree.abstract_syntax_tree import (
     StopMotorNode,
     TurnDirection,
     Unit,
-    Variable,
+    VariableNode,
     WhenProgramStartsNode,
 )
 
@@ -85,6 +86,8 @@ class Visitor:
             return self.visit_set_variable_to(node)
         elif opcode == "data_changevariableby":
             return self.visits_change_variable_by(node)
+        elif opcode == "data_addtolist":
+            return self.visit_add_to_list(node)
         elif opcode == "operator_add":
             return self.visit_operator(Operation.PLUS, node)
         elif opcode == "operator_subtract":
@@ -120,15 +123,14 @@ class Visitor:
         :param node: The Node representation.
         :return: List of all the port names (single characters).
         """
-        # If this is a list that the port is specified by a variable else by a list node
         port_specifier = node["inputs"]["PORT"][1]
         if isinstance(port_specifier, list):
-            return Variable(port_specifier[1])
+            return VariableNode(port_specifier[1], port_specifier[2])
         else:
             ports = self.cst[port_specifier]["fields"][
                 "field_flippermotor_multiple-port-selector"
             ][0]
-            return ListNode(list(ports))
+            return ListLiteralNode(list(ports))
 
     def visit_run_motor_for_duration_direction(self, node: dict) -> TurnDirection:
         """Parses the direction that is being used by the RunMotorForDurationNode.
@@ -171,14 +173,11 @@ class Visitor:
         :return: The node that that specifies the value that should be used. (Could be an entire subtree, in the case of an equation).
         """
         # So while this is disgusting it seems to work :/
-        # Would need to check if the length is 3
         if len(node["inputs"]["VALUE"][1]) == 3:
-            return Variable(
-                node["inputs"]["VALUE"][1][1]
-            )  # TODO: Need to change this to also hold the id
-        val = node["inputs"]["VALUE"][
-            1
-        ]  # TODO: This is also no longer working, which is a bit sad
+            return VariableNode(
+                node["inputs"]["VALUE"][1][1], node["inputs"]["VALUE"][1][2]
+            )
+        val = node["inputs"]["VALUE"][1]
         return self.visit_input(val)
 
     def visit_operator(self, op: Operation, node: dict) -> ArithmeticalNode:
@@ -285,3 +284,30 @@ class Visitor:
         value = self.visit_run_motor_for_duration_value(node)
         next_node = self.visit_node(node["next"])
         return ChangeVariableByNode(variable, value, next_node)
+
+    def visit_add_to_list_value(self, node) -> Node:
+        """Parses the value that is being used by the AddItemToList node.
+
+        :param node: The Node representation.
+        :return: The node that that specifies the value that should be used. (Could be an entire subtree, in the case of an equation).
+        """
+        if len(node["inputs"]["ITEM"][1]) == 3:
+            return VariableNode(
+                node["inputs"]["ITEM"][1][1], node["inputs"]["ITEM"][1][2]
+            )
+        else:
+            if isinstance(node["inputs"]["ITEM"][1], list):
+                return LiteralNode(node["inputs"]["ITEM"][1][1])
+            else:
+                return self.visit_node(node["inputs"]["ITEM"][1])
+
+    def visit_add_to_list(self, node) -> AddItemToListNode:
+        """Constructs the AST representation of the AddItemToList node.
+
+        :param node: The Node representation.
+        :return: The AST representation.
+        """
+        variable = node["fields"]["LIST"][0]
+        value = self.visit_add_to_list_value(node)
+        next_node = self.visit_node(node["next"])
+        return AddItemToListNode(variable, value, next_node)

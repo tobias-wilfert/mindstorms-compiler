@@ -185,7 +185,7 @@ class LiteralNode(Node):
         return f"LiteralNode('{self.value}')"
 
 
-class ListNode(Node):
+class ListLiteralNode(Node):
     """Class to represent any list literal."""
 
     def __init__(self, value) -> None:
@@ -193,18 +193,19 @@ class ListNode(Node):
         self.value = value  # List
 
     def __str__(self) -> str:
-        return f"ListNode('{self.value}')"
+        return f"ListLiteralNode('{self.value}')"
 
 
-class Variable(Node):
-    """Class to represent the Variable block."""
+class VariableNode(Node):
+    """Class to represent the Variable and List block."""
 
-    def __init__(self, name) -> None:
+    def __init__(self, name, id) -> None:
         super().__init__()
         self.name = name  # Variable name
+        self.id = id  # The ID of the variable (unique, program wide)
 
     def __str__(self) -> str:
-        return f"Variable(name:'{self.name}')"
+        return f"VariableNode(name:'{self.name}')"
 
 
 class SetVariableToNode(StackNode):
@@ -240,6 +241,29 @@ class ChangeVariableByNode(StackNode):
 
     def __str__(self) -> str:
         return f"ChangeVariableByNode(variable:'{self.variable}')"
+
+    def custom_representation(
+        self,
+        nodes: list,
+        connections: list,
+        parent_id: int,
+        uid_generator: UIDGenerator,
+    ):
+        self.value.generate_tree_representation(
+            nodes, connections, parent_id, uid_generator
+        )
+
+
+class AddItemToListNode(StackNode):
+    """Class to represent AddItemToList block."""
+
+    def __init__(self, variable: str, value: Node, next: Node) -> None:
+        super().__init__(next)
+        self.variable = variable
+        self.value = value
+
+    def __str__(self) -> str:
+        return f"AddItemToListNode(variable:'{self.variable}')"
 
     def custom_representation(
         self,
