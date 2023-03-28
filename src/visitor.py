@@ -8,6 +8,7 @@ from src.abstract_syntax_tree.abstract_syntax_tree import (
     LiteralNode,
     MotorGoToPositionNode,
     MotorPositionNode,
+    MotorSpeedNode,
     Node,
     NumericalNode,
     Operation,
@@ -85,6 +86,8 @@ class Visitor:
             return self.visit_set_motor_speed(node)
         elif opcode == "flippermotor_absolutePosition":
             return self.visit_motor_position(node)
+        elif opcode == "flippermotor_speed":
+            return self.visit_motor_speed(node)
         elif opcode == "data_setvariableto":
             return self.visit_set_variable_to(node)
         elif opcode == "data_changevariableby":
@@ -100,7 +103,7 @@ class Visitor:
         elif opcode == "operator_multiply":
             return self.visit_operator(Operation.MULTIPLY, node)
         else:
-            raise NotImplementedError
+            raise NotImplementedError(opcode)
 
     def visit_when_program_starts(self, node: dict) -> WhenProgramStartsNode:
         """Constructs the AST representation of the WhenProgramStarts node.
@@ -324,3 +327,13 @@ class Visitor:
         port = self.visit_run_motor_for_duration_port(node)
         next_node = self.visit_node(node["next"])
         return MotorPositionNode(port, next_node)
+
+    def visit_motor_speed(self, node) -> MotorSpeedNode:
+        """Constructs the AST representation of the MotorSpeed node.
+
+        :param node: The Node representation.
+        :return: The AST representation.
+        """
+        port = self.visit_run_motor_for_duration_port(node)
+        next_node = self.visit_node(node["next"])
+        return MotorSpeedNode(port, next_node)

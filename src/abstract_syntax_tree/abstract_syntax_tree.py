@@ -452,3 +452,25 @@ class MotorPositionNode(StackNode):
         self.port.generate_tree_representation(
             nodes, connections, parent_id, uid_generator
         )
+
+
+class MotorSpeedNode(StackNode):
+    """Class to represent MotorSpeed block."""
+
+    def __init__(self, port: Node, next: Node) -> None:
+        super().__init__(next)
+        self.port = port
+
+    def __str__(self) -> str:
+        return "MotorSpeedNode"
+
+    def custom_representation(
+        self,
+        nodes: list,
+        connections: list,
+        parent_id: int,
+        uid_generator: UIDGenerator,
+    ):
+        self.port.generate_tree_representation(
+            nodes, connections, parent_id, uid_generator
+        )
