@@ -63,6 +63,18 @@ def test_extract_json_run_motor_for_duration_value_node():
     extract_helper("run_motor_for_duration_value_node", "Motors")
 
 
+def test_extract_json_run_motor_for_duration_port_list():
+    extract_helper("run_motor_for_duration_port_list", "Motors")
+
+
+def test_extract_json_run_motor_for_duration_port_variable():
+    extract_helper("run_motor_for_duration_port_variable", "Motors")
+
+
+def test_extract_json_run_motor_for_duration_value_variable():
+    extract_helper("run_motor_for_duration_value_variable", "Motors")
+
+
 # - Motor Go to Position
 def test_extract_json_motor_go_to_position_base():
     extract_helper("motor_go_to_position_base", "Motors")
@@ -84,6 +96,18 @@ def test_extract_json_motor_go_to_position_value_node():
     extract_helper("motor_go_to_position_value_node", "Motors")
 
 
+def test_extract_json_motor_go_to_position_port_list():
+    extract_helper("motor_go_to_position_port_list", "Motors")
+
+
+def test_extract_json_motor_go_to_position_port_variable():
+    extract_helper("motor_go_to_position_port_variable", "Motors")
+
+
+def test_extract_json_motor_go_to_position_value_variable():
+    extract_helper("motor_go_to_position_value_variable", "Motors")
+
+
 # - Start Motor
 def test_extract_json_start_motor_base():
     extract_helper("start_motor_base", "Motors")
@@ -101,6 +125,14 @@ def test_extract_json_start_motor_counterclockwise():
     extract_helper("start_motor_counterclockwise", "Motors")
 
 
+def test_extract_json_start_motor_port_list():
+    extract_helper("start_motor_port_list", "Motors")
+
+
+def test_extract_json_start_motor_port_variable():
+    extract_helper("start_motor_port_variable", "Motors")
+
+
 # - Stop Motor
 def test_extract_json_stop_motor_base():
     extract_helper("stop_motor_base", "Motors")
@@ -112,6 +144,14 @@ def test_extract_json_stop_motor_all_motors():
 
 def test_extract_json_stop_motor_multiple_motors():
     extract_helper("stop_motor_multiple_motors", "Motors")
+
+
+def test_extract_json_stop_motor_port_list():
+    extract_helper("stop_motor_port_list", "Motors")
+
+
+def test_extract_json_stop_motor_port_variable():
+    extract_helper("stop_motor_port_variable", "Motors")
 
 
 # - Set Motor Speed
@@ -129,6 +169,18 @@ def test_extract_json_set_motor_speed_multiple_motors():
 
 def test_extract_json_set_motor_speed_value_node():
     extract_helper("set_motor_speed_value_node", "Motors")
+
+
+def test_extract_json_set_motor_speed_port_list():
+    extract_helper("set_motor_speed_port_list", "Motors")
+
+
+def test_extract_json_set_motor_speed_port_variable():
+    extract_helper("set_motor_speed_port_variable", "Motors")
+
+
+def test_extract_json_set_motor_speed_value_variable():
+    extract_helper("set_motor_speed_value_variable", "Motors")
 
 
 # ---------- Operators ----------
@@ -150,6 +202,10 @@ def test_extract_json_multiply():
 
 def test_extract_json_plus():
     extract_helper("plus", "Operators")
+
+
+def test_extract_json_arithmetic_variable():
+    extract_helper("arithmetic_variable", "Operators")
 
 
 # ---------- Variables ----------

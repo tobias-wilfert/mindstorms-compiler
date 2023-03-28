@@ -153,6 +153,7 @@ class Visitor:
     def visit_input(self, val) -> Node:
         """Visits the input field of a node.
         Val can be 2 things, if it is a list, than the 2 items is a string representation of a float or an int.
+        **NOTE**: If the list has 3 items it is actually a variable.
         If it is a string it is the identifier of a another node that needs to be parsed.
 
         :param val: Input representation.
@@ -160,10 +161,13 @@ class Visitor:
         :return: AST representation of the input.
         """
         if isinstance(val, list):
-            try:
-                return NumericalNode(float(val[1]))
-            except ValueError:
-                return LiteralNode(val[1])
+            if len(val) == 3:
+                return VariableNode(val[1], val[2])
+            else:
+                try:
+                    return NumericalNode(float(val[1]))
+                except ValueError:
+                    return LiteralNode(val[1])
         else:
             return self.visit_node(val)
 
@@ -172,13 +176,7 @@ class Visitor:
         :param node: The Node representation.
         :return: The node that that specifies the value that should be used. (Could be an entire subtree, in the case of an equation).
         """
-        # So while this is disgusting it seems to work :/
-        if len(node["inputs"]["VALUE"][1]) == 3:
-            return VariableNode(
-                node["inputs"]["VALUE"][1][1], node["inputs"]["VALUE"][1][2]
-            )
-        val = node["inputs"]["VALUE"][1]
-        return self.visit_input(val)
+        return self.visit_input(node["inputs"]["VALUE"][1])
 
     def visit_operator(self, op: Operation, node: dict) -> ArithmeticalNode:
         """Constructs the AST representation of the Arithmetics node.
@@ -214,6 +212,10 @@ class Visitor:
         :param node: The Node representation.
         :return: The value that is being used.
         """
+        if len(node["inputs"]["POSITION"][1]) == 3:
+            return VariableNode(
+                node["inputs"]["POSITION"][1][1], node["inputs"]["POSITION"][1][2]
+            )
         return self.visit_node(node["inputs"]["POSITION"][1])
 
     def visit_motor_custom_angle(self, node: dict) -> NumericalNode:
