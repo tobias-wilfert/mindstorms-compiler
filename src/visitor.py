@@ -7,6 +7,7 @@ from src.abstract_syntax_tree.abstract_syntax_tree import (
     ListLiteralNode,
     LiteralNode,
     MotorGoToPositionNode,
+    MotorPositionNode,
     Node,
     NumericalNode,
     Operation,
@@ -82,6 +83,8 @@ class Visitor:
             return self.visit_stop_motor(node)
         elif opcode == "flippermotor_motorSetSpeed":
             return self.visit_set_motor_speed(node)
+        elif opcode == "flippermotor_absolutePosition":
+            return self.visit_motor_position(node)
         elif opcode == "data_setvariableto":
             return self.visit_set_variable_to(node)
         elif opcode == "data_changevariableby":
@@ -128,7 +131,7 @@ class Visitor:
             return VariableNode(port_specifier[1], port_specifier[2])
         else:
             ports = self.cst[port_specifier]["fields"][
-                "field_flippermotor_multiple-port-selector"
+                "field_" + self.cst[port_specifier]["opcode"]
             ][0]
             return ListLiteralNode(list(ports))
 
@@ -268,8 +271,7 @@ class Visitor:
         :param node: The Node representation.
         :return: The AST representation.
         """
-        # TODO: here we see that the id and the name of the variable is probably interesting to have
-        #  This the  name of the variable, the id is at 1
+        # TODO: This needs to be fixed to also keep track of the variable ID and NAME
         variable = node["fields"]["VARIABLE"][0]
         value = self.visit_run_motor_for_duration_value(node)
         next_node = self.visit_node(node["next"])
@@ -280,9 +282,8 @@ class Visitor:
         :param node: The Node representation.
         :return: The AST representation.
         """
-        variable = node["fields"]["VARIABLE"][
-            0
-        ]  # This the  name of the variable, the id is at 1
+        # TODO: This needs to be fixed to also keep track of the variable ID and NAME
+        variable = node["fields"]["VARIABLE"][0]
         value = self.visit_run_motor_for_duration_value(node)
         next_node = self.visit_node(node["next"])
         return ChangeVariableByNode(variable, value, next_node)
@@ -313,3 +314,13 @@ class Visitor:
         value = self.visit_add_to_list_value(node)
         next_node = self.visit_node(node["next"])
         return AddItemToListNode(variable, value, next_node)
+
+    def visit_motor_position(self, node) -> MotorPositionNode:
+        """Constructs the AST representation of the MotorPosition node.
+
+        :param node: The Node representation.
+        :return: The AST representation.
+        """
+        port = self.visit_run_motor_for_duration_port(node)
+        next_node = self.visit_node(node["next"])
+        return MotorPositionNode(port, next_node)

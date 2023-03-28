@@ -183,6 +183,19 @@ def test_extract_json_set_motor_speed_value_variable():
     extract_helper("set_motor_speed_value_variable", "Motors")
 
 
+# Motor Position
+def test_extract_json_motor_position_base():
+    extract_helper("motor_position_base", "Motors")
+
+
+def test_extract_json_motor_position_list():
+    extract_helper("motor_position_list", "Motors")
+
+
+def test_extract_json_motor_position_variable():
+    extract_helper("motor_position_variable", "Motors")
+
+
 # ---------- Operators ----------
 def test_extract_json_arithmetic():
     extract_helper("arithmetic", "Operators")

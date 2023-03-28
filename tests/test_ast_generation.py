@@ -606,6 +606,64 @@ def test_ast_set_motor_speed_value_variable():
     )
 
 
+# Motor Position
+def test_ast_motor_position_base():
+    assert (
+        ast_helper("motor_position_base", "Motors")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="RunMotorForDurationNode(direction:'TurnDirection.CLOCKWISE', unit:'Unit.ROTATIONS')"]
+2 [label="ListLiteralNode('['A']')"]
+3 [label="MotorPositionNode"]
+4 [label="ListLiteralNode('['A']')"]
+0 -> 1
+1 -> 2
+1 -> 3
+3 -> 4}"""
+    )
+
+
+# TODO: Need to check how this would even be handled ATM.
+def test_ast_motor_position_list():
+    assert (
+        ast_helper("motor_position_list", "Motors")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="AddItemToListNode(variable:'my_list')"]
+2 [label="LiteralNode('A')"]
+3 [label="RunMotorForDurationNode(direction:'TurnDirection.CLOCKWISE', unit:'Unit.ROTATIONS')"]
+4 [label="ListLiteralNode('['A']')"]
+5 [label="MotorPositionNode"]
+6 [label="VariableNode(name:'my_list')"]
+0 -> 1
+1 -> 2
+1 -> 3
+3 -> 4
+3 -> 5
+5 -> 6}"""
+    )
+
+
+def test_ast_motor_position_variable():
+    assert (
+        ast_helper("motor_position_variable", "Motors")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="SetVariableToNode(variable:'my_variable')"]
+2 [label="LiteralNode('A')"]
+3 [label="RunMotorForDurationNode(direction:'TurnDirection.CLOCKWISE', unit:'Unit.ROTATIONS')"]
+4 [label="ListLiteralNode('['A']')"]
+5 [label="MotorPositionNode"]
+6 [label="VariableNode(name:'my_variable')"]
+0 -> 1
+1 -> 2
+1 -> 3
+3 -> 4
+3 -> 5
+5 -> 6}"""
+    )
+
+
 # ---------- Operators ----------
 def test_ast_arithmetic():
     assert (
