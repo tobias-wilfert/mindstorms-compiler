@@ -142,6 +142,16 @@ class Operation(Enum):
     DIVIDE = 3
     MULTIPLY = 4
 
+    def code(self) -> str:
+        if self == Operation.PLUS:
+            return "+"
+        elif self == Operation.MINUS:
+            return "-"
+        elif self == Operation.DIVIDE:
+            return "/"
+        elif self == Operation.MULTIPLY:
+            return "*"
+
 
 class ArithmeticalNode(Node):
     def __init__(self, operation: Operation, left_hand: Node, right_hand: Node) -> None:
@@ -291,6 +301,14 @@ class Unit(Enum):
     SECONDS = 2
     DEGREES = 3
 
+    def code(self):
+        if self == Unit.ROTATIONS:
+            return "rotations"
+        elif self == Unit.SECONDS:
+            return "seconds"
+        elif self == Unit.DEGREES:
+            return "degrees"
+
 
 class RunMotorForDurationNode(StackNode):
     """Class to represent RunMotorForDuration blocks."""
@@ -330,6 +348,14 @@ class GoDirection(Enum):
     SHORTEST = 1
     CLOCKWISE = 2
     COUNTERCLOCKWISE = 3
+
+    def code(self):
+        if self == GoDirection.SHORTEST:
+            return "shortest path"
+        elif self == GoDirection.CLOCKWISE:
+            return "clockwise"
+        elif self == GoDirection.COUNTERCLOCKWISE:
+            return "counterclockwise"
 
 
 class MotorGoToPositionNode(StackNode):

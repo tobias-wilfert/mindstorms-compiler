@@ -1,5 +1,6 @@
 import typer
 
+from src.code_generator import CodeGenerator
 from src.json_parser import extract_json, filter_json
 from src.visitor import Visitor
 
@@ -18,10 +19,13 @@ def main(
     # Generate the AST
     visitor = Visitor()
     abstract_syntax_tree = visitor.visit(concrete_syntax_tree)
-    print(abstract_syntax_tree.tree_representation())
+    # TODO: Add a flag for this to be outputted
+    # print(abstract_syntax_tree.tree_representation())
 
-    # TODO: Do the conversion (Back-end) (AST -> Python code)
+    # Generate the code
+    code_generator = CodeGenerator()
     # TODO: Write the code to the file or output it
+    print(code_generator.generate(abstract_syntax_tree))
 
 
 if __name__ == "__main__":
