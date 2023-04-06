@@ -39,6 +39,9 @@ import math
         self.objects_code = ""
         self.program_code = ""
 
+        # Indicates wether safe code should be generated which might be a bit more verbose
+        self.safe_flag = False
+
     def generate(self, ast: AST) -> str:
         # TODO: This will need to be changed later to support multiple block-states
 
@@ -356,28 +359,36 @@ import math
             )
 
     def visit_motor_speed_node(self, node: MotorSpeedNode):
-        if not isinstance(node.port, ListLiteralNode) or len(node.port.value) != 1:
+        if isinstance(node.port, ListLiteralNode):
+            # Generate the object to call the method on
+            variable = f"motor_{node.port.value[0].lower()}"
+            self.generate_object(variable, "Motor", f"'{node.port.value[0]}'")
+            return f"{variable}.get_speed()"
+        elif isinstance(node.port, VariableNode):
+            if self.safe_flag:
+                return f"(Motor({node.port.name}[0].upper()).get_speed() if (len({node.port.name}) > 0 and {node.port.name}[0].lower() in 'abcdef') else  0)"
+            else:
+                return f"Motor({node.port.name}[0]).get_speed()"
+        else:
             raise NotImplementedError(
-                f"An error occurred when trying to construct code for {node}, {node.port} can not be used here."
+                f"The following node is not currently supported in the port field: {node.port}"
             )
-
-        # Generate the object to call the method on
-        variable = f"motor_{node.port.value[0].lower()}"
-        self.generate_object(variable, "Motor", f"'{node.port.value[0]}'")
-
-        return f"{variable}.get_speed()"
 
     def visit_motor_position_node(self, node: MotorPositionNode):
-        if not isinstance(node.port, ListLiteralNode) or len(node.port.value) != 1:
+        if isinstance(node.port, ListLiteralNode):
+            # Generate the object to call the method on
+            variable = f"motor_{node.port.value[0].lower()}"
+            self.generate_object(variable, "Motor", f"'{node.port.value[0]}'")
+            return f"{variable}.get_position()"
+        elif isinstance(node.port, VariableNode):
+            if self.safe_flag:
+                return f"(Motor({node.port.name}[0].upper()).get_position() if (len({node.port.name}) > 0 and {node.port.name}[0].lower() in 'abcdef') else  0)"
+            else:
+                return f"Motor({node.port.name}[0]).get_position()"
+        else:
             raise NotImplementedError(
-                f"An error occurred when trying to construct code for {node}, {node.port} can not be used here."
+                f"The following node is not currently supported in the port field: {node.port}"
             )
-
-        # Generate the object to call the method on
-        variable = f"motor_{node.port.value[0].lower()}"
-        self.generate_object(variable, "Motor", f"'{node.port.value[0]}'")
-
-        return f"{variable}.get_position()"
 
     def visit_change_variable_by_node(self, node: ChangeVariableByNode):
         self.program_code += f"{node.variable} += {self.visit(node.value)}\n"

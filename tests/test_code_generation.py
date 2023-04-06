@@ -755,47 +755,37 @@ motor_a.run_for_rotations(motor_a.get_position())
     )
 
 
-# So how do we get these to work :/ would need to do proper checks :thinking: (for example A vs a)
-# Currently this only looks at the first so need to encode that logic
-# TODO: Need to check how this would even be handled ATM.
-# def test_code_motor_position_list():
-#     assert (
-#         helper("motor_position_list", "Motors")
-#         == """digraph {rankdir="TB"
-# 0 [label="WhenProgramStartsNode"]
-# 1 [label="AddItemToListNode(variable:'my_list')"]
-# 2 [label="LiteralNode('A')"]
-# 3 [label="RunMotorForDurationNode(direction:'TurnDirection.CLOCKWISE', unit:'Unit.ROTATIONS')"]
-# 4 [label="ListLiteralNode('['A']')"]
-# 5 [label="MotorPositionNode"]
-# 6 [label="VariableNode(name:'my_list')"]
-# 0 -> 1
-# 1 -> 2
-# 1 -> 3
-# 3 -> 4
-# 3 -> 5
-# 5 -> 6}"""
-#     )
+# Verified on Hardware
+def test_code_motor_position_list():
+    assert (
+        helper("motor_position_list", "Motors")
+        == f"""{includes}
+# Create your objects here.
+my_list = []
+motor_a = Motor('A')
+
+# Write your program here.
+my_list.append('A')
+motor_a.run_for_rotations(Motor(my_list[0]).get_position())
+
+"""
+    )
 
 
-# def test_code_motor_position_variable():
-#     assert (
-#         helper("motor_position_variable", "Motors")
-#         == """digraph {rankdir="TB"
-# 0 [label="WhenProgramStartsNode"]
-# 1 [label="SetVariableToNode(variable:'my_variable')"]
-# 2 [label="LiteralNode('A')"]
-# 3 [label="RunMotorForDurationNode(direction:'TurnDirection.CLOCKWISE', unit:'Unit.ROTATIONS')"]
-# 4 [label="ListLiteralNode('['A']')"]
-# 5 [label="MotorPositionNode"]
-# 6 [label="VariableNode(name:'my_variable')"]
-# 0 -> 1
-# 1 -> 2
-# 1 -> 3
-# 3 -> 4
-# 3 -> 5
-# 5 -> 6}"""
-#     )
+# Verified on Hardware
+def test_code_motor_position_variable():
+    assert (
+        helper("motor_position_variable", "Motors")
+        == f"""{includes}
+# Create your objects here.
+motor_a = Motor('A')
+
+# Write your program here.
+my_variable = 'A'
+motor_a.run_for_rotations(Motor(my_variable[0]).get_position())
+
+"""
+    )
 
 
 # - Motor Speed
@@ -814,45 +804,37 @@ motor_a.run_for_rotations(motor_a.get_speed())
     )
 
 
-# TODO: Same as above
-# def test_code_motor_speed_list():
-#     assert (
-#         helper("motor_speed_list", "Motors")
-#         == """digraph {rankdir="TB"
-# 0 [label="WhenProgramStartsNode"]
-# 1 [label="AddItemToListNode(variable:'my_list')"]
-# 2 [label="LiteralNode('A')"]
-# 3 [label="RunMotorForDurationNode(direction:'TurnDirection.CLOCKWISE', unit:'Unit.ROTATIONS')"]
-# 4 [label="ListLiteralNode('['A']')"]
-# 5 [label="MotorSpeedNode"]
-# 6 [label="VariableNode(name:'my_list')"]
-# 0 -> 1
-# 1 -> 2
-# 1 -> 3
-# 3 -> 4
-# 3 -> 5
-# 5 -> 6}"""
-#     )
+# Verified on Hardware
+def test_code_motor_speed_list():
+    assert (
+        helper("motor_speed_list", "Motors")
+        == f"""{includes}
+# Create your objects here.
+my_list = []
+motor_a = Motor('A')
+
+# Write your program here.
+my_list.append('A')
+motor_a.run_for_rotations(Motor(my_list[0]).get_speed())
+
+"""
+    )
 
 
-# def test_code_motor_speed_variable():
-#     assert (
-#         helper("motor_speed_variable", "Motors")
-#         == """digraph {rankdir="TB"
-# 0 [label="WhenProgramStartsNode"]
-# 1 [label="SetVariableToNode(variable:'my_variable')"]
-# 2 [label="LiteralNode('A')"]
-# 3 [label="RunMotorForDurationNode(direction:'TurnDirection.CLOCKWISE', unit:'Unit.ROTATIONS')"]
-# 4 [label="ListLiteralNode('['A']')"]
-# 5 [label="MotorSpeedNode"]
-# 6 [label="VariableNode(name:'my_variable')"]
-# 0 -> 1
-# 1 -> 2
-# 1 -> 3
-# 3 -> 4
-# 3 -> 5
-# 5 -> 6}"""
-#     )
+# Verified on Hardware
+def test_code_motor_speed_variable():
+    assert (
+        helper("motor_speed_variable", "Motors")
+        == f"""{includes}
+# Create your objects here.
+motor_a = Motor('A')
+
+# Write your program here.
+my_variable = 'A'
+motor_a.run_for_rotations(Motor(my_variable[0]).get_speed())
+
+"""
+    )
 
 
 # ---------- Operators ----------
