@@ -22,7 +22,7 @@ from src.abstract_syntax_tree.abstract_syntax_tree import (
 
 
 class CodeGenerator:
-    def __init__(self):
+    def __init__(self, safe=False):
         """The goal for the code generation is to translate the code as literal as possible.
         Furthermore the goal is to generate code as close as the boilerplate that is provided by LEGO.
         """
@@ -40,7 +40,7 @@ import math
         self.program_code = ""
 
         # Indicates wether safe code should be generated which might be a bit more verbose
-        self.safe_flag = False
+        self.safe_flag = safe
 
     def generate(self, ast: AST) -> str:
         # TODO: This will need to be changed later to support multiple block-states

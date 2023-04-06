@@ -35,7 +35,8 @@ repos:
         name: pytest
         stages: [commit]
         language: system
-        entry: pipenv run pytest
+        entry: pipenv run pytest 
+        pass_filenames: false
         types: [python]
 
       - id: pytest-cov
@@ -43,5 +44,6 @@ repos:
         stages: [push]
         language: system
         entry: pipenv run pytest --cov --cov-fail-under=100
+        pass_filenames: false
         types: [python]
         pass_filenames: false
