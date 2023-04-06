@@ -8,7 +8,25 @@
 
 1. Download this repository.  
 2. Download the necessary requirements for this project by running `pip install -r requirements.txt` in the root of the project.
-3. Run the compiler by executing the following command in the root of the project `python -m src FILENAME` (where `FILENAME` is the path to the file that should be compiled).
+3. Run the compiler by executing the following command in the root of the project `python -m src INPUT_FILENAME` (where `INPUT_FILENAME` is the path to the file that should be compiled). Furthermore there are multiple optional flags that can be used, running `python -m src --help` gives you the following explanation for them:
+```
+Usage: python -m src [OPTIONS] INPUT_FILENAME
+
+Arguments:
+  INPUT_FILENAME  The path to the file that should be converted.  [required]
+
+Options:
+  --output-filename TEXT  The name of the file the code should be written to.
+                          If none is provided the code will just be printed.
+  --ast / --no-ast        Indicates if the AST representation should also be
+                          outputted.  [default: no-ast]
+  --ast-filename TEXT     Indicates where to write the AST representation to
+                          if --ast is used. If none is provided the
+                          representation will just be printed.
+  --safe / --no-safe      Indicates if safer code should be outputted, the
+                          code might be more verbose.  [default: no-safe]
+  --help                  Show this message and exit.
+```
 
 ## Description:
 
@@ -29,6 +47,32 @@ A great feature of the latest generation of Mindstorms is that they can be progr
 
  ### Already supported:
 
- The Abstract syntax tree generation of a number of blocks is already supported and tested. The AST also be visually represented using [Graphviz](https://graphviz.org). A simple example of such a visualization can be seen below.
+A set of the most used blocks is already supported (see the list below). On top of generating the equivalent Python code the compiler can also output the abstract syntax tree representation of a program. The representation is done using [Graphviz](https://graphviz.org) a simple example of such a AST visualization can be seen below.
 
 ![example.svg](./example.svg)
+
+## List of supported blocks
+
+| Block        | # Configurations |
+|--------------|------:|
+| **Motors** |  |
+| Run Motor for Duration | 11 |
+| Motor Go to Position   | 8  |
+| Start Motor   | 6  |
+| Stop Motor   | 5  |
+| Set Motor Speed   | 7  |
+| Motor Position   | 3  |
+| Motor Speed   | 3  |
+| **Operators** |  |
+| Plus   | 3 |
+| Minus   | 3  |
+| Multiply   | 3  |
+| Divide   | 3  |
+| **Variables** |  |
+| Variable   | 2  |
+| Set Variable To   | 2  |
+| Change Variable By   | 2  |
+| List   | 1  |
+| Add Item to List   | 4  |
+| **Events** |  |
+| When Program Starts   | 1  |
