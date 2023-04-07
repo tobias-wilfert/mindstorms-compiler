@@ -12,6 +12,7 @@ from src.abstract_syntax_tree.abstract_syntax_tree import (
     NumericalNode,
     RunMotorForDurationNode,
     SetMotorSpeedNode,
+    SetMovementMotorsNode,
     SetVariableToNode,
     StartMotorNode,
     StopMotorNode,
@@ -95,6 +96,8 @@ import math
             return self.visit_literal_node(node)
         elif isinstance(node, AddItemToListNode):
             return self.visit_add_item_to_list_node(node)
+        elif isinstance(node, SetMovementMotorsNode):
+            return self.visit_set_movement_motors(node)
         else:
             raise NotImplementedError(f"Currently no code can be generated for {node}")
 
@@ -405,3 +408,11 @@ import math
 
         self.program_code += f"{variable}.append({self.visit(node.value)})\n"
         self.visit(node.next)
+
+    def visit_set_movement_motors(self, node: SetMovementMotorsNode):
+        if isinstance(node.ports, ListLiteralNode):
+            self.program_code += f"motor_pair = MotorPair('{node.ports.value[0]}', '{node.ports.value[1]}')\n"
+        else:
+            ports = self.visit(node.ports)
+            self.program_code += f"# Note: This will fail if the first two items in {ports} are not valid ports.\n"
+            self.program_code += f"motor_pair = MotorPair({ports}[0], {ports}[1])\n"

@@ -209,6 +209,20 @@ def test_extract_json_motor_speed_variable():
     helper("motor_speed_variable", "Motors")
 
 
+# ---------- Movement ----------
+# - Set Movement Motors
+def test_extract_json_set_movement_motors_base():
+    helper("set_movement_motors_base", "Movement")
+
+
+def test_extract_json_set_movement_motors_list():
+    helper("set_movement_motors_list", "Movement")
+
+
+def test_extract_json_set_movement_motors_variable():
+    helper("set_movement_motors_variable", "Movement")
+
+
 # ---------- Operators ----------
 def test_extract_json_arithmetic():
     helper("arithmetic", "Operators")

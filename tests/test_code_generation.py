@@ -837,6 +837,56 @@ motor_a.run_for_rotations(Motor(my_variable[0]).get_speed())
     )
 
 
+# # ---------- Movement ----------
+# - Set Movement Motors
+# TODO: Check on hardware
+def test_ast_set_movement_motors_base():
+    assert (
+        helper("set_movement_motors_base", "Movement")
+        == f"""{includes}
+# Create your objects here.
+
+# Write your program here.
+motor_pair = MotorPair('A', 'B')
+
+"""
+    )
+
+
+# TODO: Check on hardware
+def test_ast_set_movement_motors_list():
+    assert (
+        helper("set_movement_motors_list", "Movement")
+        == f"""{includes}
+# Create your objects here.
+my_list = []
+
+# Write your program here.
+my_list.append('A')
+my_list.append('B')
+# Note: This will fail if the first two items in my_list are not valid ports.
+motor_pair = MotorPair(my_list[0], my_list[1])
+
+"""
+    )
+
+
+# TODO: Check on hardware
+def test_ast_set_movement_motors_variable():
+    assert (
+        helper("set_movement_motors_variable", "Movement")
+        == f"""{includes}
+# Create your objects here.
+
+# Write your program here.
+my_variable = 'AB'
+# Note: This will fail if the first two items in my_variable are not valid ports.
+motor_pair = MotorPair(my_variable[0], my_variable[1])
+
+"""
+    )
+
+
 # ---------- Operators ----------
 # Verified on Hardware
 def test_code_arithmetic():

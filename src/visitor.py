@@ -14,6 +14,7 @@ from src.abstract_syntax_tree.abstract_syntax_tree import (
     Operation,
     RunMotorForDurationNode,
     SetMotorSpeedNode,
+    SetMovementMotorsNode,
     SetVariableToNode,
     StartMotorNode,
     StopMotorNode,
@@ -55,6 +56,7 @@ class Visitor:
         else:
             return []
 
+    # flake8: noqa: C901
     def visit_node(self, node: dict) -> Node:
         """Checks the type of the node and calls the appropriate visit function.
         :param node: The identifier of the current node (the key for the CST dict) or None
@@ -88,6 +90,8 @@ class Visitor:
             return self.visit_motor_position(node)
         elif opcode == "flippermotor_speed":
             return self.visit_motor_speed(node)
+        elif opcode == "flippermove_setMovementPair":
+            return self.visit_set_movement_motors(node)
         elif opcode == "data_setvariableto":
             return self.visit_set_variable_to(node)
         elif opcode == "data_changevariableby":
@@ -337,3 +341,27 @@ class Visitor:
         port = self.visit_run_motor_for_duration_port(node)
         next_node = self.visit_node(node["next"])
         return MotorSpeedNode(port, next_node)
+
+    def visit_movement_ports(self, node: dict) -> Node:
+        """Parses the ports that are being used by the SetMovementMotorsNode.
+        :param node: The Node representation.
+        :return: List of all the port names (single characters).
+        """
+        port_specifier = node["inputs"]["PAIR"][1]
+        if isinstance(port_specifier, list):
+            return VariableNode(port_specifier[1], port_specifier[2])
+        else:
+            ports = self.cst[port_specifier]["fields"][
+                "field_" + self.cst[port_specifier]["opcode"]
+            ][0]
+            return ListLiteralNode(list(ports))
+
+    def visit_set_movement_motors(self, node) -> SetMovementMotorsNode:
+        """Constructs the AST representation of the SetMovementMotors node.
+
+        :param node: The Node representation.
+        :return: The AST representation.
+        """
+        ports = self.visit_movement_ports(node)
+        next_node = self.visit_node(node["next"])
+        return SetMovementMotorsNode(ports, next_node)
