@@ -1,4 +1,4 @@
-from src.abstract_syntax_tree.abstract_syntax_tree import (
+from src.abstract_syntax_tree import (
     AST,
     AddItemToListNode,
     ArithmeticalNode,
