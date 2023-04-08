@@ -1,27 +1,25 @@
-from src.abstract_syntax_tree import (
-    AST,
-    AddItemToListNode,
-    ArithmeticalNode,
-    ChangeVariableByNode,
+from src.abstract_syntax_tree import AST, LiteralNode, Node, NumericalNode
+from src.abstract_syntax_tree.events import WhenProgramStartsNode
+from src.abstract_syntax_tree.motors import (
     GoDirection,
-    ListLiteralNode,
-    LiteralNode,
     MotorGoToPositionNode,
     MotorPositionNode,
     MotorSpeedNode,
-    Node,
-    NumericalNode,
-    Operation,
     RunMotorForDurationNode,
     SetMotorSpeedNode,
-    SetMovementMotorsNode,
-    SetVariableToNode,
     StartMotorNode,
     StopMotorNode,
     TurnDirection,
     Unit,
+)
+from src.abstract_syntax_tree.movement import SetMovementMotorsNode
+from src.abstract_syntax_tree.operators import ArithmeticalNode, Operation
+from src.abstract_syntax_tree.variables import (
+    AddItemToListNode,
+    ChangeVariableByNode,
+    ListLiteralNode,
+    SetVariableToNode,
     VariableNode,
-    WhenProgramStartsNode,
 )
 
 
