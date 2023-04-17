@@ -13,17 +13,12 @@ class TurnDirection(Enum):
 class Unit(Enum):
     """Enum for the units that can be used in the RunMotor blocks."""
 
-    ROTATIONS = 1
-    SECONDS = 2
-    DEGREES = 3
+    ROTATIONS = "rotations"
+    SECONDS = "seconds"
+    DEGREES = "degrees"
 
     def code(self):
-        if self == Unit.ROTATIONS:
-            return "rotations"
-        elif self == Unit.SECONDS:
-            return "seconds"
-        elif self == Unit.DEGREES:
-            return "degrees"
+        return self.value
 
 
 class RunMotorForDurationNode(StackNode):
@@ -61,17 +56,12 @@ class RunMotorForDurationNode(StackNode):
 class GoDirection(Enum):
     """Enum for the directions that can be used in the MotorGoToPosition blocks."""
 
-    SHORTEST = 1
-    CLOCKWISE = 2
-    COUNTERCLOCKWISE = 3
+    SHORTEST = "shortest path"
+    CLOCKWISE = "clockwise"
+    COUNTERCLOCKWISE = "counterclockwise"
 
     def code(self):
-        if self == GoDirection.SHORTEST:
-            return "shortest path"
-        elif self == GoDirection.CLOCKWISE:
-            return "clockwise"
-        elif self == GoDirection.COUNTERCLOCKWISE:
-            return "counterclockwise"
+        return self.value
 
 
 class MotorGoToPositionNode(StackNode):

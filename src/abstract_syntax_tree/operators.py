@@ -4,20 +4,13 @@ from src.abstract_syntax_tree import Node
 
 
 class Operation(Enum):
-    PLUS = 1
-    MINUS = 2
-    DIVIDE = 3
-    MULTIPLY = 4
+    PLUS = "+"
+    MINUS = "-"
+    DIVIDE = "/"
+    MULTIPLY = "*"
 
     def code(self) -> str:
-        if self == Operation.PLUS:
-            return "+"
-        elif self == Operation.MINUS:
-            return "-"
-        elif self == Operation.DIVIDE:
-            return "/"
-        elif self == Operation.MULTIPLY:
-            return "*"
+        return self.value
 
 
 class ArithmeticalNode(Node):

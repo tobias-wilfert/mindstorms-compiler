@@ -838,9 +838,155 @@ motor_a.run_for_rotations(Motor(my_variable[0]).get_speed())
 
 
 # # ---------- Movement ----------
+# - Move for duration
+# Verified on Hardware
+def test_code_move_for_duration_backwards():
+    assert (
+        helper("move_for_duration_backwards", "Movement")
+        == f"""{includes}
+# Create your objects here.
+
+# Write your program here.
+motor_pair = MotorPair('A', 'B')
+motor_pair.set_default_speed(50)  # Note: Needed since the default speed is 100, which is too fast.
+motor_pair.move(-10.0, 'cm')
+
+"""
+    )
+
+
+# Verified on Hardware
+def test_code_move_for_duration_base():
+    assert (
+        helper("move_for_duration_base", "Movement")
+        == f"""{includes}
+# Create your objects here.
+
+# Write your program here.
+motor_pair = MotorPair('A', 'B')
+motor_pair.set_default_speed(50)  # Note: Needed since the default speed is 100, which is too fast.
+motor_pair.move(10.0, 'cm')
+
+"""
+    )
+
+
+# Verified on Hardware
+def test_code_move_for_duration_clockwise():
+    assert (
+        helper("move_for_duration_clockwise", "Movement")
+        == f"""{includes}
+# Create your objects here.
+
+# Write your program here.
+motor_pair = MotorPair('A', 'B')
+motor_pair.set_default_speed(50)  # Note: Needed since the default speed is 100, which is too fast.
+motor_pair.move(10.0, 'cm', 100)
+
+"""
+    )
+
+
+# Verified on Hardware
+def test_code_move_for_duration_counterclockwise():
+    assert (
+        helper("move_for_duration_counterclockwise", "Movement")
+        == f"""{includes}
+# Create your objects here.
+
+# Write your program here.
+motor_pair = MotorPair('A', 'B')
+motor_pair.set_default_speed(50)  # Note: Needed since the default speed is 100, which is too fast.
+motor_pair.move(10.0, 'cm', -100)
+
+"""
+    )
+
+
+# Verified on Hardware
+def test_code_move_for_duration_degrees():
+    assert (
+        helper("move_for_duration_degrees", "Movement")
+        == f"""{includes}
+# Create your objects here.
+
+# Write your program here.
+motor_pair = MotorPair('A', 'B')
+motor_pair.set_default_speed(50)  # Note: Needed since the default speed is 100, which is too fast.
+motor_pair.move(10.0, 'degrees')
+
+"""
+    )
+
+
+# Verified on Hardware
+def test_code_move_for_duration_inches():
+    assert (
+        helper("move_for_duration_inches", "Movement")
+        == f"""{includes}
+# Create your objects here.
+
+# Write your program here.
+motor_pair = MotorPair('A', 'B')
+motor_pair.set_default_speed(50)  # Note: Needed since the default speed is 100, which is too fast.
+motor_pair.move(10.0, 'in')
+
+"""
+    )
+
+
+# Verified on Hardware
+def test_code_move_for_duration_rotations():
+    assert (
+        helper("move_for_duration_rotations", "Movement")
+        == f"""{includes}
+# Create your objects here.
+
+# Write your program here.
+motor_pair = MotorPair('A', 'B')
+motor_pair.set_default_speed(50)  # Note: Needed since the default speed is 100, which is too fast.
+motor_pair.move(10.0, 'rotations')
+
+"""
+    )
+
+
+# Verified on Hardware
+def test_code_move_for_duration_seconds():
+    assert (
+        helper("move_for_duration_seconds", "Movement")
+        == f"""{includes}
+# Create your objects here.
+
+# Write your program here.
+motor_pair = MotorPair('A', 'B')
+motor_pair.set_default_speed(50)  # Note: Needed since the default speed is 100, which is too fast.
+motor_pair.move(10.0, 'seconds')
+
+"""
+    )
+
+
+# Verified on Hardware
+def test_code_move_for_duration_value_variable():
+    assert (
+        helper("move_for_duration_value_variable", "Movement")
+        == f"""{includes}
+# Create your objects here.
+
+# Write your program here.
+my_variable = 10.0
+motor_pair = MotorPair('A', 'B')
+motor_pair.set_default_speed(50)  # Note: Needed since the default speed is 100, which is too fast.
+motor_pair.move(my_variable, 'cm')
+
+"""
+    )
+
+
 # - Set Movement Motors
-# TODO: Check on hardware
-def test_ast_set_movement_motors_base():
+# Verified on Hardware
+def test_code_set_movement_motors_base():
     assert (
         helper("set_movement_motors_base", "Movement")
         == f"""{includes}
@@ -848,13 +994,14 @@ def test_ast_set_movement_motors_base():
 
 # Write your program here.
 motor_pair = MotorPair('A', 'B')
+motor_pair.set_default_speed(50)  # Note: Needed since the default speed is 100, which is too fast.
 
 """
     )
 
 
-# TODO: Check on hardware
-def test_ast_set_movement_motors_list():
+# Verified on Hardware
+def test_code_set_movement_motors_list():
     assert (
         helper("set_movement_motors_list", "Movement")
         == f"""{includes}
@@ -866,13 +1013,14 @@ my_list.append('A')
 my_list.append('B')
 # Note: This will fail if the first two items in my_list are not valid ports.
 motor_pair = MotorPair(my_list[0], my_list[1])
+motor_pair.set_default_speed(50)  # Note: Needed since the default speed is 100, which is too fast.
 
 """
     )
 
 
-# TODO: Check on hardware
-def test_ast_set_movement_motors_variable():
+# Verified on Hardware
+def test_code_set_movement_motors_variable():
     assert (
         helper("set_movement_motors_variable", "Movement")
         == f"""{includes}
@@ -882,6 +1030,7 @@ def test_ast_set_movement_motors_variable():
 my_variable = 'AB'
 # Note: This will fail if the first two items in my_variable are not valid ports.
 motor_pair = MotorPair(my_variable[0], my_variable[1])
+motor_pair.set_default_speed(50)  # Note: Needed since the default speed is 100, which is too fast.
 
 """
     )

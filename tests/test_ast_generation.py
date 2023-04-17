@@ -723,6 +723,155 @@ def test_ast_motor_speed_variable():
 
 
 # ---------- Movement ----------
+# - Move for duration
+def test_ast_move_for_duration_backwards():
+    assert (
+        helper("move_for_duration_backwards", "Movement")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="SetMovementMotorsNode"]
+2 [label="ListLiteralNode('['A', 'B']')"]
+3 [label="MoveForDurationNode(direction:'MovementDirection.BACK', unit:'MovementUnit.CM')"]
+4 [label="NumericalNode(10.0)"]
+0 -> 1
+1 -> 2
+1 -> 3
+3 -> 4}"""
+    )
+
+
+def test_ast_move_for_duration_base():
+    assert (
+        helper("move_for_duration_base", "Movement")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="SetMovementMotorsNode"]
+2 [label="ListLiteralNode('['A', 'B']')"]
+3 [label="MoveForDurationNode(direction:'MovementDirection.FORWARD', unit:'MovementUnit.CM')"]
+4 [label="NumericalNode(10.0)"]
+0 -> 1
+1 -> 2
+1 -> 3
+3 -> 4}"""
+    )
+
+
+def test_ast_move_for_duration_clockwise():
+    assert (
+        helper("move_for_duration_clockwise", "Movement")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="SetMovementMotorsNode"]
+2 [label="ListLiteralNode('['A', 'B']')"]
+3 [label="MoveForDurationNode(direction:'MovementDirection.CLOCKWISE', unit:'MovementUnit.CM')"]
+4 [label="NumericalNode(10.0)"]
+0 -> 1
+1 -> 2
+1 -> 3
+3 -> 4}"""
+    )
+
+
+def test_ast_move_for_duration_counterclockwise():
+    assert (
+        helper("move_for_duration_counterclockwise", "Movement")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="SetMovementMotorsNode"]
+2 [label="ListLiteralNode('['A', 'B']')"]
+3 [label="MoveForDurationNode(direction:'MovementDirection.COUNTERCLOCKWISE', unit:'MovementUnit.CM')"]
+4 [label="NumericalNode(10.0)"]
+0 -> 1
+1 -> 2
+1 -> 3
+3 -> 4}"""
+    )
+
+
+def test_ast_move_for_duration_degrees():
+    assert (
+        helper("move_for_duration_degrees", "Movement")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="SetMovementMotorsNode"]
+2 [label="ListLiteralNode('['A', 'B']')"]
+3 [label="MoveForDurationNode(direction:'MovementDirection.FORWARD', unit:'MovementUnit.DEGREES')"]
+4 [label="NumericalNode(10.0)"]
+0 -> 1
+1 -> 2
+1 -> 3
+3 -> 4}"""
+    )
+
+
+def test_ast_move_for_duration_inches():
+    assert (
+        helper("move_for_duration_inches", "Movement")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="SetMovementMotorsNode"]
+2 [label="ListLiteralNode('['A', 'B']')"]
+3 [label="MoveForDurationNode(direction:'MovementDirection.FORWARD', unit:'MovementUnit.INCHES')"]
+4 [label="NumericalNode(10.0)"]
+0 -> 1
+1 -> 2
+1 -> 3
+3 -> 4}"""
+    )
+
+
+def test_ast_move_for_duration_rotations():
+    assert (
+        helper("move_for_duration_rotations", "Movement")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="SetMovementMotorsNode"]
+2 [label="ListLiteralNode('['A', 'B']')"]
+3 [label="MoveForDurationNode(direction:'MovementDirection.FORWARD', unit:'MovementUnit.ROTATIONS')"]
+4 [label="NumericalNode(10.0)"]
+0 -> 1
+1 -> 2
+1 -> 3
+3 -> 4}"""
+    )
+
+
+def test_ast_move_for_duration_seconds():
+    assert (
+        helper("move_for_duration_seconds", "Movement")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="SetMovementMotorsNode"]
+2 [label="ListLiteralNode('['A', 'B']')"]
+3 [label="MoveForDurationNode(direction:'MovementDirection.FORWARD', unit:'MovementUnit.SECONDS')"]
+4 [label="NumericalNode(10.0)"]
+0 -> 1
+1 -> 2
+1 -> 3
+3 -> 4}"""
+    )
+
+
+def test_ast_move_for_duration_value_variable():
+    assert (
+        helper("move_for_duration_value_variable", "Movement")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="SetVariableToNode(variable:'my_variable')"]
+2 [label="NumericalNode(10.0)"]
+3 [label="SetMovementMotorsNode"]
+4 [label="ListLiteralNode('['A', 'B']')"]
+5 [label="MoveForDurationNode(direction:'MovementDirection.FORWARD', unit:'MovementUnit.CM')"]
+6 [label="VariableNode(name:'my_variable')"]
+0 -> 1
+1 -> 2
+1 -> 3
+3 -> 4
+3 -> 5
+5 -> 6}"""
+    )
+
+
 # - Set Movement Motors
 def test_ast_set_movement_motors_base():
     assert (

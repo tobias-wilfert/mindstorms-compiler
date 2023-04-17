@@ -210,6 +210,43 @@ def test_extract_json_motor_speed_variable():
 
 
 # ---------- Movement ----------
+# - Move for duration
+def test_extract_json_move_for_duration_backwards():
+    helper("move_for_duration_backwards", "Movement")
+
+
+def test_extract_json_move_for_duration_base():
+    helper("move_for_duration_base", "Movement")
+
+
+def test_extract_json_move_for_duration_clockwise():
+    helper("move_for_duration_clockwise", "Movement")
+
+
+def test_extract_json_move_for_duration_counterclockwise():
+    helper("move_for_duration_counterclockwise", "Movement")
+
+
+def test_extract_json_move_for_duration_degrees():
+    helper("move_for_duration_degrees", "Movement")
+
+
+def test_extract_json_move_for_duration_inches():
+    helper("move_for_duration_inches", "Movement")
+
+
+def test_extract_json_move_for_duration_rotations():
+    helper("move_for_duration_rotations", "Movement")
+
+
+def test_extract_json_move_for_duration_seconds():
+    helper("move_for_duration_seconds", "Movement")
+
+
+def test_extract_json_move_for_duration_value_variable():
+    helper("move_for_duration_value_variable", "Movement")
+
+
 # - Set Movement Motors
 def test_extract_json_set_movement_motors_base():
     helper("set_movement_motors_base", "Movement")

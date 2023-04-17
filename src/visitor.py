@@ -12,7 +12,12 @@ from src.abstract_syntax_tree.motors import (
     TurnDirection,
     Unit,
 )
-from src.abstract_syntax_tree.movement import SetMovementMotorsNode
+from src.abstract_syntax_tree.movement import (
+    MoveForDurationNode,
+    MovementDirection,
+    MovementUnit,
+    SetMovementMotorsNode,
+)
 from src.abstract_syntax_tree.operators import ArithmeticalNode, Operation
 from src.abstract_syntax_tree.variables import (
     AddItemToListNode,
@@ -90,6 +95,8 @@ class Visitor:
             return self.visit_motor_speed(node)
         elif opcode == "flippermove_setMovementPair":
             return self.visit_set_movement_motors(node)
+        elif opcode == "flippermove_move":
+            return self.visit_move_for_duration(node)
         elif opcode == "data_setvariableto":
             return self.visit_set_variable_to(node)
         elif opcode == "data_changevariableby":
@@ -363,3 +370,33 @@ class Visitor:
         ports = self.visit_movement_ports(node)
         next_node = self.visit_node(node["next"])
         return SetMovementMotorsNode(ports, next_node)
+
+    def visit_move_for_duration_unit(self, node: dict) -> MovementUnit:
+        """Parses the unit that is being used by the MoveForDuration.
+        :param node: The Node representation.
+        :return: The unit that is being used.
+        """
+        unit = node["fields"]["UNIT"][0]
+        return MovementUnit[unit.upper()]
+
+    def visit_move_for_duration_direction(self, node: dict) -> MovementDirection:
+        """Parses the direction that is being used by the MoveForDuration.
+        :param node: The Node representation.
+        :return: The direction that is being used.
+        """
+        direction = self.cst[node["inputs"]["DIRECTION"][1]]["fields"][
+            "field_flippermove_custom-icon-direction"
+        ][0]
+        return MovementDirection[direction.upper()]
+
+    def visit_move_for_duration(self, node) -> MoveForDurationNode:
+        """Constructs the AST representation of the MoveForDuration node.
+
+        :param node: The Node representation.
+        :return: The AST representation.
+        """
+        direction = self.visit_move_for_duration_direction(node)
+        value = self.visit_run_motor_for_duration_value(node)
+        unit = self.visit_move_for_duration_unit(node)
+        next_node = self.visit_node(node["next"])
+        return MoveForDurationNode(direction, value, unit, next_node)

@@ -10,7 +10,11 @@ from src.abstract_syntax_tree.motors import (
     StopMotorNode,
     TurnDirection,
 )
-from src.abstract_syntax_tree.movement import SetMovementMotorsNode
+from src.abstract_syntax_tree.movement import (
+    MoveForDurationNode,
+    MovementDirection,
+    SetMovementMotorsNode,
+)
 from src.abstract_syntax_tree.operators import ArithmeticalNode
 from src.abstract_syntax_tree.variables import (
     AddItemToListNode,
@@ -56,6 +60,7 @@ import math
 {self.program_code}
 """
 
+    # flake8: noqa: C901
     def visit(self, node: Node) -> str:
         """Visit the node in the AST, decide which type it is and call the appropriate method.
 
@@ -97,6 +102,8 @@ import math
             return self.visit_add_item_to_list_node(node)
         elif isinstance(node, SetMovementMotorsNode):
             return self.visit_set_movement_motors(node)
+        elif isinstance(node, MoveForDurationNode):
+            return self.visit_move_for_duration(node)
         else:
             raise NotImplementedError(f"Currently no code can be generated for {node}")
 
@@ -415,3 +422,23 @@ import math
             ports = self.visit(node.ports)
             self.program_code += f"# Note: This will fail if the first two items in {ports} are not valid ports.\n"
             self.program_code += f"motor_pair = MotorPair({ports}[0], {ports}[1])\n"
+
+        self.program_code += "motor_pair.set_default_speed(50)  # Note: Needed since the default speed is 100, which is too fast.\n"
+        self.visit(node.next)
+
+    def visit_move_for_duration(self, node: MoveForDurationNode):
+        value = self.visit(node.value)
+        if node.direction == MovementDirection.CLOCKWISE:
+            self.program_code += (
+                f"motor_pair.move({value}, '{node.unit.code()}', 100)\n"
+            )
+        elif node.direction == MovementDirection.COUNTERCLOCKWISE:
+            self.program_code += (
+                f"motor_pair.move({value}, '{node.unit.code()}', -100)\n"
+            )
+        else:
+            if node.direction == MovementDirection.BACK:
+                value = f"-{value}"
+            self.program_code += f"motor_pair.move({value}, '{node.unit.code()}')\n"
+
+        self.visit(node.next)
