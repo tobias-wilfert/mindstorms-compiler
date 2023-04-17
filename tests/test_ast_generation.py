@@ -872,6 +872,242 @@ def test_ast_move_for_duration_value_variable():
     )
 
 
+# - Move with Steering
+def test_extract_json_move_with_steering_base():
+    assert (
+        helper("move_with_steering_base", "Movement")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="SetMovementMotorsNode"]
+2 [label="ListLiteralNode('['A', 'B']')"]
+3 [label="MoveWithSteeringNode(unit:'MovementUnit.CM')"]
+4 [label="NumericalNode(0.0)"]
+5 [label="NumericalNode(10.0)"]
+0 -> 1
+1 -> 2
+1 -> 3
+3 -> 4
+3 -> 5}"""
+    )
+
+
+def test_extract_json_move_with_steering_degrees():
+    assert (
+        helper("move_with_steering_degrees", "Movement")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="SetMovementMotorsNode"]
+2 [label="ListLiteralNode('['A', 'B']')"]
+3 [label="MoveWithSteeringNode(unit:'MovementUnit.DEGREES')"]
+4 [label="NumericalNode(0.0)"]
+5 [label="NumericalNode(10.0)"]
+0 -> 1
+1 -> 2
+1 -> 3
+3 -> 4
+3 -> 5}"""
+    )
+
+
+def test_extract_json_move_with_steering_inches():
+    assert (
+        helper("move_with_steering_inches", "Movement")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="SetMovementMotorsNode"]
+2 [label="ListLiteralNode('['A', 'B']')"]
+3 [label="MoveWithSteeringNode(unit:'MovementUnit.INCHES')"]
+4 [label="NumericalNode(0.0)"]
+5 [label="NumericalNode(10.0)"]
+0 -> 1
+1 -> 2
+1 -> 3
+3 -> 4
+3 -> 5}"""
+    )
+
+
+def test_extract_json_move_with_steering_rotations():
+    assert (
+        helper("move_with_steering_rotations", "Movement")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="SetMovementMotorsNode"]
+2 [label="ListLiteralNode('['A', 'B']')"]
+3 [label="MoveWithSteeringNode(unit:'MovementUnit.ROTATIONS')"]
+4 [label="NumericalNode(0.0)"]
+5 [label="NumericalNode(10.0)"]
+0 -> 1
+1 -> 2
+1 -> 3
+3 -> 4
+3 -> 5}"""
+    )
+
+
+def test_extract_json_move_with_steering_seconds():
+    assert (
+        helper("move_with_steering_seconds", "Movement")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="SetMovementMotorsNode"]
+2 [label="ListLiteralNode('['A', 'B']')"]
+3 [label="MoveWithSteeringNode(unit:'MovementUnit.SECONDS')"]
+4 [label="NumericalNode(0.0)"]
+5 [label="NumericalNode(10.0)"]
+0 -> 1
+1 -> 2
+1 -> 3
+3 -> 4
+3 -> 5}"""
+    )
+
+
+def test_extract_json_move_with_steering_steering_variable():
+    assert (
+        helper("move_with_steering_steering_variable", "Movement")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="SetVariableToNode(variable:'my_variable')"]
+2 [label="NumericalNode(0.0)"]
+3 [label="SetMovementMotorsNode"]
+4 [label="ListLiteralNode('['A', 'B']')"]
+5 [label="MoveWithSteeringNode(unit:'MovementUnit.CM')"]
+6 [label="VariableNode(name:'my_variable')"]
+7 [label="NumericalNode(10.0)"]
+0 -> 1
+1 -> 2
+1 -> 3
+3 -> 4
+3 -> 5
+5 -> 6
+5 -> 7}"""
+    )
+
+
+def test_extract_json_move_with_steering_value_variable():
+    assert (
+        helper("move_with_steering_value_variable", "Movement")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="SetVariableToNode(variable:'my_variable')"]
+2 [label="NumericalNode(10.0)"]
+3 [label="SetMovementMotorsNode"]
+4 [label="ListLiteralNode('['A', 'B']')"]
+5 [label="MoveWithSteeringNode(unit:'MovementUnit.CM')"]
+6 [label="NumericalNode(0.0)"]
+7 [label="VariableNode(name:'my_variable')"]
+0 -> 1
+1 -> 2
+1 -> 3
+3 -> 4
+3 -> 5
+5 -> 6
+5 -> 7}"""
+    )
+
+
+# - Start Moving with Steering
+def test_extract_json_start_moving_with_steering_base():
+    assert (
+        helper("start_moving_with_steering_base", "Movement")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="SetMovementMotorsNode"]
+2 [label="ListLiteralNode('['A', 'B']')"]
+3 [label="StartMowingWithSteeringNode"]
+4 [label="NumericalNode(0.0)"]
+0 -> 1
+1 -> 2
+1 -> 3
+3 -> 4}"""
+    )
+
+
+def test_extract_json_start_moving_with_steering_variable():
+    assert (
+        helper("start_moving_with_steering_variable", "Movement")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="SetVariableToNode(variable:'my_variable')"]
+2 [label="NumericalNode(0.0)"]
+3 [label="SetMovementMotorsNode"]
+4 [label="ListLiteralNode('['A', 'B']')"]
+5 [label="StartMowingWithSteeringNode"]
+6 [label="VariableNode(name:'my_variable')"]
+0 -> 1
+1 -> 2
+1 -> 3
+3 -> 4
+3 -> 5
+5 -> 6}"""
+    )
+
+
+# - Stop Moving
+def test_extract_json_stop_moving():
+    assert (
+        helper("stop_moving", "Movement")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="SetMovementMotorsNode"]
+2 [label="ListLiteralNode('['A', 'B']')"]
+3 [label="StartMowingWithSteeringNode"]
+4 [label="NumericalNode(0.0)"]
+5 [label="StopMovingNode"]
+0 -> 1
+1 -> 2
+1 -> 3
+3 -> 4
+3 -> 5}"""
+    )
+
+
+# - Set Movement Speed
+def test_extract_json_set_movement_speed_base():
+    assert (
+        helper("set_movement_speed_base", "Movement")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="SetMovementMotorsNode"]
+2 [label="ListLiteralNode('['A', 'B']')"]
+3 [label="SetMovementSpeedNode"]
+4 [label="NumericalNode(50.0)"]
+5 [label="MoveForDurationNode(direction:'MovementDirection.FORWARD', unit:'MovementUnit.CM')"]
+6 [label="NumericalNode(10.0)"]
+0 -> 1
+1 -> 2
+1 -> 3
+3 -> 4
+3 -> 5
+5 -> 6}"""
+    )
+
+
+def test_extract_json_set_movement_speed_value_variable():
+    assert (
+        helper("set_movement_speed_value_variable", "Movement")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="SetVariableToNode(variable:'my_variable')"]
+2 [label="NumericalNode(10.0)"]
+3 [label="SetMovementMotorsNode"]
+4 [label="ListLiteralNode('['A', 'B']')"]
+5 [label="SetMovementSpeedNode"]
+6 [label="VariableNode(name:'my_variable')"]
+7 [label="MoveForDurationNode(direction:'MovementDirection.FORWARD', unit:'MovementUnit.CM')"]
+8 [label="NumericalNode(10.0)"]
+0 -> 1
+1 -> 2
+1 -> 3
+3 -> 4
+3 -> 5
+5 -> 6
+5 -> 7
+7 -> 8}"""
+    )
+
+
 # - Set Movement Motors
 def test_ast_set_movement_motors_base():
     assert (
@@ -918,6 +1154,71 @@ def test_ast_set_movement_motors_variable():
 1 -> 2
 1 -> 3
 3 -> 4}"""
+    )
+
+
+# - Set Motor rotation
+def test_extract_json_set_motor_rotation_base():
+    assert (
+        helper("set_motor_rotation_base", "Movement")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="SetMovementMotorsNode"]
+2 [label="ListLiteralNode('['A', 'B']')"]
+3 [label="SetMotorRotationNode(unit:'RotationUnit.CM')"]
+4 [label="NumericalNode(17.5)"]
+5 [label="MoveForDurationNode(direction:'MovementDirection.FORWARD', unit:'MovementUnit.CM')"]
+6 [label="NumericalNode(10.0)"]
+0 -> 1
+1 -> 2
+1 -> 3
+3 -> 4
+3 -> 5
+5 -> 6}"""
+    )
+
+
+def test_extract_json_set_motor_rotation_inches():
+    assert (
+        helper("set_motor_rotation_inches", "Movement")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="SetMovementMotorsNode"]
+2 [label="ListLiteralNode('['A', 'B']')"]
+3 [label="SetMotorRotationNode(unit:'RotationUnit.INCHES')"]
+4 [label="NumericalNode(17.5)"]
+5 [label="MoveForDurationNode(direction:'MovementDirection.FORWARD', unit:'MovementUnit.CM')"]
+6 [label="NumericalNode(10.0)"]
+0 -> 1
+1 -> 2
+1 -> 3
+3 -> 4
+3 -> 5
+5 -> 6}"""
+    )
+
+
+def test_extract_json_set_motor_rotation_value_variable():
+    assert (
+        helper("set_motor_rotation_value_variable", "Movement")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="SetVariableToNode(variable:'my_variable')"]
+2 [label="NumericalNode(10.0)"]
+3 [label="SetMovementMotorsNode"]
+4 [label="ListLiteralNode('['A', 'B']')"]
+5 [label="SetMotorRotationNode(unit:'RotationUnit.CM')"]
+6 [label="VariableNode(name:'my_variable')"]
+7 [label="MoveForDurationNode(direction:'MovementDirection.FORWARD', unit:'MovementUnit.CM')"]
+8 [label="NumericalNode(10.0)"]
+0 -> 1
+1 -> 2
+1 -> 3
+3 -> 4
+3 -> 5
+5 -> 6
+5 -> 7
+7 -> 8}"""
     )
 
 

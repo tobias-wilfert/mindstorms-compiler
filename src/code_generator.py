@@ -13,7 +13,12 @@ from src.abstract_syntax_tree.motors import (
 from src.abstract_syntax_tree.movement import (
     MoveForDurationNode,
     MovementDirection,
+    MoveWithSteeringNode,
+    SetMotorRotationNode,
     SetMovementMotorsNode,
+    SetMovementSpeedNode,
+    StartMovingWithSteering,
+    StopMovingNode,
 )
 from src.abstract_syntax_tree.operators import ArithmeticalNode
 from src.abstract_syntax_tree.variables import (
@@ -101,9 +106,19 @@ import math
         elif isinstance(node, AddItemToListNode):
             return self.visit_add_item_to_list_node(node)
         elif isinstance(node, SetMovementMotorsNode):
-            return self.visit_set_movement_motors(node)
+            return self.visit_set_movement_motors_node(node)
         elif isinstance(node, MoveForDurationNode):
-            return self.visit_move_for_duration(node)
+            return self.visit_move_for_duration_node(node)
+        elif isinstance(node, MoveWithSteeringNode):
+            return self.visit_move_with_steering_node(node)
+        elif isinstance(node, StartMovingWithSteering):
+            return self.visit_start_moving_with_steering_node(node)
+        elif isinstance(node, StopMovingNode):
+            return self.visit_stop_moving_node(node)
+        elif isinstance(node, SetMovementSpeedNode):
+            return self.visit_set_movement_speed_node(node)
+        elif isinstance(node, SetMotorRotationNode):
+            return self.visit_set_motor_rotation_node(node)
         else:
             raise NotImplementedError(f"Currently no code can be generated for {node}")
 
@@ -415,7 +430,7 @@ import math
         self.program_code += f"{variable}.append({self.visit(node.value)})\n"
         self.visit(node.next)
 
-    def visit_set_movement_motors(self, node: SetMovementMotorsNode):
+    def visit_set_movement_motors_node(self, node: SetMovementMotorsNode):
         if isinstance(node.ports, ListLiteralNode):
             self.program_code += f"motor_pair = MotorPair('{node.ports.value[0]}', '{node.ports.value[1]}')\n"
         else:
@@ -426,7 +441,7 @@ import math
         self.program_code += "motor_pair.set_default_speed(50)  # Note: Needed since the default speed is 100, which is too fast.\n"
         self.visit(node.next)
 
-    def visit_move_for_duration(self, node: MoveForDurationNode):
+    def visit_move_for_duration_node(self, node: MoveForDurationNode):
         value = self.visit(node.value)
         if node.direction == MovementDirection.CLOCKWISE:
             self.program_code += (
@@ -441,4 +456,24 @@ import math
                 value = f"-{value}"
             self.program_code += f"motor_pair.move({value}, '{node.unit.code()}')\n"
 
+        self.visit(node.next)
+
+    def visit_move_with_steering_node(self, node: MoveWithSteeringNode):
+        self.program_code += f"motor_pair.move({self.visit(node.value)}, '{node.unit.code()}', int({self.visit(node.steering)}))  # Note: This methods expects an integer so wee need to convert the value.\n"
+        self.visit(node.next)
+
+    def visit_start_moving_with_steering_node(self, node: SetMotorSpeedNode):
+        self.program_code += f"motor_pair.start(int({self.visit(node.steering)}))  # Note: This methods expects an integer so wee need to convert the value.\n"
+        self.visit(node.next)
+
+    def visit_stop_moving_node(self, node: StopMovingNode):
+        self.program_code += "motor_pair.stop()\n"
+        self.visit(node.next)
+
+    def visit_set_movement_speed_node(self, node: SetMovementSpeedNode):
+        self.program_code += f"motor_pair.set_default_speed(int({self.visit(node.value)}))  # Note: This methods expects an integer so wee need to convert the value.\n"
+        self.visit(node.next)
+
+    def visit_set_motor_rotation_node(self, node: SetMotorRotationNode):
+        self.program_code += f"motor_pair.set_motor_rotation({self.visit(node.value)}, '{node.unit.code()}')\n"
         self.visit(node.next)

@@ -247,6 +247,58 @@ def test_extract_json_move_for_duration_value_variable():
     helper("move_for_duration_value_variable", "Movement")
 
 
+# - Move with Steering
+def test_extract_json_move_with_steering_base():
+    helper("move_with_steering_base", "Movement")
+
+
+def test_extract_json_move_with_steering_degrees():
+    helper("move_with_steering_degrees", "Movement")
+
+
+def test_extract_json_move_with_steering_inches():
+    helper("move_with_steering_inches", "Movement")
+
+
+def test_extract_json_move_with_steering_rotations():
+    helper("move_with_steering_rotations", "Movement")
+
+
+def test_extract_json_move_with_steering_seconds():
+    helper("move_with_steering_seconds", "Movement")
+
+
+def test_extract_json_move_with_steering_steering_variable():
+    helper("move_with_steering_steering_variable", "Movement")
+
+
+def test_extract_json_move_with_steering_value_variable():
+    helper("move_with_steering_value_variable", "Movement")
+
+
+# - Start Moving with Steering
+def test_extract_json_start_moving_with_steering_base():
+    helper("start_moving_with_steering_base", "Movement")
+
+
+def test_extract_json_start_moving_with_steering_variable():
+    helper("start_moving_with_steering_variable", "Movement")
+
+
+# - Stop Moving
+def test_extract_json_stop_moving():
+    helper("stop_moving", "Movement")
+
+
+# - Set Movement Speed
+def test_extract_json_set_movement_speed_base():
+    helper("set_movement_speed_base", "Movement")
+
+
+def test_extract_json_set_movement_speed_value_variable():
+    helper("set_movement_speed_value_variable", "Movement")
+
+
 # - Set Movement Motors
 def test_extract_json_set_movement_motors_base():
     helper("set_movement_motors_base", "Movement")
@@ -258,6 +310,19 @@ def test_extract_json_set_movement_motors_list():
 
 def test_extract_json_set_movement_motors_variable():
     helper("set_movement_motors_variable", "Movement")
+
+
+# - Set Motor rotation
+def test_extract_json_set_motor_rotation_base():
+    helper("set_motor_rotation_base", "Movement")
+
+
+def test_extract_json_set_motor_rotation_inches():
+    helper("set_motor_rotation_inches", "Movement")
+
+
+def test_extract_json_set_motor_rotation_value_variable():
+    helper("set_motor_rotation_value_variable", "Movement")
 
 
 # ---------- Operators ----------

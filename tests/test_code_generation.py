@@ -984,6 +984,209 @@ motor_pair.move(my_variable, 'cm')
     )
 
 
+# - Move with Steering
+# Verified on Hardware
+def test_code_move_with_steering_base():
+    assert (
+        helper("move_with_steering_base", "Movement")
+        == f"""{includes}
+# Create your objects here.
+
+# Write your program here.
+motor_pair = MotorPair('A', 'B')
+motor_pair.set_default_speed(50)  # Note: Needed since the default speed is 100, which is too fast.
+motor_pair.move(10.0, 'cm', int(0.0))  # Note: This methods expects an integer so wee need to convert the value.
+
+"""
+    )
+
+
+# Verified on Hardware
+def test_code_move_with_steering_degrees():
+    assert (
+        helper("move_with_steering_degrees", "Movement")
+        == f"""{includes}
+# Create your objects here.
+
+# Write your program here.
+motor_pair = MotorPair('A', 'B')
+motor_pair.set_default_speed(50)  # Note: Needed since the default speed is 100, which is too fast.
+motor_pair.move(10.0, 'degrees', int(0.0))  # Note: This methods expects an integer so wee need to convert the value.
+
+"""
+    )
+
+
+# Verified on Hardware
+def test_code_move_with_steering_inches():
+    assert (
+        helper("move_with_steering_inches", "Movement")
+        == f"""{includes}
+# Create your objects here.
+
+# Write your program here.
+motor_pair = MotorPair('A', 'B')
+motor_pair.set_default_speed(50)  # Note: Needed since the default speed is 100, which is too fast.
+motor_pair.move(10.0, 'in', int(0.0))  # Note: This methods expects an integer so wee need to convert the value.
+
+"""
+    )
+
+
+# Verified on Hardware
+def test_code_move_with_steering_rotations():
+    assert (
+        helper("move_with_steering_rotations", "Movement")
+        == f"""{includes}
+# Create your objects here.
+
+# Write your program here.
+motor_pair = MotorPair('A', 'B')
+motor_pair.set_default_speed(50)  # Note: Needed since the default speed is 100, which is too fast.
+motor_pair.move(10.0, 'rotations', int(0.0))  # Note: This methods expects an integer so wee need to convert the value.
+
+"""
+    )
+
+
+# Verified on Hardware
+def test_code_move_with_steering_seconds():
+    assert (
+        helper("move_with_steering_seconds", "Movement")
+        == f"""{includes}
+# Create your objects here.
+
+# Write your program here.
+motor_pair = MotorPair('A', 'B')
+motor_pair.set_default_speed(50)  # Note: Needed since the default speed is 100, which is too fast.
+motor_pair.move(10.0, 'seconds', int(0.0))  # Note: This methods expects an integer so wee need to convert the value.
+
+"""
+    )
+
+
+# Verified on Hardware
+def test_code_move_with_steering_steering_variable():
+    assert (
+        helper("move_with_steering_steering_variable", "Movement")
+        == f"""{includes}
+# Create your objects here.
+
+# Write your program here.
+my_variable = 0.0
+motor_pair = MotorPair('A', 'B')
+motor_pair.set_default_speed(50)  # Note: Needed since the default speed is 100, which is too fast.
+motor_pair.move(10.0, 'cm', int(my_variable))  # Note: This methods expects an integer so wee need to convert the value.
+
+"""
+    )
+
+
+# Verified on Hardware
+def test_code_move_with_steering_value_variable():
+    assert (
+        helper("move_with_steering_value_variable", "Movement")
+        == f"""{includes}
+# Create your objects here.
+
+# Write your program here.
+my_variable = 10.0
+motor_pair = MotorPair('A', 'B')
+motor_pair.set_default_speed(50)  # Note: Needed since the default speed is 100, which is too fast.
+motor_pair.move(my_variable, 'cm', int(0.0))  # Note: This methods expects an integer so wee need to convert the value.
+
+"""
+    )
+
+
+# - Start Moving with Steering
+# Verified on Hardware
+def test_code_start_moving_with_steering_base():
+    assert (
+        helper("start_moving_with_steering_base", "Movement")
+        == f"""{includes}
+# Create your objects here.
+
+# Write your program here.
+motor_pair = MotorPair('A', 'B')
+motor_pair.set_default_speed(50)  # Note: Needed since the default speed is 100, which is too fast.
+motor_pair.start(int(0.0))  # Note: This methods expects an integer so wee need to convert the value.
+
+"""
+    )
+
+
+# Verified on Hardware
+def test_code_start_moving_with_steering_variable():
+    assert (
+        helper("start_moving_with_steering_variable", "Movement")
+        == f"""{includes}
+# Create your objects here.
+
+# Write your program here.
+my_variable = 0.0
+motor_pair = MotorPair('A', 'B')
+motor_pair.set_default_speed(50)  # Note: Needed since the default speed is 100, which is too fast.
+motor_pair.start(int(my_variable))  # Note: This methods expects an integer so wee need to convert the value.
+
+"""
+    )
+
+
+# - Stop Moving
+# Verified on Hardware
+def test_code_stop_moving():
+    assert (
+        helper("stop_moving", "Movement")
+        == f"""{includes}
+# Create your objects here.
+
+# Write your program here.
+motor_pair = MotorPair('A', 'B')
+motor_pair.set_default_speed(50)  # Note: Needed since the default speed is 100, which is too fast.
+motor_pair.start(int(0.0))  # Note: This methods expects an integer so wee need to convert the value.
+motor_pair.stop()
+
+"""
+    )
+
+
+# - Set Movement Speed
+# Verified on Hardware
+def test_code_set_movement_speed_base():
+    assert (
+        helper("set_movement_speed_base", "Movement")
+        == f"""{includes}
+# Create your objects here.
+
+# Write your program here.
+motor_pair = MotorPair('A', 'B')
+motor_pair.set_default_speed(50)  # Note: Needed since the default speed is 100, which is too fast.
+motor_pair.set_default_speed(int(50.0))  # Note: This methods expects an integer so wee need to convert the value.
+motor_pair.move(10.0, 'cm')
+
+"""
+    )
+
+
+# Verified on Hardware
+def test_code_set_movement_speed_value_variable():
+    assert (
+        helper("set_movement_speed_value_variable", "Movement")
+        == f"""{includes}
+# Create your objects here.
+
+# Write your program here.
+my_variable = 10.0
+motor_pair = MotorPair('A', 'B')
+motor_pair.set_default_speed(50)  # Note: Needed since the default speed is 100, which is too fast.
+motor_pair.set_default_speed(int(my_variable))  # Note: This methods expects an integer so wee need to convert the value.
+motor_pair.move(10.0, 'cm')
+
+"""
+    )
+
+
 # - Set Movement Motors
 # Verified on Hardware
 def test_code_set_movement_motors_base():
@@ -1031,6 +1234,59 @@ my_variable = 'AB'
 # Note: This will fail if the first two items in my_variable are not valid ports.
 motor_pair = MotorPair(my_variable[0], my_variable[1])
 motor_pair.set_default_speed(50)  # Note: Needed since the default speed is 100, which is too fast.
+
+"""
+    )
+
+
+# - Set Motor rotation
+# Verified on Hardware
+def test_code_set_motor_rotation_base():
+    assert (
+        helper("set_motor_rotation_base", "Movement")
+        == f"""{includes}
+# Create your objects here.
+
+# Write your program here.
+motor_pair = MotorPair('A', 'B')
+motor_pair.set_default_speed(50)  # Note: Needed since the default speed is 100, which is too fast.
+motor_pair.set_motor_rotation(17.5, 'cm')
+motor_pair.move(10.0, 'cm')
+
+"""
+    )
+
+
+# Verified on Hardware
+def test_code_set_motor_rotation_inches():
+    assert (
+        helper("set_motor_rotation_inches", "Movement")
+        == f"""{includes}
+# Create your objects here.
+
+# Write your program here.
+motor_pair = MotorPair('A', 'B')
+motor_pair.set_default_speed(50)  # Note: Needed since the default speed is 100, which is too fast.
+motor_pair.set_motor_rotation(17.5, 'in')
+motor_pair.move(10.0, 'cm')
+
+"""
+    )
+
+
+# Verified on Hardware
+def test_code_set_motor_rotation_value_variable():
+    assert (
+        helper("set_motor_rotation_value_variable", "Movement")
+        == f"""{includes}
+# Create your objects here.
+
+# Write your program here.
+my_variable = 10.0
+motor_pair = MotorPair('A', 'B')
+motor_pair.set_default_speed(50)  # Note: Needed since the default speed is 100, which is too fast.
+motor_pair.set_motor_rotation(my_variable, 'cm')
+motor_pair.move(10.0, 'cm')
 
 """
     )

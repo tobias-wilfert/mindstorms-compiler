@@ -71,3 +71,119 @@ class MoveForDurationNode(StackNode):
         self.value.generate_tree_representation(
             nodes, connections, parent_id, uid_generator
         )
+
+
+class MoveWithSteeringNode(StackNode):
+    """Class to represent the MoveWithSteeringNode block."""
+
+    def __init__(
+        self, steering: Node, value: Node, unit: MovementUnit, next: Node
+    ) -> None:
+        super().__init__(next)
+        self.steering = steering
+        self.value = value
+        self.unit = unit
+
+    def __str__(self) -> str:
+        return f"MoveWithSteeringNode(unit:'{self.unit}')"
+
+    def custom_representation(
+        self,
+        nodes: list,
+        connections: list,
+        parent_id: int,
+        uid_generator: UIDGenerator,
+    ):
+        self.steering.generate_tree_representation(
+            nodes, connections, parent_id, uid_generator
+        )
+        self.value.generate_tree_representation(
+            nodes, connections, parent_id, uid_generator
+        )
+
+
+class StartMovingWithSteering(StackNode):
+    """Class to represent the MoveWithSteering block."""
+
+    def __init__(self, steering: Node, next: Node) -> None:
+        super().__init__(next)
+        self.steering = steering
+
+    def __str__(self) -> str:
+        return "StartMowingWithSteeringNode"
+
+    def custom_representation(
+        self,
+        nodes: list,
+        connections: list,
+        parent_id: int,
+        uid_generator: UIDGenerator,
+    ):
+        self.steering.generate_tree_representation(
+            nodes, connections, parent_id, uid_generator
+        )
+
+
+class StopMovingNode(StackNode):
+    """Class to represent the StopMoving block."""
+
+    def __init__(self, next: Node) -> None:
+        super().__init__(next)
+
+    def __str__(self) -> str:
+        return "StopMovingNode"
+
+
+class SetMovementSpeedNode(StackNode):
+    """Class to represent the SetMovement block."""
+
+    def __init__(self, value: Node, next: Node) -> None:
+        super().__init__(next)
+        self.value = value
+
+    def __str__(self) -> str:
+        return "SetMovementSpeedNode"
+
+    def custom_representation(
+        self,
+        nodes: list,
+        connections: list,
+        parent_id: int,
+        uid_generator: UIDGenerator,
+    ):
+        self.value.generate_tree_representation(
+            nodes, connections, parent_id, uid_generator
+        )
+
+
+class RotationUnit(Enum):
+    """Enum for the units that can be used in the SetMotorRotation block."""
+
+    CM = "cm"
+    INCHES = "in"
+
+    def code(self):
+        return self.value
+
+
+class SetMotorRotationNode(StackNode):
+    """Class to represent the SetMotorRotation block."""
+
+    def __init__(self, value: Node, unit: MovementUnit, next: Node) -> None:
+        super().__init__(next)
+        self.value = value
+        self.unit = unit
+
+    def __str__(self) -> str:
+        return f"SetMotorRotationNode(unit:'{self.unit}')"
+
+    def custom_representation(
+        self,
+        nodes: list,
+        connections: list,
+        parent_id: int,
+        uid_generator: UIDGenerator,
+    ):
+        self.value.generate_tree_representation(
+            nodes, connections, parent_id, uid_generator
+        )

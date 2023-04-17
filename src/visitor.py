@@ -16,7 +16,13 @@ from src.abstract_syntax_tree.movement import (
     MoveForDurationNode,
     MovementDirection,
     MovementUnit,
+    MoveWithSteeringNode,
+    RotationUnit,
+    SetMotorRotationNode,
     SetMovementMotorsNode,
+    SetMovementSpeedNode,
+    StartMovingWithSteering,
+    StopMovingNode,
 )
 from src.abstract_syntax_tree.operators import ArithmeticalNode, Operation
 from src.abstract_syntax_tree.variables import (
@@ -97,6 +103,18 @@ class Visitor:
             return self.visit_set_movement_motors(node)
         elif opcode == "flippermove_move":
             return self.visit_move_for_duration(node)
+        elif opcode == "flippermove_steer":
+            return self.visit_move_with_steering(node)
+        elif opcode == "flippermove_rotation-wheel":
+            return self.visit_move_rotation_wheel(node)
+        elif opcode == "flippermove_startSteer":
+            return self.visit_start_moving_with_steering(node)
+        elif opcode == "flippermove_stopMove":
+            return self.visit_stop_moving(node)
+        elif opcode == "flippermove_movementSpeed":
+            return self.visit_set_movement_speed(node)
+        elif opcode == "flippermove_setDistance":
+            return self.visit_set_motor_rotation(node)
         elif opcode == "data_setvariableto":
             return self.visit_set_variable_to(node)
         elif opcode == "data_changevariableby":
@@ -400,3 +418,71 @@ class Visitor:
         unit = self.visit_move_for_duration_unit(node)
         next_node = self.visit_node(node["next"])
         return MoveForDurationNode(direction, value, unit, next_node)
+
+    def visit_move_with_steering_steering(self, node: dict) -> Node:
+        """Parses the value that is being used by the MoveWithSteeringNode.
+        :param node: The Node representation.
+        :return: The node that that specifies the value that should be used. (Could be an entire subtree, in the case of an equation).
+        """
+        return self.visit_input(node["inputs"]["STEERING"][1])
+
+    def visit_move_rotation_wheel(self, node: dict) -> Node:
+        """Parses the steering that is being used by the MoveWithSteeringNode.
+        :param node: The Node representation.
+        :return: A NumericalNode with the value of the steering.
+        """
+        return NumericalNode(
+            float(node["fields"]["field_flippermove_rotation-wheel"][0])
+        )
+
+    def visit_move_with_steering(self, node) -> MoveWithSteeringNode:
+        """Constructs the AST representation of the MoveWithSteering node.
+
+        :param node: The Node representation.
+        :return: The AST representation.
+        """
+        steering = self.visit_move_with_steering_steering(node)
+        value = self.visit_run_motor_for_duration_value(node)
+        unit = self.visit_move_for_duration_unit(node)
+        next_node = self.visit_node(node["next"])
+        return MoveWithSteeringNode(steering, value, unit, next_node)
+
+    def visit_start_moving_with_steering(self, node) -> StartMovingWithSteering:
+        """Constructs the AST representation of the StartMovingWithSteering node.
+
+        :param node: The Node representation.
+        :return: The AST representation.
+        """
+        steering = self.visit_move_with_steering_steering(node)
+        next_node = self.visit_node(node["next"])
+        return StartMovingWithSteering(steering, next_node)
+
+    def visit_stop_moving(self, node) -> StopMovingNode:
+        """Constructs the AST representation of the StopMoving node.
+
+        :param node: The Node representation.
+        :return: The AST representation.
+        """
+        next_node = self.visit_node(node["next"])
+        return StopMovingNode(next_node)
+
+    def visit_set_movement_speed(self, node) -> SetMovementSpeedNode:
+        """Constructs the AST representation of the SetMovementSpeed node.
+
+        :param node: The Node representation.
+        :return: The AST representation.
+        """
+        value = self.visit_input(node["inputs"]["SPEED"][1])
+        next_node = self.visit_node(node["next"])
+        return SetMovementSpeedNode(value, next_node)
+
+    def visit_set_motor_rotation(self, node) -> SetMotorRotationNode:
+        """Constructs the AST representation of the SetMotorRotation node.
+
+        :param node: The Node representation.
+        :return: The AST representation.
+        """
+        value = self.visit_input(node["inputs"]["DISTANCE"][1])
+        unit = RotationUnit[node["fields"]["UNIT"][0].upper()]
+        next_node = self.visit_node(node["next"])
+        return SetMotorRotationNode(value, unit, next_node)
