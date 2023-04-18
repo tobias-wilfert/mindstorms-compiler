@@ -47,9 +47,17 @@ A great feature of the latest generation of Mindstorms is that they can be progr
 
  ### Already supported:
 
-A set of the most used blocks is already supported (see the list below). On top of generating the equivalent Python code the compiler can also output the abstract syntax tree representation of a program. The representation is done using [Graphviz](https://graphviz.org) a simple example of such a AST visualization can be seen below.
+A set of the most used blocks is already supported (see the list below). On top of generating the equivalent Python code the compiler can also output the abstract syntax tree representation of a program. The representation is done using [Graphviz](https://graphviz.org) a simple example of such a AST visualization can be seen below together with the generated python code.
 
-![example.svg](./example.svg)
+![example.svg](./example.png)
+
+```python
+my_variable = 10.0
+motor_pair = MotorPair('A', 'B')
+motor_pair.set_default_speed(50)  # Note: Needed since the default speed is 100, which is too fast.
+motor_pair.set_default_speed(int(my_variable))  # Note: This methods expects an integer so wee need to convert the value.
+motor_pair.move(10.0, 'cm')
+```
 
 ## List of supported blocks
 
