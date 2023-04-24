@@ -71,6 +71,14 @@ motor_pair.move(10.0, 'cm')
 | Set Motor Speed   | 7  |
 | Motor Position   | 3  |
 | Motor Speed   | 3  |
+| **Movement** |  |
+| Move for Duration   | 9  |
+| Move  with Steering | 7  |
+| Start moving with Steering   | 2  |
+| Stop moving   | 1  |
+| Set Movement Speed   | 2  |
+| Set Movement Motor   | 3  |
+| Set Motor Rotation   | 3  |
 | **Operators** |  |
 | Plus   | 3 |
 | Minus   | 3  |
