@@ -1,0 +1,65 @@
+<svg
+      xmlns="http://www.w3.org/2000/svg"
+      xmlns:xlink="http://www.w3.org/1999/xlink"
+      version="1.1" 
+      preserveAspectRatio="xMidYMid meet"
+      viewBox="0 0 225 87"><style>
+ * {
+   -webkit-font-smoothing: antialiased;
+   text-rendering: optimizeLegibility;
+   word-wrap: break-word;
+ }
+ .blocklyPath {
+   stroke-width: 1px;
+ }
+ .blocklyText {
+   fill: rgb(255, 255, 255);
+   font-family: "Chalet", "Arial", sans-serif;
+   font-size: 12pt;
+   font-weight: 700;
+ }
+ .blocklyDropdownText {
+   fill: rgb(255, 255, 255) !important;
+ }
+ .blocklyNonEditableText > text, .blocklyEditableText > text {
+   fill: rgb(87, 94, 117);
+ }
+ .scratchCommentForeignObject {
+   background-color: #fff9d9;
+ }
+ .scratchCommentTextarea {
+   color: #a9983e;
+   background-color: #fff9d9; 
+   width: 100%;
+   height: 100%;
+   padding: 12px;
+   box-sizing: border-box;
+ }
+ 
+ .scratchCommentText {
+   font-size: 12pt;
+   fill: #fff9d9;
+   font-family: "Chalet", "Arial", sans-serif; 
+ }
+ .scratchCommentBody {
+   background-color: #fff9d9; }
+ .scratchCommentTopBar {
+   fill: #fff2ae;
+   fill-opacity: 0.1}
+ .scratchCommentRect {
+   fill: #fff2ae; }
+ .scratchWorkspaceCommentBorder {
+   stroke: #fff2ae; }
+ .scratchCommentTopBar ~ use, .scratchCommentTopBar ~ image {
+   opacity: 0.4; }
+ .scratchCommentTarget {
+   display: none;
+ }
+ .scratchCommentResizeSE, .scratchCommentResizeSW {
+   fill: transparent;
+ }
+ .blocklyResizeLine {
+   stroke: #888;
+   stroke-width: 1;
+ }
+ </style><g xmlns="http://www.w3.org/2000/svg" class="blocklyWorkspace" transform="translate(-432.25,-189.8625030517578)"><g class="blocklyBlockCanvas" transform="translate(520,120) scale(0.675)"><g data-id="DrTWXpZma5PYfutKXaYZ" class="blocklyDraggable" data-shapes="hat" data-category="Events" transform="translate(-130,120)"><path class="blocklyPath blocklyBlockBackground" stroke="#b89a00" fill="#f5c400" fill-opacity="1" d="m 0,0 c 25,-22 71,-22 96,0 H 231.34371948242188 a 4,4 0 0,1 4,4 v 40  a 4,4 0 0,1 -4,4 H 48   c -2,0 -3,1 -4,2 l -4,4 c -1,1 -2,2 -4,2 h -12 c -2,0 -3,-1 -4,-2 l -4,-4 c -1,-1 -2,-2 -4,-2 H 4 a 4,4 0 0,1 -4,-4 z"/><g transform="translate(8, 4) "><use xlink:href="#a0fc6202a70c0c6b6ad100149573d13339fbac25"/></g><g transform="translate(56, 4) "><line stroke="#d9b100" stroke-linecap="round" x1="0" y1="0" x2="0" y2="36"/></g><text class="blocklyText" y="2" text-anchor="middle" dominant-baseline="middle" dy="0" x="81.17185974121094" transform="translate(65, 24) ">when program starts</text><g data-id="%LS(+%uRBYFv%,]gFV1Y" class="blocklyDraggable" data-shapes="stack" data-category="Light" transform="translate(0,48)"><path class="blocklyPath blocklyBlockBackground" stroke="#4a00d0" fill="#935df5" fill-opacity="1" d="m 0,4 A 4,4 0 0,1 4,0 H 12 c 2,0 3,1 4,2 l 4,4 c 1,1 2,2 4,2 h 12 c 2,0 3,-1 4,-2 l 4,-4 c 1,-1 2,-2 4,-2 H 329.17478942871094 a 4,4 0 0,1 4,4 v 48  a 4,4 0 0,1 -4,4 H 48   c -2,0 -3,1 -4,2 l -4,4 c -1,1 -2,2 -4,2 h -12 c -2,0 -3,-1 -4,-2 l -4,-4 c -1,-1 -2,-2 -4,-2 H 4 a 4,4 0 0,1 -4,-4 z"/><g data-id="8(Mr`Gqkteir;|o9XYQI" data-shapes="argument round" transform="translate(269.17478942871094,12)"><g width="52.8" height="32.8" x="0" y="5" viewBox="0 0 52.8 34.8"><rect fill="#d8009b" stroke="#FFFFFF" width="52.8" height="32.8" x="0" y="0" rx="16" ry="16"/><circle fill="#d8009b" height="24" width="24" cx="16" cy="16" r="12"/><path fill="#ffffff" stroke="#FFFFFF" transform="translate(34, 13)" d="M6,7.7 C5.6,7.7 5.3,7.5 5,7.3 L1,3.4 C0.5,2.8 0.5,2 1,1.4 C1.6,0.8 10.3,0.8 10.9,1.4 C11.4,2 11.4,2.8 10.9,3.4 L7,7.3 C6.7,7.6 6.4,7.7 6,7.7 Z"/></g></g><g transform="translate(8, 12) "><use xlink:href="#f1772651080547038def922a64a9550df7e47ddb"/></g><g transform="translate(56, 8) "><line stroke="#691ff0" stroke-linecap="round" x1="0" y1="0" x2="0" y2="40"/></g><text class="blocklyText" y="2" text-anchor="middle" dominant-baseline="middle" dy="0" x="98.08739471435547" transform="translate(65, 28) ">set Center Button light to</text><path class="blocklyPath" style="visibility: hidden" d="" fill="#4a00d0"/></g></g></g><g class="blocklyBubbleCanvas" transform="translate(520,120) scale(0.675)"/><defs><image height="40px" width="40px" xlink:href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0NiIgaGVpZ2h0PSI0NiIgdmlld0JveD0iMCAwIDQ2IDQ2IiBmaWxsPSJub25lIj48cGF0aCBkPSJNMzIuMzYgMjMuNDJMMTQgMTFWMzUuODRMMzIuMzYgMjMuNDJaIiBmaWxsPSIjZmZmIi8+PC9zdmc+" xmlns:xlink="http://www.w3.org/1999/xlink" id="a0fc6202a70c0c6b6ad100149573d13339fbac25"/><image height="40px" width="40px" xlink:href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzNCIgaGVpZ2h0PSI0OCIgdmlld0JveD0iMCAwIDM0IDQ4IiBmaWxsPSJub25lIj48ZyBjbGlwLXBhdGg9InVybCgjYmxvY2tzX2xhcmdlX2h1Yl9hKSI+PHBhdGggZD0iTTAgNDJWNkMwIDIuNjg3IDIuNjg3IDAgNiAwSDI4QzMxLjMxMyAwIDM0IDIuNjg3IDM0IDZWNDJDMzQgNDUuMzEzIDMxLjMxMyA0OCAyOCA0OEg2QzIuNjg3IDQ4IDAgNDUuMzEzIDAgNDJaIiBmaWxsPSIjZmZmIi8+PHBhdGggZD0iTTE3IDM4QzE1Ljc1OSAzOCAxNC43NSAzOS4wMSAxNC43NSA0MC4yNUMxNC43NSA0MS40OSAxNS43NTkgNDIuNSAxNyA0Mi41QzE4LjI0MSA0Mi41IDE5LjI1IDQxLjQ5IDE5LjI1IDQwLjI1QzE5LjI1IDM5LjAxIDE4LjI0MSAzOCAxNyAzOFpNMTcgNDRDMTQuOTMyIDQ0IDEzLjI1IDQyLjMxNyAxMy4yNSA0MC4yNUMxMy4yNSAzOC4xODMgMTQuOTMyIDM2LjUgMTcgMzYuNUMxOS4wNjggMzYuNSAyMC43NSAzOC4xODMgMjAuNzUgNDAuMjVDMjAuNzUgNDIuMzE3IDE5LjA2OCA0NCAxNyA0NFoiIGZpbGw9IiM2OTFmZjAiLz48cGF0aCBkPSJNMjggMEg2QzIuNjg2IDAgMCAyLjY4NyAwIDZWNDJDMCA0NS4zMTMgMi42ODYgNDggNiA0OEgyOEMzMS4zMTMgNDggMzQgNDUuMzEzIDM0IDQyVjZDMzQgMi42ODcgMzEuMzEzIDAgMjggMFpNMjggMS41QzMwLjQ4MSAxLjUgMzIuNSAzLjUxOSAzMi41IDZWNDJDMzIuNSA0NC40ODEgMzAuNDgxIDQ2LjUgMjggNDYuNUg2QzMuNTE5IDQ2LjUgMS41IDQ0LjQ4MSAxLjUgNDJWNkMxLjUgMy41MTkgMy41MTkgMS41IDYgMS41SDI4WiIgZmlsbD0iIzY5MWZmMCIvPjxwYXRoIGQ9Ik0xMCAzMFYzNEg2VjMwSDEwWk0xNiAzMFYzNEgxMlYzMEgxNlpNMjIgMzBWMzRIMThWMzBIMjJaTTI4IDMwVjM0SDI0VjMwSDI4Wk0xMCAyNFYyOEg2VjI0SDEwWk0xNiAyNFYyOEgxMlYyNEgxNlpNMjIgMjRWMjhIMThWMjRIMjJaTTI4IDI0VjI4SDI0VjI0SDI4Wk0xMCAxOFYyMkg2VjE4SDEwWk0xNiAxOFYyMkgxMlYxOEgxNlpNMjIgMThWMjJIMThWMThIMjJaTTI4IDE4VjIySDI0VjE4SDI4Wk0xMCAxMlYxNkg2VjEySDEwWk0xNiAxMlYxNkgxMlYxMkgxNlpNMjIgMTJWMTZIMThWMTJIMjJaTTI4IDEyVjE2SDI0VjEySDI4Wk0yNiA1QzI3LjEwNCA1IDI4IDUuODk2IDI4IDdDMjggOC4xMDQgMjcuMTA0IDkgMjYgOUMyNC44OTYgOSAyNCA4LjEwNCAyNCA3QzI0IDUuODk2IDI0Ljg5NiA1IDI2IDVaIiBmaWxsPSIjNjkxZmYwIi8+PC9nPjxkZWZzPjxjbGlwUGF0aCBpZD0iYmxvY2tzX2xhcmdlX2h1Yl9hIj48cGF0aCBmaWxsPSIjZmZmIiBkPSJNMCAwSDM0VjQ4SDB6Ii8+PC9jbGlwUGF0aD48L2RlZnM+PC9zdmc+" xmlns:xlink="http://www.w3.org/1999/xlink" id="f1772651080547038def922a64a9550df7e47ddb"/></defs></g></svg>
