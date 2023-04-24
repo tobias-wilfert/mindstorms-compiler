@@ -97,7 +97,7 @@ def test_code_run_motor_for_duration_degrees():
 motor_a = Motor('A')
 
 # Write your program here.
-motor_a.run_for_degrees(int(1.0))  # Note: This methods expects an integer so wee need to convert the value.
+motor_a.run_for_degrees(int(1.0))  # Note: This method expects an integer so wee need to convert the value.
 
 """
     )
@@ -265,7 +265,7 @@ def test_code_motor_go_to_position_base():
 motor_a = Motor('A')
 
 # Write your program here.
-motor_a.run_to_position(int(0.0), 'shortest path')  # Note: This methods expects an integer so wee need to convert the value.
+motor_a.run_to_position(int(0.0), 'shortest path')  # Note: This method expects an integer so wee need to convert the value.
 
 """
     )
@@ -280,7 +280,7 @@ def test_code_motor_go_to_position_clockwise():
 motor_a = Motor('A')
 
 # Write your program here.
-motor_a.run_to_position(int(0.0), 'clockwise')  # Note: This methods expects an integer so wee need to convert the value.
+motor_a.run_to_position(int(0.0), 'clockwise')  # Note: This method expects an integer so wee need to convert the value.
 
 """
     )
@@ -295,7 +295,7 @@ def test_code_motor_go_to_position_counterclockwise():
 motor_a = Motor('A')
 
 # Write your program here.
-motor_a.run_to_position(int(0.0), 'counterclockwise')  # Note: This methods expects an integer so wee need to convert the value.
+motor_a.run_to_position(int(0.0), 'counterclockwise')  # Note: This method expects an integer so wee need to convert the value.
 
 """
     )
@@ -313,8 +313,8 @@ motor_b = Motor('B')
 # Write your program here.
 # Note: This will turn the motors after each other rather than at the same time.
 #   This is because there is no way to turn multiple Motors at the same time in Python.
-motor_a.run_to_position(int(0.0), 'shortest path')  # Note: This methods expects an integer so wee need to convert the value.
-motor_b.run_to_position(int(0.0), 'shortest path')  # Note: This methods expects an integer so wee need to convert the value.
+motor_a.run_to_position(int(0.0), 'shortest path')  # Note: This method expects an integer so wee need to convert the value.
+motor_b.run_to_position(int(0.0), 'shortest path')  # Note: This method expects an integer so wee need to convert the value.
 
 """
     )
@@ -329,7 +329,7 @@ def test_code_motor_go_to_position_value_node():
 motor_a = Motor('A')
 
 # Write your program here.
-motor_a.run_to_position(int((1.0 + 2.0)), 'shortest path')  # Note: This methods expects an integer so wee need to convert the value.
+motor_a.run_to_position(int((1.0 + 2.0)), 'shortest path')  # Note: This method expects an integer so wee need to convert the value.
 
 """
     )
@@ -349,7 +349,7 @@ my_list.append('A')
 #   this code is needed. This will turn the motors after each other rather than at the same time.
 #   This is because there is no way to turn multiple Motors at the same time in Python.
 for port in my_list:
-\tMotor(port).run_to_position(int(0.0), 'shortest path')  # Note: This methods expects an integer so wee need to convert the value.
+\tMotor(port).run_to_position(int(0.0), 'shortest path')  # Note: This method expects an integer so wee need to convert the value.
 
 """
     )
@@ -368,7 +368,7 @@ my_variable = 'A'
 #   this code is needed. This will turn the motors after each other rather than at the same time.
 #   This is because there is no way to turn multiple Motors at the same time in Python.
 for port in my_variable:
-\tMotor(port).run_to_position(int(0.0), 'shortest path')  # Note: This methods expects an integer so wee need to convert the value.
+\tMotor(port).run_to_position(int(0.0), 'shortest path')  # Note: This method expects an integer so wee need to convert the value.
 
 """
     )
@@ -384,7 +384,7 @@ motor_a = Motor('A')
 
 # Write your program here.
 my_variable = 0.0
-motor_a.run_to_position(int(my_variable), 'shortest path')  # Note: This methods expects an integer so wee need to convert the value.
+motor_a.run_to_position(int(my_variable), 'shortest path')  # Note: This method expects an integer so wee need to convert the value.
 
 """
     )
@@ -617,7 +617,7 @@ def test_code_set_motor_speed_base():
 motor_a = Motor('A')
 
 # Write your program here.
-motor_a.set_default_speed(int(75.0))  # Note: This methods expects an integer so wee need to convert the value.
+motor_a.set_default_speed(int(75.0))  # Note: This method expects an integer so wee need to convert the value.
 
 """
     )
@@ -639,12 +639,12 @@ motor_f = Motor('F')
 # Write your program here.
 # Note: This will turn the motors after each other rather than at the same time.
 #   This is because there is no way to turn multiple Motors at the same time in Python.
-motor_a.set_default_speed(int(75.0))  # Note: This methods expects an integer so wee need to convert the value.
-motor_b.set_default_speed(int(75.0))  # Note: This methods expects an integer so wee need to convert the value.
-motor_c.set_default_speed(int(75.0))  # Note: This methods expects an integer so wee need to convert the value.
-motor_d.set_default_speed(int(75.0))  # Note: This methods expects an integer so wee need to convert the value.
-motor_e.set_default_speed(int(75.0))  # Note: This methods expects an integer so wee need to convert the value.
-motor_f.set_default_speed(int(75.0))  # Note: This methods expects an integer so wee need to convert the value.
+motor_a.set_default_speed(int(75.0))  # Note: This method expects an integer so wee need to convert the value.
+motor_b.set_default_speed(int(75.0))  # Note: This method expects an integer so wee need to convert the value.
+motor_c.set_default_speed(int(75.0))  # Note: This method expects an integer so wee need to convert the value.
+motor_d.set_default_speed(int(75.0))  # Note: This method expects an integer so wee need to convert the value.
+motor_e.set_default_speed(int(75.0))  # Note: This method expects an integer so wee need to convert the value.
+motor_f.set_default_speed(int(75.0))  # Note: This method expects an integer so wee need to convert the value.
 
 """
     )
@@ -662,8 +662,8 @@ motor_b = Motor('B')
 # Write your program here.
 # Note: This will turn the motors after each other rather than at the same time.
 #   This is because there is no way to turn multiple Motors at the same time in Python.
-motor_a.set_default_speed(int(75.0))  # Note: This methods expects an integer so wee need to convert the value.
-motor_b.set_default_speed(int(75.0))  # Note: This methods expects an integer so wee need to convert the value.
+motor_a.set_default_speed(int(75.0))  # Note: This method expects an integer so wee need to convert the value.
+motor_b.set_default_speed(int(75.0))  # Note: This method expects an integer so wee need to convert the value.
 
 """
     )
@@ -678,7 +678,7 @@ def test_code_set_motor_speed_value_node():
 motor_a = Motor('A')
 
 # Write your program here.
-motor_a.set_default_speed(int((25.0 + 50.0)))  # Note: This methods expects an integer so wee need to convert the value.
+motor_a.set_default_speed(int((25.0 + 50.0)))  # Note: This method expects an integer so wee need to convert the value.
 
 """
     )
@@ -698,7 +698,7 @@ my_list.append('A')
 #   this code is needed. This will turn the motors after each other rather than at the same time.
 #   This is because there is no way to turn multiple Motors at the same time in Python.
 for port in my_list:
-\tMotor(port).set_default_speed(int(75.0))  # Note: This methods expects an integer so wee need to convert the value.
+\tMotor(port).set_default_speed(int(75.0))  # Note: This method expects an integer so wee need to convert the value.
 
 """
     )
@@ -717,7 +717,7 @@ my_variable = 'A'
 #   this code is needed. This will turn the motors after each other rather than at the same time.
 #   This is because there is no way to turn multiple Motors at the same time in Python.
 for port in my_variable:
-\tMotor(port).set_default_speed(int(75.0))  # Note: This methods expects an integer so wee need to convert the value.
+\tMotor(port).set_default_speed(int(75.0))  # Note: This method expects an integer so wee need to convert the value.
 
 """
     )
@@ -733,7 +733,7 @@ motor_a = Motor('A')
 
 # Write your program here.
 my_variable = 75.0
-motor_a.set_default_speed(int(my_variable))  # Note: This methods expects an integer so wee need to convert the value.
+motor_a.set_default_speed(int(my_variable))  # Note: This method expects an integer so wee need to convert the value.
 
 """
     )
@@ -995,7 +995,7 @@ def test_code_move_with_steering_base():
 # Write your program here.
 motor_pair = MotorPair('A', 'B')
 motor_pair.set_default_speed(50)  # Note: Needed since the default speed is 100, which is too fast.
-motor_pair.move(10.0, 'cm', int(0.0))  # Note: This methods expects an integer so wee need to convert the value.
+motor_pair.move(10.0, 'cm', int(0.0))  # Note: This method expects an integer so wee need to convert the value.
 
 """
     )
@@ -1011,7 +1011,7 @@ def test_code_move_with_steering_degrees():
 # Write your program here.
 motor_pair = MotorPair('A', 'B')
 motor_pair.set_default_speed(50)  # Note: Needed since the default speed is 100, which is too fast.
-motor_pair.move(10.0, 'degrees', int(0.0))  # Note: This methods expects an integer so wee need to convert the value.
+motor_pair.move(10.0, 'degrees', int(0.0))  # Note: This method expects an integer so wee need to convert the value.
 
 """
     )
@@ -1027,7 +1027,7 @@ def test_code_move_with_steering_inches():
 # Write your program here.
 motor_pair = MotorPair('A', 'B')
 motor_pair.set_default_speed(50)  # Note: Needed since the default speed is 100, which is too fast.
-motor_pair.move(10.0, 'in', int(0.0))  # Note: This methods expects an integer so wee need to convert the value.
+motor_pair.move(10.0, 'in', int(0.0))  # Note: This method expects an integer so wee need to convert the value.
 
 """
     )
@@ -1043,7 +1043,7 @@ def test_code_move_with_steering_rotations():
 # Write your program here.
 motor_pair = MotorPair('A', 'B')
 motor_pair.set_default_speed(50)  # Note: Needed since the default speed is 100, which is too fast.
-motor_pair.move(10.0, 'rotations', int(0.0))  # Note: This methods expects an integer so wee need to convert the value.
+motor_pair.move(10.0, 'rotations', int(0.0))  # Note: This method expects an integer so wee need to convert the value.
 
 """
     )
@@ -1059,7 +1059,7 @@ def test_code_move_with_steering_seconds():
 # Write your program here.
 motor_pair = MotorPair('A', 'B')
 motor_pair.set_default_speed(50)  # Note: Needed since the default speed is 100, which is too fast.
-motor_pair.move(10.0, 'seconds', int(0.0))  # Note: This methods expects an integer so wee need to convert the value.
+motor_pair.move(10.0, 'seconds', int(0.0))  # Note: This method expects an integer so wee need to convert the value.
 
 """
     )
@@ -1076,7 +1076,7 @@ def test_code_move_with_steering_steering_variable():
 my_variable = 0.0
 motor_pair = MotorPair('A', 'B')
 motor_pair.set_default_speed(50)  # Note: Needed since the default speed is 100, which is too fast.
-motor_pair.move(10.0, 'cm', int(my_variable))  # Note: This methods expects an integer so wee need to convert the value.
+motor_pair.move(10.0, 'cm', int(my_variable))  # Note: This method expects an integer so wee need to convert the value.
 
 """
     )
@@ -1093,7 +1093,7 @@ def test_code_move_with_steering_value_variable():
 my_variable = 10.0
 motor_pair = MotorPair('A', 'B')
 motor_pair.set_default_speed(50)  # Note: Needed since the default speed is 100, which is too fast.
-motor_pair.move(my_variable, 'cm', int(0.0))  # Note: This methods expects an integer so wee need to convert the value.
+motor_pair.move(my_variable, 'cm', int(0.0))  # Note: This method expects an integer so wee need to convert the value.
 
 """
     )
@@ -1110,7 +1110,7 @@ def test_code_start_moving_with_steering_base():
 # Write your program here.
 motor_pair = MotorPair('A', 'B')
 motor_pair.set_default_speed(50)  # Note: Needed since the default speed is 100, which is too fast.
-motor_pair.start(int(0.0))  # Note: This methods expects an integer so wee need to convert the value.
+motor_pair.start(int(0.0))  # Note: This method expects an integer so wee need to convert the value.
 
 """
     )
@@ -1127,7 +1127,7 @@ def test_code_start_moving_with_steering_variable():
 my_variable = 0.0
 motor_pair = MotorPair('A', 'B')
 motor_pair.set_default_speed(50)  # Note: Needed since the default speed is 100, which is too fast.
-motor_pair.start(int(my_variable))  # Note: This methods expects an integer so wee need to convert the value.
+motor_pair.start(int(my_variable))  # Note: This method expects an integer so wee need to convert the value.
 
 """
     )
@@ -1144,7 +1144,7 @@ def test_code_stop_moving():
 # Write your program here.
 motor_pair = MotorPair('A', 'B')
 motor_pair.set_default_speed(50)  # Note: Needed since the default speed is 100, which is too fast.
-motor_pair.start(int(0.0))  # Note: This methods expects an integer so wee need to convert the value.
+motor_pair.start(int(0.0))  # Note: This method expects an integer so wee need to convert the value.
 motor_pair.stop()
 
 """
@@ -1162,7 +1162,7 @@ def test_code_set_movement_speed_base():
 # Write your program here.
 motor_pair = MotorPair('A', 'B')
 motor_pair.set_default_speed(50)  # Note: Needed since the default speed is 100, which is too fast.
-motor_pair.set_default_speed(int(50.0))  # Note: This methods expects an integer so wee need to convert the value.
+motor_pair.set_default_speed(int(50.0))  # Note: This method expects an integer so wee need to convert the value.
 motor_pair.move(10.0, 'cm')
 
 """
@@ -1180,7 +1180,7 @@ def test_code_set_movement_speed_value_variable():
 my_variable = 10.0
 motor_pair = MotorPair('A', 'B')
 motor_pair.set_default_speed(50)  # Note: Needed since the default speed is 100, which is too fast.
-motor_pair.set_default_speed(int(my_variable))  # Note: This methods expects an integer so wee need to convert the value.
+motor_pair.set_default_speed(int(my_variable))  # Note: This method expects an integer so wee need to convert the value.
 motor_pair.move(10.0, 'cm')
 
 """
@@ -1287,6 +1287,593 @@ motor_pair = MotorPair('A', 'B')
 motor_pair.set_default_speed(50)  # Note: Needed since the default speed is 100, which is too fast.
 motor_pair.set_motor_rotation(my_variable, 'cm')
 motor_pair.move(10.0, 'cm')
+
+"""
+    )
+
+
+# ---------- Light ----------
+# - Start Animation
+# No Verification Needed
+def test_code_start_animation_base():
+    assert (
+        helper("start_animation_base", "Light")
+        == f"""{includes}
+# Create your objects here.
+
+# Write your program here.
+# Placeholder for the START ANIMATION block. Note: that animations are not supported in Python at the moment.
+
+"""
+    )
+
+
+# No Verification Needed
+def test_code_start_animation_custom():
+    assert (
+        helper("start_animation_custom", "Light")
+        == f"""{includes}
+# Create your objects here.
+
+# Write your program here.
+# Placeholder for the START ANIMATION block. Note: that animations are not supported in Python at the moment.
+
+"""
+    )
+
+
+# - Play Animation until done
+# No Verification Needed
+def test_code_play_animation_until_done_base():
+    assert (
+        helper("play_animation_until_done_base", "Light")
+        == f"""{includes}
+# Create your objects here.
+
+# Write your program here.
+# Placeholder for the PLAY ANIMATION block. Note: that animations are not supported in Python at the moment.
+
+"""
+    )
+
+
+# No Verification Needed
+def test_code_play_animation_until_done_custom():
+    assert (
+        helper("play_animation_until_done_custom", "Light")
+        == f"""{includes}
+# Create your objects here.
+
+# Write your program here.
+# Placeholder for the PLAY ANIMATION block. Note: that animations are not supported in Python at the moment.
+
+"""
+    )
+
+
+# - Turn on for duration
+# Verified on Hardware
+def test_code_turn_on_for_duration_base():
+    assert (
+        helper("turn_on_for_duration_base", "Light")
+        == f"""{includes}
+# Create your objects here.
+hub = MSHub()
+
+# Declare you functions here.
+# This is a helper function that is necessary to turn on patterns on the light matrix.
+def _turn_on_pattern(pattern, brightness=100):
+\tfor i in range(len(pattern)):
+\t\thub.light_matrix.set_pixel(i%5, int(i/5), int(brightness * int(pattern[i])/9.0))
+
+# Write your program here.
+_turn_on_pattern('9909999099000009000909990')
+wait_for_seconds(int(2.0))
+hub.light_matrix.off()
+
+"""
+    )
+
+
+# Verified on Hardware
+def test_code_turn_on_for_duration_custom():
+    assert (
+        helper("turn_on_for_duration_custom", "Light")
+        == f"""{includes}
+# Create your objects here.
+hub = MSHub()
+
+# Declare you functions here.
+# This is a helper function that is necessary to turn on patterns on the light matrix.
+def _turn_on_pattern(pattern, brightness=100):
+\tfor i in range(len(pattern)):
+\t\thub.light_matrix.set_pixel(i%5, int(i/5), int(brightness * int(pattern[i])/9.0))
+
+# Write your program here.
+_turn_on_pattern('0000009990099900999000000')
+wait_for_seconds(int(2.0))
+hub.light_matrix.off()
+
+"""
+    )
+
+
+# Verified on Hardware
+def test_code_turn_on_for_duration_variable():
+    assert (
+        helper("turn_on_for_duration_variable", "Light")
+        == f"""{includes}
+# Create your objects here.
+hub = MSHub()
+
+# Declare you functions here.
+# This is a helper function that is necessary to turn on patterns on the light matrix.
+def _turn_on_pattern(pattern, brightness=100):
+\tfor i in range(len(pattern)):
+\t\thub.light_matrix.set_pixel(i%5, int(i/5), int(brightness * int(pattern[i])/9.0))
+
+# Write your program here.
+my_variable = 3.0
+_turn_on_pattern('9909999099000009000909990')
+wait_for_seconds(int(my_variable))
+hub.light_matrix.off()
+
+"""
+    )
+
+
+# - Turn on
+# Verified on Hardware
+def test_code_turn_on_base():
+    assert (
+        helper("turn_on_base", "Light")
+        == f"""{includes}
+# Create your objects here.
+hub = MSHub()
+
+# Declare you functions here.
+# This is a helper function that is necessary to turn on patterns on the light matrix.
+def _turn_on_pattern(pattern, brightness=100):
+\tfor i in range(len(pattern)):
+\t\thub.light_matrix.set_pixel(i%5, int(i/5), int(brightness * int(pattern[i])/9.0))
+
+# Write your program here.
+_turn_on_pattern('9909999099000009000909990')
+
+"""
+    )
+
+
+# Verified on Hardware
+def test_code_turn_on_custom():
+    assert (
+        helper("turn_on_custom", "Light")
+        == f"""{includes}
+# Create your objects here.
+hub = MSHub()
+
+# Declare you functions here.
+# This is a helper function that is necessary to turn on patterns on the light matrix.
+def _turn_on_pattern(pattern, brightness=100):
+\tfor i in range(len(pattern)):
+\t\thub.light_matrix.set_pixel(i%5, int(i/5), int(brightness * int(pattern[i])/9.0))
+
+# Write your program here.
+_turn_on_pattern('0000009990099900999000000')
+
+"""
+    )
+
+
+# - Write
+# Verified on Hardware
+def test_code_write_base():
+    assert (
+        helper("write_base", "Light")
+        == f"""{includes}
+# Create your objects here.
+hub = MSHub()
+
+# Write your program here.
+hub.light_matrix.write('Hello World')
+
+"""
+    )
+
+
+# Verified on Hardware
+def test_code_write_variable():
+    assert (
+        helper("write_variable", "Light")
+        == f"""{includes}
+# Create your objects here.
+hub = MSHub()
+
+# Write your program here.
+my_variable = 'Hello World'
+hub.light_matrix.write(my_variable)
+
+"""
+    )
+
+
+# - Turn off
+# Verified on Hardware
+def test_code_turn_off_pixels():
+    assert (
+        helper("turn_off_pixels", "Light")
+        == f"""{includes}
+# Create your objects here.
+hub = MSHub()
+
+# Write your program here.
+hub.light_matrix.off()
+
+"""
+    )
+
+
+# - Set pixel brightness
+# Verified on Hardware
+def test_code_set_pixel_brightness_base():
+    assert (
+        helper("set_pixel_brightness_base", "Light")
+        == f"""{includes}
+# Create your objects here.
+hub = MSHub()
+
+# Declare you functions here.
+# This is a helper function that is necessary to turn on patterns on the light matrix.
+def _turn_on_pattern(pattern, brightness=100):
+\tfor i in range(len(pattern)):
+\t\thub.light_matrix.set_pixel(i%5, int(i/5), int(brightness * int(pattern[i])/9.0))
+
+# Write your program here.
+_brightness = 75.0
+_turn_on_pattern('9909999099000009000909990', _brightness)
+
+"""
+    )
+
+
+# Verified on Hardware
+def test_code_set_pixel_brightness_variable():
+    assert (
+        helper("set_pixel_brightness_variable", "Light")
+        == f"""{includes}
+# Create your objects here.
+hub = MSHub()
+
+# Declare you functions here.
+# This is a helper function that is necessary to turn on patterns on the light matrix.
+def _turn_on_pattern(pattern, brightness=100):
+\tfor i in range(len(pattern)):
+\t\thub.light_matrix.set_pixel(i%5, int(i/5), int(brightness * int(pattern[i])/9.0))
+
+# Write your program here.
+my_variable = 50.0
+_brightness = my_variable
+_turn_on_pattern('9909999099000009000909990', _brightness)
+
+"""
+    )
+
+
+# - Set pixel
+# Verified on Hardware
+def test_code_set_pixel_base():
+    assert (
+        helper("set_pixel_base", "Light")
+        == f"""{includes}
+# Create your objects here.
+hub = MSHub()
+
+# Write your program here.
+hub.light_matrix.set_pixel(int(1.0)-1, int(1.0)-1, int(100.0))  # Note: This method expects integers so wee need to convert the value. Also starts with 0 not 1.
+
+"""
+    )
+
+
+# Verified on Hardware
+def test_code_set_pixel_variable():
+    assert (
+        helper("set_pixel_variable", "Light")
+        == f"""{includes}
+# Create your objects here.
+hub = MSHub()
+
+# Write your program here.
+my_variable = 50.0
+hub.light_matrix.set_pixel(int(1.0)-1, int(1.0)-1, int(my_variable))  # Note: This method expects integers so wee need to convert the value. Also starts with 0 not 1.
+
+"""
+    )
+
+
+# Verified on Hardware
+def test_code_set_pixel_x_value_variable():
+    assert (
+        helper("set_pixel_x_value_variable", "Light")
+        == f"""{includes}
+# Create your objects here.
+hub = MSHub()
+
+# Write your program here.
+my_variable = 2.0
+hub.light_matrix.set_pixel(int(my_variable)-1, int(1.0)-1, int(100.0))  # Note: This method expects integers so wee need to convert the value. Also starts with 0 not 1.
+
+"""
+    )
+
+
+# Verified on Hardware
+def test_code_set_pixel_y_value_variable():
+    assert (
+        helper("set_pixel_y_value_variable", "Light")
+        == f"""{includes}
+# Create your objects here.
+hub = MSHub()
+
+# Write your program here.
+my_variable = 2.0
+hub.light_matrix.set_pixel(int(1.0)-1, int(my_variable)-1, int(100.0))  # Note: This method expects integers so wee need to convert the value. Also starts with 0 not 1.
+
+"""
+    )
+
+
+# - Rotate Orientation
+# No Verification Needed
+def test_code_rotate_orientation_clockwise():
+    assert (
+        helper("rotate_orientation_clockwise", "Light")
+        == f"""{includes}
+# Create your objects here.
+
+# Write your program here.
+# Placeholder for the ROTATE ORIENTATION block. Note: that rotations are not supported in Python at the moment.
+
+"""
+    )
+
+
+# No Verification Needed
+def test_code_rotate_orientation_counterclockwise():
+    assert (
+        helper("rotate_orientation_counterclockwise", "Light")
+        == f"""{includes}
+# Create your objects here.
+
+# Write your program here.
+# Placeholder for the ROTATE ORIENTATION block. Note: that rotations are not supported in Python at the moment.
+
+"""
+    )
+
+
+# - Set Orientation
+# No Verification Needed
+def test_code_set_orientation_upright():
+    assert (
+        helper("set_orientation_upright", "Light")
+        == f"""{includes}
+# Create your objects here.
+
+# Write your program here.
+# Placeholder for the SET ORIENTATION block. Note: that rotations are not supported in Python at the moment.
+
+"""
+    )
+
+
+# No Verification Needed
+def test_code_set_orientation_upsidedown():
+    assert (
+        helper("set_orientation_upsidedown", "Light")
+        == f"""{includes}
+# Create your objects here.
+
+# Write your program here.
+# Placeholder for the SET ORIENTATION block. Note: that rotations are not supported in Python at the moment.
+
+"""
+    )
+
+
+# No Verification Needed
+def test_code_set_orientation_left():
+    assert (
+        helper("set_orientation_left", "Light")
+        == f"""{includes}
+# Create your objects here.
+
+# Write your program here.
+# Placeholder for the SET ORIENTATION block. Note: that rotations are not supported in Python at the moment.
+
+"""
+    )
+
+
+# No Verification Needed
+def test_code_set_orientation_right():
+    assert (
+        helper("set_orientation_right", "Light")
+        == f"""{includes}
+# Create your objects here.
+
+# Write your program here.
+# Placeholder for the SET ORIENTATION block. Note: that rotations are not supported in Python at the moment.
+
+"""
+    )
+
+
+# - Set Center button
+# Verified on Hardware
+def test_code_set_center_button_red():
+    assert (
+        helper("set_center_button_red", "Light")
+        == f"""{includes}
+# Create your objects here.
+hub = MSHub()
+
+# Write your program here.
+hub.status_light.on('red')
+
+"""
+    )
+
+
+# Verified on Hardware
+def test_code_set_center_button_yellow():
+    assert (
+        helper("set_center_button_yellow", "Light")
+        == f"""{includes}
+# Create your objects here.
+hub = MSHub()
+
+# Write your program here.
+hub.status_light.on('yellow')
+
+"""
+    )
+
+
+# Verified on Hardware
+def test_code_set_center_button_green():
+    assert (
+        helper("set_center_button_green", "Light")
+        == f"""{includes}
+# Create your objects here.
+hub = MSHub()
+
+# Write your program here.
+hub.status_light.on('green')
+
+"""
+    )
+
+
+# Verified on Hardware
+def test_code_set_center_button_cyan():
+    assert (
+        helper("set_center_button_cyan", "Light")
+        == f"""{includes}
+# Create your objects here.
+hub = MSHub()
+
+# Write your program here.
+hub.status_light.on('cyan')
+
+"""
+    )
+
+
+# Verified on Hardware
+def test_code_set_center_button_azure():
+    assert (
+        helper("set_center_button_azure", "Light")
+        == f"""{includes}
+# Create your objects here.
+hub = MSHub()
+
+# Write your program here.
+hub.status_light.on('azure')
+
+"""
+    )
+
+
+# Verified on Hardware
+def test_code_set_center_button_pink():
+    assert (
+        helper("set_center_button_pink", "Light")
+        == f"""{includes}
+# Create your objects here.
+hub = MSHub()
+
+# Write your program here.
+hub.status_light.on('pink')
+
+"""
+    )
+
+
+# Verified on Hardware
+def test_code_set_center_button_white():
+    assert (
+        helper("set_center_button_white", "Light")
+        == f"""{includes}
+# Create your objects here.
+hub = MSHub()
+
+# Write your program here.
+hub.status_light.on('white')
+
+"""
+    )
+
+
+# Verified on Hardware
+def test_code_set_center_button_black():
+    assert (
+        helper("set_center_button_black", "Light")
+        == f"""{includes}
+# Create your objects here.
+hub = MSHub()
+
+# Write your program here.
+hub.status_light.on('black')
+
+"""
+    )
+
+
+# -Light up distance sensor
+# Verified on Hardware
+def test_code_light_up_distance_sensor_base():
+    assert (
+        helper("light_up_distance_sensor_base", "Light")
+        == f"""{includes}
+# Create your objects here.
+distance_sensor_a = DistanceSensor('A')
+
+# Write your program here.
+distance_sensor_a.light_up(100, 100, 100, 100)
+
+"""
+    )
+
+
+# Verified on Hardware
+def test_code_light_up_distance_sensor_port_list():
+    assert (
+        helper("light_up_distance_sensor_port_list", "Light")
+        == f"""{includes}
+# Create your objects here.
+my_list = []
+
+# Write your program here.
+my_list.append('A')
+# Note: This will fail if the first item in my_list is not valid port.
+DistanceSensor(my_list[0].upper()).light_up(100, 100, 100, 100)
+
+"""
+    )
+
+
+# Verified on Hardware
+def test_code_light_up_distance_sensor_port_variable():
+    assert (
+        helper("light_up_distance_sensor_port_variable", "Light")
+        == f"""{includes}
+# Create your objects here.
+
+# Write your program here.
+my_variable = 'A'
+# Note: This will fail if the first item in my_variable is not valid port.
+DistanceSensor(my_variable[0].upper()).light_up(100, 100, 100, 100)
 
 """
     )

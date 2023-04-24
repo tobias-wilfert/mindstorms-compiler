@@ -138,3 +138,14 @@ class LiteralNode(Node):
 
     def __str__(self) -> str:
         return f"LiteralNode('{self.value}')"
+
+
+class CommentNode(StackNode):
+    """Class to represent any comment."""
+
+    def __init__(self, value, next: Node) -> None:
+        super().__init__(next)
+        self.value = value  # String
+
+    def __str__(self) -> str:
+        return f"CommentNode('{self.value}')"

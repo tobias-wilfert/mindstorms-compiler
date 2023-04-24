@@ -873,7 +873,7 @@ def test_ast_move_for_duration_value_variable():
 
 
 # - Move with Steering
-def test_extract_json_move_with_steering_base():
+def test_ast_move_with_steering_base():
     assert (
         helper("move_with_steering_base", "Movement")
         == """digraph {rankdir="TB"
@@ -891,7 +891,7 @@ def test_extract_json_move_with_steering_base():
     )
 
 
-def test_extract_json_move_with_steering_degrees():
+def test_ast_move_with_steering_degrees():
     assert (
         helper("move_with_steering_degrees", "Movement")
         == """digraph {rankdir="TB"
@@ -909,7 +909,7 @@ def test_extract_json_move_with_steering_degrees():
     )
 
 
-def test_extract_json_move_with_steering_inches():
+def test_ast_move_with_steering_inches():
     assert (
         helper("move_with_steering_inches", "Movement")
         == """digraph {rankdir="TB"
@@ -927,7 +927,7 @@ def test_extract_json_move_with_steering_inches():
     )
 
 
-def test_extract_json_move_with_steering_rotations():
+def test_ast_move_with_steering_rotations():
     assert (
         helper("move_with_steering_rotations", "Movement")
         == """digraph {rankdir="TB"
@@ -945,7 +945,7 @@ def test_extract_json_move_with_steering_rotations():
     )
 
 
-def test_extract_json_move_with_steering_seconds():
+def test_ast_move_with_steering_seconds():
     assert (
         helper("move_with_steering_seconds", "Movement")
         == """digraph {rankdir="TB"
@@ -963,7 +963,7 @@ def test_extract_json_move_with_steering_seconds():
     )
 
 
-def test_extract_json_move_with_steering_steering_variable():
+def test_ast_move_with_steering_steering_variable():
     assert (
         helper("move_with_steering_steering_variable", "Movement")
         == """digraph {rankdir="TB"
@@ -985,7 +985,7 @@ def test_extract_json_move_with_steering_steering_variable():
     )
 
 
-def test_extract_json_move_with_steering_value_variable():
+def test_ast_move_with_steering_value_variable():
     assert (
         helper("move_with_steering_value_variable", "Movement")
         == """digraph {rankdir="TB"
@@ -1008,7 +1008,7 @@ def test_extract_json_move_with_steering_value_variable():
 
 
 # - Start Moving with Steering
-def test_extract_json_start_moving_with_steering_base():
+def test_ast_start_moving_with_steering_base():
     assert (
         helper("start_moving_with_steering_base", "Movement")
         == """digraph {rankdir="TB"
@@ -1024,7 +1024,7 @@ def test_extract_json_start_moving_with_steering_base():
     )
 
 
-def test_extract_json_start_moving_with_steering_variable():
+def test_ast_start_moving_with_steering_variable():
     assert (
         helper("start_moving_with_steering_variable", "Movement")
         == """digraph {rankdir="TB"
@@ -1045,7 +1045,7 @@ def test_extract_json_start_moving_with_steering_variable():
 
 
 # - Stop Moving
-def test_extract_json_stop_moving():
+def test_ast_stop_moving():
     assert (
         helper("stop_moving", "Movement")
         == """digraph {rankdir="TB"
@@ -1064,7 +1064,7 @@ def test_extract_json_stop_moving():
 
 
 # - Set Movement Speed
-def test_extract_json_set_movement_speed_base():
+def test_ast_set_movement_speed_base():
     assert (
         helper("set_movement_speed_base", "Movement")
         == """digraph {rankdir="TB"
@@ -1084,7 +1084,7 @@ def test_extract_json_set_movement_speed_base():
     )
 
 
-def test_extract_json_set_movement_speed_value_variable():
+def test_ast_set_movement_speed_value_variable():
     assert (
         helper("set_movement_speed_value_variable", "Movement")
         == """digraph {rankdir="TB"
@@ -1158,7 +1158,7 @@ def test_ast_set_movement_motors_variable():
 
 
 # - Set Motor rotation
-def test_extract_json_set_motor_rotation_base():
+def test_ast_set_motor_rotation_base():
     assert (
         helper("set_motor_rotation_base", "Movement")
         == """digraph {rankdir="TB"
@@ -1178,7 +1178,7 @@ def test_extract_json_set_motor_rotation_base():
     )
 
 
-def test_extract_json_set_motor_rotation_inches():
+def test_ast_set_motor_rotation_inches():
     assert (
         helper("set_motor_rotation_inches", "Movement")
         == """digraph {rankdir="TB"
@@ -1198,7 +1198,7 @@ def test_extract_json_set_motor_rotation_inches():
     )
 
 
-def test_extract_json_set_motor_rotation_value_variable():
+def test_ast_set_motor_rotation_value_variable():
     assert (
         helper("set_motor_rotation_value_variable", "Movement")
         == """digraph {rankdir="TB"
@@ -1219,6 +1219,449 @@ def test_extract_json_set_motor_rotation_value_variable():
 5 -> 6
 5 -> 7
 7 -> 8}"""
+    )
+
+
+# ---------- Light ----------
+# - Start Animation
+def test_ast_start_animation_base():
+    assert (
+        helper("start_animation_base", "Light")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="CommentNode('# Placeholder for the START ANIMATION block. Note: that animations are not supported in Python at the moment.')"]
+0 -> 1}"""
+    )
+
+
+def test_ast_start_animation_custom():
+    assert (
+        helper("start_animation_custom", "Light")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="CommentNode('# Placeholder for the START ANIMATION block. Note: that animations are not supported in Python at the moment.')"]
+0 -> 1}"""
+    )
+
+
+# - Play Animation until done
+def test_ast_play_animation_until_done_base():
+    assert (
+        helper("play_animation_until_done_base", "Light")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="CommentNode('# Placeholder for the PLAY ANIMATION block. Note: that animations are not supported in Python at the moment.')"]
+0 -> 1}"""
+    )
+
+
+def test_ast_play_animation_until_done_custom():
+    assert (
+        helper("play_animation_until_done_custom", "Light")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="CommentNode('# Placeholder for the PLAY ANIMATION block. Note: that animations are not supported in Python at the moment.')"]
+0 -> 1}"""
+    )
+
+
+# - Turn on for duration
+def test_ast_turn_on_for_duration_base():
+    assert (
+        helper("turn_on_for_duration_base", "Light")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="TurnOnForDurationNode(image: '9909999099000009000909990')"]
+2 [label="NumericalNode(2.0)"]
+0 -> 1
+1 -> 2}"""
+    )
+
+
+def test_ast_turn_on_for_duration_custom():
+    assert (
+        helper("turn_on_for_duration_custom", "Light")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="TurnOnForDurationNode(image: '0000009990099900999000000')"]
+2 [label="NumericalNode(2.0)"]
+0 -> 1
+1 -> 2}"""
+    )
+
+
+def test_ast_turn_on_for_duration_variable():
+    assert (
+        helper("turn_on_for_duration_variable", "Light")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="SetVariableToNode(variable:'my_variable')"]
+2 [label="NumericalNode(3.0)"]
+3 [label="TurnOnForDurationNode(image: '9909999099000009000909990')"]
+4 [label="VariableNode(name:'my_variable')"]
+0 -> 1
+1 -> 2
+1 -> 3
+3 -> 4}"""
+    )
+
+
+# - Turn on
+def test_ast_turn_on_base():
+    assert (
+        helper("turn_on_base", "Light")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="TurnOnNode(image: '9909999099000009000909990')"]
+0 -> 1}"""
+    )
+
+
+def test_ast_turn_on_custom():
+    assert (
+        helper("turn_on_custom", "Light")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="TurnOnNode(image: '0000009990099900999000000')"]
+0 -> 1}"""
+    )
+
+
+# - Write
+def test_ast_write_base():
+    assert (
+        helper("write_base", "Light")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="WriteNode"]
+2 [label="LiteralNode('Hello World')"]
+0 -> 1
+1 -> 2}"""
+    )
+
+
+def test_ast_write_variable():
+    assert (
+        helper("write_variable", "Light")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="SetVariableToNode(variable:'my_variable')"]
+2 [label="LiteralNode('Hello World')"]
+3 [label="WriteNode"]
+4 [label="VariableNode(name:'my_variable')"]
+0 -> 1
+1 -> 2
+1 -> 3
+3 -> 4}"""
+    )
+
+
+# - Turn off
+def test_ast_turn_off_pixels():
+    assert (
+        helper("turn_off_pixels", "Light")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="TurnOffPixelsNode"]
+0 -> 1}"""
+    )
+
+
+# - Set pixel brightness
+def test_ast_set_pixel_brightness_base():
+    assert (
+        helper("set_pixel_brightness_base", "Light")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="SetPixelBrightnessNode"]
+2 [label="NumericalNode(75.0)"]
+3 [label="TurnOnNode(image: '9909999099000009000909990')"]
+0 -> 1
+1 -> 2
+1 -> 3}"""
+    )
+
+
+def test_ast_set_pixel_brightness_variable():
+    assert (
+        helper("set_pixel_brightness_variable", "Light")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="SetVariableToNode(variable:'my_variable')"]
+2 [label="NumericalNode(50.0)"]
+3 [label="SetPixelBrightnessNode"]
+4 [label="VariableNode(name:'my_variable')"]
+5 [label="TurnOnNode(image: '9909999099000009000909990')"]
+0 -> 1
+1 -> 2
+1 -> 3
+3 -> 4
+3 -> 5}"""
+    )
+
+
+# - Set pixel
+def test_ast_set_pixel_base():
+    assert (
+        helper("set_pixel_base", "Light")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="SetPixelNode"]
+2 [label="NumericalNode(1.0)"]
+3 [label="NumericalNode(1.0)"]
+4 [label="NumericalNode(100.0)"]
+0 -> 1
+1 -> 2
+1 -> 3
+1 -> 4}"""
+    )
+
+
+def test_ast_set_pixel_variable():
+    assert (
+        helper("set_pixel_variable", "Light")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="SetVariableToNode(variable:'my_variable')"]
+2 [label="NumericalNode(50.0)"]
+3 [label="SetPixelNode"]
+4 [label="NumericalNode(1.0)"]
+5 [label="NumericalNode(1.0)"]
+6 [label="VariableNode(name:'my_variable')"]
+0 -> 1
+1 -> 2
+1 -> 3
+3 -> 4
+3 -> 5
+3 -> 6}"""
+    )
+
+
+def test_ast_set_pixel_x_value_variable():
+    assert (
+        helper("set_pixel_x_value_variable", "Light")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="SetVariableToNode(variable:'my_variable')"]
+2 [label="NumericalNode(2.0)"]
+3 [label="SetPixelNode"]
+4 [label="VariableNode(name:'my_variable')"]
+5 [label="NumericalNode(1.0)"]
+6 [label="NumericalNode(100.0)"]
+0 -> 1
+1 -> 2
+1 -> 3
+3 -> 4
+3 -> 5
+3 -> 6}"""
+    )
+
+
+def test_ast_set_pixel_y_value_variable():
+    assert (
+        helper("set_pixel_y_value_variable", "Light")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="SetVariableToNode(variable:'my_variable')"]
+2 [label="NumericalNode(2.0)"]
+3 [label="SetPixelNode"]
+4 [label="NumericalNode(1.0)"]
+5 [label="VariableNode(name:'my_variable')"]
+6 [label="NumericalNode(100.0)"]
+0 -> 1
+1 -> 2
+1 -> 3
+3 -> 4
+3 -> 5
+3 -> 6}"""
+    )
+
+
+# - Rotate Orientation
+def test_ast_rotate_orientation_clockwise():
+    assert (
+        helper("rotate_orientation_clockwise", "Light")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="CommentNode('# Placeholder for the ROTATE ORIENTATION block. Note: that rotations are not supported in Python at the moment.')"]
+0 -> 1}"""
+    )
+
+
+def test_ast_rotate_orientation_counterclockwise():
+    assert (
+        helper("rotate_orientation_counterclockwise", "Light")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="CommentNode('# Placeholder for the ROTATE ORIENTATION block. Note: that rotations are not supported in Python at the moment.')"]
+0 -> 1}"""
+    )
+
+
+# - Set Orientation
+def test_ast_set_orientation_upright():
+    assert (
+        helper("set_orientation_upright", "Light")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="CommentNode('# Placeholder for the SET ORIENTATION block. Note: that rotations are not supported in Python at the moment.')"]
+0 -> 1}"""
+    )
+
+
+def test_ast_set_orientation_upsidedown():
+    assert (
+        helper("set_orientation_upsidedown", "Light")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="CommentNode('# Placeholder for the SET ORIENTATION block. Note: that rotations are not supported in Python at the moment.')"]
+0 -> 1}"""
+    )
+
+
+def test_ast_set_orientation_left():
+    assert (
+        helper("set_orientation_left", "Light")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="CommentNode('# Placeholder for the SET ORIENTATION block. Note: that rotations are not supported in Python at the moment.')"]
+0 -> 1}"""
+    )
+
+
+def test_ast_set_orientation_right():
+    assert (
+        helper("set_orientation_right", "Light")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="CommentNode('# Placeholder for the SET ORIENTATION block. Note: that rotations are not supported in Python at the moment.')"]
+0 -> 1}"""
+    )
+
+
+# - Set Center button
+def test_ast_set_center_button_red():
+    assert (
+        helper("set_center_button_red", "Light")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="SetCenterButtonNode(color: 'CenterButtonColor.RED')"]
+0 -> 1}"""
+    )
+
+
+def test_ast_set_center_button_yellow():
+    assert (
+        helper("set_center_button_yellow", "Light")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="SetCenterButtonNode(color: 'CenterButtonColor.YELLOW')"]
+0 -> 1}"""
+    )
+
+
+def test_ast_set_center_button_green():
+    assert (
+        helper("set_center_button_green", "Light")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="SetCenterButtonNode(color: 'CenterButtonColor.GREEN')"]
+0 -> 1}"""
+    )
+
+
+def test_ast_set_center_button_cyan():
+    assert (
+        helper("set_center_button_cyan", "Light")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="SetCenterButtonNode(color: 'CenterButtonColor.CYAN')"]
+0 -> 1}"""
+    )
+
+
+def test_ast_set_center_button_azure():
+    assert (
+        helper("set_center_button_azure", "Light")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="SetCenterButtonNode(color: 'CenterButtonColor.AZURE')"]
+0 -> 1}"""
+    )
+
+
+def test_ast_set_center_button_pink():
+    assert (
+        helper("set_center_button_pink", "Light")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="SetCenterButtonNode(color: 'CenterButtonColor.PINK')"]
+0 -> 1}"""
+    )
+
+
+def test_ast_set_center_button_white():
+    assert (
+        helper("set_center_button_white", "Light")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="SetCenterButtonNode(color: 'CenterButtonColor.WHITE')"]
+0 -> 1}"""
+    )
+
+
+def test_ast_set_center_button_black():
+    assert (
+        helper("set_center_button_black", "Light")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="SetCenterButtonNode(color: 'CenterButtonColor.BLACK')"]
+0 -> 1}"""
+    )
+
+
+# -Light up distance sensor
+def test_ast_light_up_distance_sensor_base():
+    assert (
+        helper("light_up_distance_sensor_base", "Light")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="LightUpDistanceSensorNode(pattern: '100 100 100 100')"]
+2 [label="ListLiteralNode('['A']')"]
+0 -> 1
+1 -> 2}"""
+    )
+
+
+def test_ast_light_up_distance_sensor_port_list():
+    assert (
+        helper("light_up_distance_sensor_port_list", "Light")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="AddItemToListNode(variable:'my_list')"]
+2 [label="LiteralNode('A')"]
+3 [label="LightUpDistanceSensorNode(pattern: '100 100 100 100')"]
+4 [label="VariableNode(name:'my_list')"]
+0 -> 1
+1 -> 2
+1 -> 3
+3 -> 4}"""
+    )
+
+
+def test_ast_light_up_distance_sensor_port_variable():
+    assert (
+        helper("light_up_distance_sensor_port_variable", "Light")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="SetVariableToNode(variable:'my_variable')"]
+2 [label="LiteralNode('A')"]
+3 [label="LightUpDistanceSensorNode(pattern: '100 100 100 100')"]
+4 [label="VariableNode(name:'my_variable')"]
+0 -> 1
+1 -> 2
+1 -> 3
+3 -> 4}"""
     )
 
 

@@ -1,5 +1,15 @@
-from src.abstract_syntax_tree import AST, LiteralNode, Node, NumericalNode
+from src.abstract_syntax_tree import AST, CommentNode, LiteralNode, Node, NumericalNode
 from src.abstract_syntax_tree.events import WhenProgramStartsNode
+from src.abstract_syntax_tree.light import (
+    LightUpDistanceSensorNode,
+    SetCenterButtonNode,
+    SetPixelBrightnessNode,
+    SetPixelNode,
+    TurnOffPixelsNode,
+    TurnOnForDurationNode,
+    TurnOnNode,
+    WriteNode,
+)
 from src.abstract_syntax_tree.motors import (
     MotorGoToPositionNode,
     MotorPositionNode,
@@ -44,8 +54,10 @@ import math
 """
         # Collection of all the objects that are added to self.objects_code
         self.objects = set()
+        self.functions = set()
 
         self.objects_code = ""
+        self.functions_code = ""
         self.program_code = ""
 
         # Indicates wether safe code should be generated which might be a bit more verbose
@@ -58,7 +70,17 @@ import math
             self.visit(ast.hat_nodes[0])
 
         # Return the complete code
-        return f"""{self.includes}
+        if len(self.functions_code):
+            return f"""{self.includes}
+# Create your objects here.
+{self.objects_code}
+# Declare you functions here.
+{self.functions_code}
+# Write your program here.
+{self.program_code}
+"""
+        else:
+            return f"""{self.includes}
 # Create your objects here.
 {self.objects_code}
 # Write your program here.
@@ -119,6 +141,24 @@ import math
             return self.visit_set_movement_speed_node(node)
         elif isinstance(node, SetMotorRotationNode):
             return self.visit_set_motor_rotation_node(node)
+        elif isinstance(node, CommentNode):
+            return self.visit_comment_node(node)
+        elif isinstance(node, TurnOnForDurationNode):
+            self.visit_turn_on_for_duration_node(node)
+        elif isinstance(node, TurnOnNode):
+            return self.visit_turn_on_node(node)
+        elif isinstance(node, WriteNode):
+            return self.visit_write_node(node)
+        elif isinstance(node, TurnOffPixelsNode):
+            return self.visit_turn_off_pixels_node(node)
+        elif isinstance(node, SetPixelBrightnessNode):
+            return self.visit_set_pixel_brightness_node(node)
+        elif isinstance(node, SetPixelNode):
+            return self.visit_set_pixel_node(node)
+        elif isinstance(node, SetCenterButtonNode):
+            return self.visit_set_center_button_node(node)
+        elif isinstance(node, LightUpDistanceSensorNode):
+            return self.visit_light_up_distance_sensor_node(node)
         else:
             raise NotImplementedError(f"Currently no code can be generated for {node}")
 
@@ -157,7 +197,7 @@ import math
 
             # Add the code and keep exploring
             if node.unit.code() == "degrees":
-                self.program_code += f"{variable}.run_for_degrees(int({value_code}))  # Note: This methods expects an integer so wee need to convert the value.\n"
+                self.program_code += f"{variable}.run_for_degrees(int({value_code}))  # Note: This method expects an integer so wee need to convert the value.\n"
             else:
                 self.program_code += (
                     f"{variable}.run_for_{node.unit.code()}({value_code})\n"
@@ -181,7 +221,7 @@ import math
             value_code = f"-{value_code}"
 
         if node.unit.code() == "degrees":
-            self.program_code += f"\tMotor(port).run_for_degrees(int({value_code}))  # Note: This methods expects an integer so wee need to convert the value.\n"
+            self.program_code += f"\tMotor(port).run_for_degrees(int({value_code}))  # Note: This method expects an integer so wee need to convert the value.\n"
         else:
             self.program_code += (
                 f"\tMotor(port).run_for_{node.unit.code()}({value_code})\n"
@@ -230,7 +270,7 @@ import math
                 value_code = f"-{value_code}"  # TODO: Do some cashing for these.
 
             # Add the code and keep exploring
-            self.program_code += f"{variable}.run_to_position(int({value_code}), '{node.direction.code()}')  # Note: This methods expects an integer so wee need to convert the value.\n"
+            self.program_code += f"{variable}.run_to_position(int({value_code}), '{node.direction.code()}')  # Note: This method expects an integer so wee need to convert the value.\n"
         self.visit(node.next)
 
     def visit_motor_got_to_position_node_variable_ports(
@@ -249,7 +289,7 @@ import math
             value_code = f"-{value_code}"
 
         # Add the code and keep exploring
-        self.program_code += f"\tMotor(port).run_to_position(int({value_code}), '{node.direction.code()}')  # Note: This methods expects an integer so wee need to convert the value.\n"
+        self.program_code += f"\tMotor(port).run_to_position(int({value_code}), '{node.direction.code()}')  # Note: This method expects an integer so wee need to convert the value.\n"
         self.visit(node.next)
 
     def visit_motor_got_to_position_node(self, node: MotorGoToPositionNode):
@@ -355,7 +395,7 @@ import math
             self.generate_object(variable, "Motor", f"'{port}'")
 
             # TODO: Do some cashing here
-            self.program_code += f"{variable}.set_default_speed(int({self.visit(node.value)}))  # Note: This methods expects an integer so wee need to convert the value.\n"
+            self.program_code += f"{variable}.set_default_speed(int({self.visit(node.value)}))  # Note: This method expects an integer so wee need to convert the value.\n"
             self.visit(node.next)
 
         self.visit(node.next)
@@ -369,7 +409,7 @@ import math
         self.program_code += f"for port in {node.ports.name}:\n"
 
         # Add the code and keep exploring
-        self.program_code += f"\tMotor(port).set_default_speed(int({self.visit(node.value)}))  # Note: This methods expects an integer so wee need to convert the value.\n"
+        self.program_code += f"\tMotor(port).set_default_speed(int({self.visit(node.value)}))  # Note: This method expects an integer so wee need to convert the value.\n"
         self.visit(node.next)
 
     def visit_set_motor_speed_node(self, node: SetMotorSpeedNode):
@@ -459,11 +499,11 @@ import math
         self.visit(node.next)
 
     def visit_move_with_steering_node(self, node: MoveWithSteeringNode):
-        self.program_code += f"motor_pair.move({self.visit(node.value)}, '{node.unit.code()}', int({self.visit(node.steering)}))  # Note: This methods expects an integer so wee need to convert the value.\n"
+        self.program_code += f"motor_pair.move({self.visit(node.value)}, '{node.unit.code()}', int({self.visit(node.steering)}))  # Note: This method expects an integer so wee need to convert the value.\n"
         self.visit(node.next)
 
     def visit_start_moving_with_steering_node(self, node: SetMotorSpeedNode):
-        self.program_code += f"motor_pair.start(int({self.visit(node.steering)}))  # Note: This methods expects an integer so wee need to convert the value.\n"
+        self.program_code += f"motor_pair.start(int({self.visit(node.steering)}))  # Note: This method expects an integer so wee need to convert the value.\n"
         self.visit(node.next)
 
     def visit_stop_moving_node(self, node: StopMovingNode):
@@ -471,9 +511,104 @@ import math
         self.visit(node.next)
 
     def visit_set_movement_speed_node(self, node: SetMovementSpeedNode):
-        self.program_code += f"motor_pair.set_default_speed(int({self.visit(node.value)}))  # Note: This methods expects an integer so wee need to convert the value.\n"
+        self.program_code += f"motor_pair.set_default_speed(int({self.visit(node.value)}))  # Note: This method expects an integer so wee need to convert the value.\n"
         self.visit(node.next)
 
     def visit_set_motor_rotation_node(self, node: SetMotorRotationNode):
         self.program_code += f"motor_pair.set_motor_rotation({self.visit(node.value)}, '{node.unit.code()}')\n"
+        self.visit(node.next)
+
+    def visit_comment_node(self, node: CommentNode):
+        self.program_code += f"{node.value}\n"
+        self.visit(node.next)
+
+    def visit_set_center_button_node(self, node: SetCenterButtonNode):
+        self.generate_object("hub", "MSHub", "")
+
+        self.program_code += f"hub.status_light.on('{node.color.code()}')\n"
+        self.visit(node.next)
+
+    def visit_light_up_distance_sensor_node(self, node: LightUpDistanceSensorNode):
+        pattern = ", ".join(node.pattern.split(" "))
+
+        if isinstance(node.port, ListLiteralNode):
+            # Generate the object to call the method on
+            variable = f"distance_sensor_{node.port.value[0].lower()}"
+            self.generate_object(variable, "DistanceSensor", f"'{node.port.value[0]}'")
+            self.program_code += f"{variable}.light_up({pattern})\n"
+
+        elif isinstance(node.port, VariableNode):
+            port = self.visit(node.port)
+            self.program_code += f"# Note: This will fail if the first item in {port} is not valid port.\n"
+            self.program_code += (
+                f"DistanceSensor({node.port.name}[0].upper()).light_up({pattern})\n"
+            )
+
+        else:
+            raise NotImplementedError(
+                f"The following node is not currently supported in the port field: {node.port}"
+            )
+        self.visit(node.next)
+
+    def visit_write_node(self, node: WriteNode):
+        self.generate_object("hub", "MSHub", "")
+
+        self.program_code += f"hub.light_matrix.write({self.visit(node.text)})\n"
+        self.visit(node.next)
+
+    def visit_turn_off_pixels_node(self, node: TurnOffPixelsNode):
+        self.generate_object("hub", "MSHub", "")
+
+        self.program_code += f"hub.light_matrix.off()\n"
+        self.visit(node.next)
+
+    def visit_set_pixel_node(self, node: SetPixelNode):
+        self.generate_object("hub", "MSHub", "")
+
+        self.program_code += f"hub.light_matrix.set_pixel(int({self.visit(node.x)})-1, int({self.visit(node.y)})-1, int({self.visit(node.brightness)}))  # Note: This method expects integers so wee need to convert the value. Also starts with 0 not 1.\n"
+        self.visit(node.next)
+
+    def visit_set_pixel_brightness_node(self, node: SetPixelBrightnessNode):
+        self.objects.add("_brightness")
+        self.program_code += f"_brightness = {self.visit(node.brightness)}\n"
+        self.visit(node.next)
+
+    def visit_turn_on_node(self, node: TurnOnNode):
+        self.generate_object("hub", "MSHub", "")
+
+        # If the function is not yet added add it
+        if "_turn_on_pattern" not in self.functions:
+            self.functions.add("_turn_on_pattern")
+            self.functions_code += """# This is a helper function that is necessary to turn on patterns on the light matrix.
+def _turn_on_pattern(pattern, brightness=100):
+\tfor i in range(len(pattern)):
+\t\thub.light_matrix.set_pixel(i%5, int(i/5), int(brightness * int(pattern[i])/9.0))
+"""
+
+        if "_brightness" in self.objects:
+            self.program_code += f"_turn_on_pattern('{node.image}', _brightness)\n"
+        else:
+            self.program_code += f"_turn_on_pattern('{node.image}')\n"
+
+        self.visit(node.next)
+
+    def visit_turn_on_for_duration_node(self, node: TurnOnForDurationNode):
+        self.generate_object("hub", "MSHub", "")
+
+        # If the function is not yet added add it
+        if "_turn_on_pattern" not in self.functions:
+            self.functions.add("_turn_on_pattern")
+            self.functions_code += """# This is a helper function that is necessary to turn on patterns on the light matrix.
+def _turn_on_pattern(pattern, brightness=100):
+\tfor i in range(len(pattern)):
+\t\thub.light_matrix.set_pixel(i%5, int(i/5), int(brightness * int(pattern[i])/9.0))
+"""
+
+        if "_brightness" in self.objects:
+            self.program_code += f"_turn_on_pattern('{node.image}', _brightness)\n"
+        else:
+            self.program_code += f"_turn_on_pattern('{node.image}')\n"
+
+        self.program_code += f"wait_for_seconds(int({self.visit(node.duration)}))\n"
+        self.program_code += "hub.light_matrix.off()\n"
         self.visit(node.next)

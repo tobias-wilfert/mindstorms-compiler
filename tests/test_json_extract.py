@@ -325,6 +325,159 @@ def test_extract_json_set_motor_rotation_value_variable():
     helper("set_motor_rotation_value_variable", "Movement")
 
 
+# ---------- Light ----------
+# - Start Animation
+def test_extract_json_start_animation_base():
+    helper("start_animation_base", "Light")
+
+
+def test_extract_json_start_animation_custom():
+    helper("start_animation_custom", "Light")
+
+
+# - Play Animation until done
+def test_extract_json_play_animation_until_done_base():
+    helper("play_animation_until_done_base", "Light")
+
+
+def test_extract_json_play_animation_until_done_custom():
+    helper("play_animation_until_done_custom", "Light")
+
+
+# - Turn on for duration
+def test_extract_json_turn_on_for_duration_base():
+    helper("turn_on_for_duration_base", "Light")
+
+
+def test_extract_json_turn_on_for_duration_custom():
+    helper("turn_on_for_duration_custom", "Light")
+
+
+def test_extract_json_turn_on_for_duration_variable():
+    helper("turn_on_for_duration_variable", "Light")
+
+
+# - Turn on
+def test_extract_json_turn_on_base():
+    helper("turn_on_base", "Light")
+
+
+def test_extract_json_turn_on_custom():
+    helper("turn_on_custom", "Light")
+
+
+# - Write
+def test_extract_json_write_base():
+    helper("write_base", "Light")
+
+
+def test_extract_json_write_variable():
+    helper("write_variable", "Light")
+
+
+# - Turn off
+def test_extract_json_turn_off_pixels():
+    helper("turn_off_pixels", "Light")
+
+
+# - Set pixel brightness
+def test_extract_json_set_pixel_brightness_base():
+    helper("set_pixel_brightness_base", "Light")
+
+
+def test_extract_json_set_pixel_brightness_variable():
+    helper("set_pixel_brightness_variable", "Light")
+
+
+# - Set pixel
+def test_extract_json_set_pixel_base():
+    helper("set_pixel_base", "Light")
+
+
+def test_extract_json_set_pixel_variable():
+    helper("set_pixel_variable", "Light")
+
+
+def test_extract_json_set_pixel_x_value_variable():
+    helper("set_pixel_x_value_variable", "Light")
+
+
+def test_extract_json_set_pixel_y_value_variable():
+    helper("set_pixel_y_value_variable", "Light")
+
+
+# - Rotate Orientation
+def test_extract_json_rotate_orientation_clockwise():
+    helper("rotate_orientation_clockwise", "Light")
+
+
+def test_extract_json_rotate_orientation_counterclockwise():
+    helper("rotate_orientation_counterclockwise", "Light")
+
+
+# - Set Orientation
+def test_extract_json_set_orientation_upright():
+    helper("set_orientation_upright", "Light")
+
+
+def test_extract_json_set_orientation_upsidedown():
+    helper("set_orientation_upsidedown", "Light")
+
+
+def test_extract_json_set_orientation_left():
+    helper("set_orientation_left", "Light")
+
+
+def test_extract_json_set_orientation_right():
+    helper("set_orientation_right", "Light")
+
+
+# - Set Center button
+def test_extract_json_set_center_button_red():
+    helper("set_center_button_red", "Light")
+
+
+def test_extract_json_set_center_button_yellow():
+    helper("set_center_button_yellow", "Light")
+
+
+def test_extract_json_set_center_button_green():
+    helper("set_center_button_green", "Light")
+
+
+def test_extract_json_set_center_button_cyan():
+    helper("set_center_button_cyan", "Light")
+
+
+def test_extract_json_set_center_button_azure():
+    helper("set_center_button_azure", "Light")
+
+
+def test_extract_json_set_center_button_pink():
+    helper("set_center_button_pink", "Light")
+
+
+def test_extract_json_set_center_button_white():
+    helper("set_center_button_white", "Light")
+
+
+def test_extract_json_set_center_button_black():
+    helper("set_center_button_black", "Light")
+
+
+# -Light up distance sensor
+def test_extract_json_light_up_distance_sensor_base():
+    helper("light_up_distance_sensor_base", "Light")
+
+
+def test_extract_json_light_up_distance_sensor_port_list():
+    helper("light_up_distance_sensor_port_list", "Light")
+
+
+def test_extract_json_light_up_distance_sensor_port_variable():
+    helper("light_up_distance_sensor_port_variable", "Light")
+
+
 # ---------- Operators ----------
 def test_extract_json_arithmetic():
     helper("arithmetic", "Operators")

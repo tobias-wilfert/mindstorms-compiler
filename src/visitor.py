@@ -1,5 +1,16 @@
-from src.abstract_syntax_tree import AST, LiteralNode, Node, NumericalNode
+from src.abstract_syntax_tree import AST, CommentNode, LiteralNode, Node, NumericalNode
 from src.abstract_syntax_tree.events import WhenProgramStartsNode
+from src.abstract_syntax_tree.light import (
+    CenterButtonColor,
+    LightUpDistanceSensorNode,
+    SetCenterButtonNode,
+    SetPixelBrightnessNode,
+    SetPixelNode,
+    TurnOffPixelsNode,
+    TurnOnForDurationNode,
+    TurnOnNode,
+    WriteNode,
+)
 from src.abstract_syntax_tree.motors import (
     GoDirection,
     MotorGoToPositionNode,
@@ -40,7 +51,11 @@ class Visitor:
     ast: AST  # The AST that is being constructed
     cst: dict
 
-    def __init__(self) -> None:
+    best_effort: bool  # If true then the visitor will try to continue even if it encounters a block it can't translate.
+    # A comment will be added to the AST to indicate that this has happened.
+
+    def __init__(self, best_effort=True) -> None:
+        self.best_effort = best_effort
         pass
 
     def visit(self, cst: dict) -> AST:
@@ -115,6 +130,32 @@ class Visitor:
             return self.visit_set_movement_speed(node)
         elif opcode == "flippermove_setDistance":
             return self.visit_set_motor_rotation(node)
+        elif opcode == "flipperdisplay_ledAnimation":
+            return self.visit_start_animation(node)
+        elif opcode == "flipperdisplay_ledAnimationUntilDone":
+            return self.visit_play_animation_until_done(node)
+        elif opcode == "flipperdisplay_ledImageFor":
+            return self.visit_turn_on_for_duration(node)
+        elif opcode == "flipperdisplay_ledImage":
+            return self.visit_turn_on(node)
+        elif opcode == "flipperdisplay_ledText":
+            return self.visit_write(node)
+        elif opcode == "flipperdisplay_displayOff":
+            return self.visit_turn_off_pixels(node)
+        elif opcode == "flipperdisplay_ledSetBrightness":
+            return self.visit_set_pixel_brightness(node)
+        elif opcode == "flipperdisplay_ledOn":
+            return self.visit_set_pixel(node)
+        elif opcode == "flipperdisplay_menu_ledMatrixIndex":
+            return self.visit_set_pixel_matrix_index(node)
+        elif opcode == "flipperdisplay_ledRotateDirection":
+            return self.visit_rotate_orientation(node)
+        elif opcode == "flipperdisplay_ledRotateOrientation":
+            return self.visit_set_orientation(node)
+        elif opcode == "flipperdisplay_centerButtonLight":
+            return self.visit_set_center_button(node)
+        elif opcode == "flipperdisplay_ultrasonicLightUp":
+            return self.visit_light_up_distance_sensor(node)
         elif opcode == "data_setvariableto":
             return self.visit_set_variable_to(node)
         elif opcode == "data_changevariableby":
@@ -486,3 +527,173 @@ class Visitor:
         unit = RotationUnit[node["fields"]["UNIT"][0].upper()]
         next_node = self.visit_node(node["next"])
         return SetMotorRotationNode(value, unit, next_node)
+
+    def visit_start_animation(self, node) -> CommentNode:
+        """If the best effort flag is true constructs a comment node that acts as a place holder and explains that animations are not supported yet.
+        Else raise an NotImplementedError.
+        :param node: The Node representation.
+        :return: The AST representation.
+        """
+        if not self.best_effort:
+            raise NotImplementedError(
+                "Animations are not supported yet, use the best_effort flag to generate code without animations."
+            )
+
+        next_node = self.visit_node(node["next"])
+        return CommentNode(
+            "# Placeholder for the START ANIMATION block. Note: that animations are not supported in Python at the moment.",
+            next_node,
+        )
+
+    def visit_play_animation_until_done(self, node) -> CommentNode:
+        """If the best effort flag is true constructs a comment node that acts as a place holder and explains that animations are not supported yet.
+        Else raise an NotImplementedError.
+        :param node: The Node representation.
+        :return: The AST representation.
+        """
+        if not self.best_effort:
+            raise NotImplementedError(
+                "Animations are not supported yet, use the best_effort flag to generate code without animations."
+            )
+
+        next_node = self.visit_node(node["next"])
+        return CommentNode(
+            "# Placeholder for the PLAY ANIMATION block. Note: that animations are not supported in Python at the moment.",
+            next_node,
+        )
+
+    def visit_turn_on_for_duration(self, node) -> TurnOnForDurationNode:
+        """Constructs the AST representation of the TurnOnForDuration node.
+
+        :param node: The Node representation.
+        :return: The AST representation.
+        """
+        image = self.cst[node["inputs"]["MATRIX"][1]]["fields"][
+            "field_flipperdisplay_custom-matrix"
+        ][
+            0
+        ]  # TODO: Need to parse this
+        duration = self.visit_input(
+            node["inputs"]["VALUE"][1]
+        )  # TODO: Need to visit this as if it where an value
+        next_node = self.visit_node(node["next"])
+        return TurnOnForDurationNode(image, duration, next_node)
+
+    def visit_turn_on(self, node) -> TurnOnNode:
+        """Constructs the AST representation of the TurnOn node.
+
+        :param node: The Node representation.
+        :return: The AST representation.
+        """
+        image = self.cst[node["inputs"]["MATRIX"][1]]["fields"][
+            "field_flipperdisplay_custom-matrix"
+        ][0]
+        next_node = self.visit_node(node["next"])
+        return TurnOnNode(image, next_node)
+
+    def visit_write(self, node) -> WriteNode:
+        """Constructs the AST representation of the Write node.
+
+        :param node: The Node representation.
+        :return: The AST representation.
+        """
+        text = self.visit_input(node["inputs"]["TEXT"][1])
+        next_node = self.visit_node(node["next"])
+        return WriteNode(text, next_node)
+
+    def visit_turn_off_pixels(self, node) -> TurnOffPixelsNode:
+        """Constructs the AST representation of the TurnOffPixels node.
+
+        :param node: The Node representation.
+        :return: The AST representation.
+        """
+        next_node = self.visit_node(node["next"])
+        return TurnOffPixelsNode(next_node)
+
+    def visit_set_pixel_brightness(self, node) -> SetPixelBrightnessNode:
+        """Constructs the AST representation of the SetPixelBrightness node.
+
+        :param node: The Node representation.
+        :return: The AST representation.
+        """
+        brightness = self.visit_input(node["inputs"]["BRIGHTNESS"][1])
+        next_node = self.visit_node(node["next"])
+        return SetPixelBrightnessNode(brightness, next_node)
+
+    def visit_set_pixel_matrix_index(self, node) -> NumericalNode:
+        return NumericalNode(float(node["fields"]["ledMatrixIndex"][0]))
+
+    def visit_set_pixel(self, node) -> SetPixelNode:
+        """Constructs the AST representation of the SetPixel node.
+
+        :param node: The Node representation.
+        :return: The AST representation.
+        """
+        x = self.visit_input(node["inputs"]["X"][1])
+        y = self.visit_input(node["inputs"]["Y"][1])
+        brightness = self.visit_input(node["inputs"]["BRIGHTNESS"][1])
+        next_node = self.visit_node(node["next"])
+        return SetPixelNode(x, y, brightness, next_node)
+
+    def visit_rotate_orientation(self, node) -> CommentNode:
+        """If the best effort flag is true constructs a comment node that acts as a place holder and explains that rotations are not supported yet.
+        Else raise an NotImplementedError.
+        :param node: The Node representation.
+        :return: The AST representation.
+        """
+        if not self.best_effort:
+            raise NotImplementedError(
+                "Rotations are not supported yet, use the best_effort flag to generate code without rotations."
+            )
+
+        next_node = self.visit_node(node["next"])
+        return CommentNode(
+            "# Placeholder for the ROTATE ORIENTATION block. Note: that rotations are not supported in Python at the moment.",
+            next_node,
+        )
+
+    def visit_set_orientation(self, node) -> CommentNode:
+        """If the best effort flag is true constructs a comment node that acts as a place holder and explains that rotations are not supported yet.
+        Else raise an NotImplementedError.
+        :param node: The Node representation.
+        :return: The AST representation.
+        """
+        if not self.best_effort:
+            raise NotImplementedError(
+                "Rotations are not supported yet, use the best_effort flag to generate code without rotations."
+            )
+
+        next_node = self.visit_node(node["next"])
+        return CommentNode(
+            "# Placeholder for the SET ORIENTATION block. Note: that rotations are not supported in Python at the moment.",
+            next_node,
+        )
+
+    def visit_set_center_button(self, node) -> SetCenterButtonNode:
+        """Constructs the AST representation of the SetCenterButton node.
+
+        :param node: The Node representation.
+        :return: The AST representation.
+        """
+
+        color_index = int(
+            self.cst[node["inputs"]["COLOR"][1]]["fields"][
+                "field_flipperdisplay_color-selector-vertical"
+            ][0]
+        )
+        color = CenterButtonColor.at(color_index)
+        next_node = self.visit_node(node["next"])
+        return SetCenterButtonNode(color, next_node)
+
+    def visit_light_up_distance_sensor(self, node) -> LightUpDistanceSensorNode:
+        """Constructs the AST representation of the LightUpDistanceSensor node.
+
+        :param node: The Node representation.
+        :return: The AST representation.
+        """
+        port = self.visit_run_motor_for_duration_port(node)
+        pattern = self.cst[node["inputs"]["VALUE"][1]]["fields"][
+            "field_flipperdisplay_led-selector"
+        ][0]
+        next_node = self.visit_node(node["next"])
+        return LightUpDistanceSensorNode(port, pattern, next_node)
