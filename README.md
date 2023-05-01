@@ -79,6 +79,19 @@ motor_pair.move(10.0, 'cm')
 | Set Movement Speed   | 2  |
 | Set Movement Motor   | 3  |
 | Set Motor Rotation   | 3  |
+| **Light** |  |
+| Start Animation| - |
+| Play Animation until Done  | - |
+| Turn Light Matrix on for Duration  | 3 |
+| Turn Light Matrix on | 2 |
+| Write on Matrix | 2 |
+| Turn off Pixels | 1 |
+| Set Pixel Brightness | 2 |
+| Set Pixel | 4 |
+| Rotate Orientation | - |
+| Set orientation | - |
+| Set Center Button Light | 8 |
+| Light up distance sensor | 3 | 
 | **Operators** |  |
 | Plus   | 3 |
 | Minus   | 3  |
