@@ -89,9 +89,11 @@ motor_pair.move(10.0, 'cm')
 | Set Pixel Brightness | 2 |
 | Set Pixel | 4 |
 | Rotate Orientation | - |
-| Set orientation | - |
+| Set Orientation | - |
 | Set Center Button Light | 8 |
-| Light up distance sensor | 3 | 
+| Light up Distance Sensor | 3 | 
+| **Control** |  |
+| If Then   | 1  |
 | **Operators** |  |
 | Plus   | 3 |
 | Minus   | 3  |
@@ -103,5 +105,13 @@ motor_pair.move(10.0, 'cm')
 | Change Variable By   | 2  |
 | List   | 1  |
 | Add Item to List   | 4  |
+| Delete Item of List   | 2  |
+| Delete All of List   | 1  |
+| Insert Item in List at Index   | 3  |
+| Replace Item in List at Index   | 3  |
+| Item at Index  | 2  |
+| Index of Item   | 2  |
+| Length of List   | 1  |
+| List contains Item   | 2 |
 | **Events** |  |
 | When Program Starts   | 1  |

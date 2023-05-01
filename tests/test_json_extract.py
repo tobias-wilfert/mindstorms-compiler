@@ -504,10 +504,12 @@ def test_extract_json_arithmetic_variable():
 
 
 # ---------- Variables ----------
+# - Change Variable by
 def test_extract_json_change_variable_by():
     helper("change_variable_by", "Variables")
 
 
+# - Variable
 def test_extract_json_variable_num():
     helper("variable_num", "Variables")
 
@@ -516,10 +518,12 @@ def test_extract_json_variable_string():
     helper("variable_string", "Variables")
 
 
+# - List
 def test_extract_json_list():
     helper("list", "Variables")
 
 
+# - Add item to list
 def test_extract_json_add_item_to_list_base():
     helper("add_item_to_list_base", "Variables")
 
@@ -534,3 +538,75 @@ def test_extract_json_add_item_to_list_list():
 
 def test_extract_json_add_item_to_list_variable():
     helper("add_item_to_list_variable", "Variables")
+
+
+# - Delete item in list
+def test_extract_json_delete_item_in_list_base():
+    helper("delete_item_in_list_base", "Variables")
+
+
+def test_extract_json_delete_item_in_list_variable():
+    helper("delete_item_in_list_variable", "Variables")
+
+
+# - Delete all items in list
+def test_extract_json_delete_all_items_in_list():
+    helper("delete_all_items_in_list", "Variables")
+
+
+# - Insert item at index
+def test_extract_json_insert_item_at_index_base():
+    helper("insert_item_at_index_base", "Variables")
+
+
+def test_extract_json_insert_item_at_index_variable_index():
+    helper("insert_item_at_index_variable_index", "Variables")
+
+
+def test_extract_json_insert_item_at_index_variable_item():
+    helper("insert_item_at_index_variable_item", "Variables")
+
+
+# - Replace item at index
+def test_extract_json_replace_item_at_index_base():
+    helper("replace_item_at_index_base", "Variables")
+
+
+def test_extract_json_replace_item_at_index_variable_index():
+    helper("replace_item_at_index_variable_index", "Variables")
+
+
+def test_extract_json_replace_item_at_index_variable_value():
+    helper("replace_item_at_index_variable_value", "Variables")
+
+
+# - Item at Index
+def test_extract_json_item_at_index_base():
+    helper("item_at_index_base", "Variables")
+
+
+def test_extract_json_item_at_index_variable():
+    helper("item_at_index_variable", "Variables")
+
+
+# - Index of item
+def test_extract_json_index_of_item_base():
+    helper("index_of_item_base", "Variables")
+
+
+def test_extract_json_index_of_item_variable():
+    helper("index_of_item_variable", "Variables")
+
+
+# - Length of list
+def test_extract_json_length_of_list():
+    helper("length_of_list", "Variables")
+
+
+# - List contains
+def test_extract_json_list_contains_base():
+    helper("list_contains_base", "Variables")
+
+
+def test_extract_json_list_contains_variable():
+    helper("list_contains_variable", "Variables")

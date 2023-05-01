@@ -1,4 +1,5 @@
 from src.abstract_syntax_tree import AST, CommentNode, LiteralNode, Node, NumericalNode
+from src.abstract_syntax_tree.control import IfThenNode
 from src.abstract_syntax_tree.events import WhenProgramStartsNode
 from src.abstract_syntax_tree.light import (
     CenterButtonColor,
@@ -39,7 +40,15 @@ from src.abstract_syntax_tree.operators import ArithmeticalNode, Operation
 from src.abstract_syntax_tree.variables import (
     AddItemToListNode,
     ChangeVariableByNode,
+    DeleteAllItemsInListNode,
+    DeleteItemInListNode,
+    IndexOfItemNode,
+    InsertItemAtIndexNode,
+    ItemAtIndexNode,
+    LengthOfListNode,
+    ListContainsNode,
     ListLiteralNode,
+    ReplaceItemAtIndexNode,
     SetVariableToNode,
     VariableNode,
 )
@@ -162,6 +171,24 @@ class Visitor:
             return self.visits_change_variable_by(node)
         elif opcode == "data_addtolist":
             return self.visit_add_to_list(node)
+        elif opcode == "data_deleteoflist":
+            return self.visit_delete_item_in_list(node)
+        elif opcode == "data_deletealloflist":
+            return self.visit_delete_all_items_in_list(node)
+        elif opcode == "data_lengthoflist":
+            return self.visit_length_of_list(node)
+        elif opcode == "data_insertatlist":
+            return self.visit_insert_at_index(node)
+        elif opcode == "data_itemoflist":
+            return self.visit_item_at_index(node)
+        elif opcode == "data_replaceitemoflist":
+            return self.visit_replace_item_at_index(node)
+        elif opcode == "data_itemnumoflist":
+            return self.visit_index_of_item(node)
+        elif opcode == "data_listcontainsitem":
+            return self.visit_list_contains_item(node)
+        elif opcode == "control_if":
+            return self.visit_if_then(node)
         elif opcode == "operator_add":
             return self.visit_operator(Operation.PLUS, node)
         elif opcode == "operator_subtract":
@@ -697,3 +724,99 @@ class Visitor:
         ][0]
         next_node = self.visit_node(node["next"])
         return LightUpDistanceSensorNode(port, pattern, next_node)
+
+    def visit_delete_item_in_list(self, node) -> DeleteItemInListNode:
+        """Constructs the AST representation of the DeleteItemInList node.
+
+        :param node: The Node representation.
+        :return: The AST representation.
+        """
+        # TODO: This needs to be fixed to also keep track of the variable ID and NAME
+        list = node["fields"]["LIST"][0]
+        index = self.visit_input(node["inputs"]["INDEX"][1])
+        next_node = self.visit_node(node["next"])
+        return DeleteItemInListNode(list, index, next_node)
+
+    def visit_delete_all_items_in_list(self, node) -> DeleteAllItemsInListNode:
+        """Constructs the AST representation of the DeleteAllItemsInList node.
+
+        :param node: The Node representation.
+        :return: The AST representation.
+        """
+        list = node["fields"]["LIST"][0]
+        next_node = self.visit_node(node["next"])
+        return DeleteAllItemsInListNode(list, next_node)
+
+    def visit_length_of_list(self, node) -> LengthOfListNode:
+        """Constructs the AST representation of the LengthOfList node.
+
+        :param node: The Node representation.
+        :return: The AST representation.
+        """
+        list = node["fields"]["LIST"][0]
+        return LengthOfListNode(list)
+
+    def visit_item_at_index(self, node) -> ItemAtIndexNode:
+        """Constructs the AST representation of the ItemAtIndex node.
+
+        :param node: The Node representation.
+        :return: The AST representation.
+        """
+        list = node["fields"]["LIST"][0]
+        index = self.visit_input(node["inputs"]["INDEX"][1])
+        return ItemAtIndexNode(list, index)
+
+    def visit_insert_at_index(self, node) -> InsertItemAtIndexNode:
+        """Constructs the AST representation of the InsertItemAtIndex node.
+
+        :param node: The Node representation.
+        :return: The AST representation.
+        """
+        list = node["fields"]["LIST"][0]
+        item = self.visit_input(node["inputs"]["ITEM"][1])
+        index = self.visit_input(node["inputs"]["INDEX"][1])
+        next_node = self.visit_node(node["next"])
+        return InsertItemAtIndexNode(list, item, index, next_node)
+
+    def visit_replace_item_at_index(self, node) -> ReplaceItemAtIndexNode:
+        """Constructs the AST representation of the ReplaceItemAtIndex node.
+
+        :param node: The Node representation.
+        :return: The AST representation.
+        """
+        list = node["fields"]["LIST"][0]
+        index = self.visit_input(node["inputs"]["INDEX"][1])
+        item = self.visit_input(node["inputs"]["ITEM"][1])
+        next_node = self.visit_node(node["next"])
+        return ReplaceItemAtIndexNode(list, index, item, next_node)
+
+    def visit_index_of_item(self, node) -> IndexOfItemNode:
+        """Constructs the AST representation of the IndexOfItem node.
+
+        :param node: The Node representation.
+        :return: The AST representation.
+        """
+        list = node["fields"]["LIST"][0]
+        item = self.visit_input(node["inputs"]["ITEM"][1])
+        return IndexOfItemNode(list, item)
+
+    def visit_if_then(self, node) -> IfThenNode:
+        """Constructs the AST representation of the IfThen node.
+
+        :param node: The Node representation.
+        :return: The AST representation.
+        """
+        condition = self.visit_input(node["inputs"]["CONDITION"][1])
+        body = self.visit_node(node["inputs"]["SUBSTACK"][1])
+        next_node = self.visit_node(node["next"])
+        return IfThenNode(condition, body, next_node)
+
+    def visit_list_contains_item(self, node) -> ListContainsNode:
+        """Constructs the AST representation of the ListContainsItem node.
+
+        :param node: The Node representation.
+        :return: The AST representation.
+        """
+        list = node["fields"]["LIST"][0]
+        item = self.visit_input(node["inputs"]["ITEM"][1])
+        return ListContainsNode(list, item)

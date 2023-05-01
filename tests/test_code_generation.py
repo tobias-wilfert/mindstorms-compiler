@@ -2106,3 +2106,314 @@ my_list.append(my_variable)
 
 """
     )
+
+
+# - Delete item in list
+# Verified on Hardware
+def test_code_delete_item_in_list_base():
+    assert (
+        helper("delete_item_in_list_base", "Variables")
+        == f"""{includes}
+# Create your objects here.
+my_list = []
+hub = MSHub()
+
+# Write your program here.
+my_list.append('a')
+my_list.append('b')
+del my_list[int(2.0) - 1]  # Note: This method expects integers so wee need to convert the value. Also starts with 0 not 1.
+hub.light_matrix.write(my_list)
+
+"""
+    )
+
+
+# Verified on Hardware
+def test_code_delete_item_in_list_variable():
+    assert (
+        helper("delete_item_in_list_variable", "Variables")
+        == f"""{includes}
+# Create your objects here.
+my_list = []
+hub = MSHub()
+
+# Write your program here.
+my_variable = 1.0
+my_list.append('a')
+my_list.append('b')
+del my_list[int(my_variable) - 1]  # Note: This method expects integers so wee need to convert the value. Also starts with 0 not 1.
+hub.light_matrix.write(my_list)
+
+"""
+    )
+
+
+# - Delete all items in list
+# Verified on Hardware
+def test_code_delete_all_items_in_list():
+    assert (
+        helper("delete_all_items_in_list", "Variables")
+        == f"""{includes}
+# Create your objects here.
+my_list = []
+hub = MSHub()
+
+# Write your program here.
+my_list.append('a')
+my_list.append('b')
+my_list.clear()
+hub.light_matrix.write(len(my_list))
+
+"""
+    )
+
+
+# - Insert item at index
+# Verified on Hardware
+def test_code_insert_item_at_index_base():
+    assert (
+        helper("insert_item_at_index_base", "Variables")
+        == f"""{includes}
+# Create your objects here.
+my_list = []
+hub = MSHub()
+
+# Write your program here.
+my_list.append('a')
+my_list.append('b')
+my_list.insert(int(1.0) - 1, 'c')  # Note: This method expects integers so wee need to convert the value. Also starts with 0 not 1.
+hub.light_matrix.write(my_list[int(1.0) - 1])
+
+"""
+    )
+
+
+# Verified on Hardware
+def test_code_insert_item_at_index_variable_index():
+    assert (
+        helper("insert_item_at_index_variable_index", "Variables")
+        == f"""{includes}
+# Create your objects here.
+my_list = []
+hub = MSHub()
+
+# Write your program here.
+my_variable = 2.0
+my_list.append('a')
+my_list.append('b')
+my_list.insert(int(my_variable) - 1, 'c')  # Note: This method expects integers so wee need to convert the value. Also starts with 0 not 1.
+hub.light_matrix.write(my_list[int(2.0) - 1])
+
+"""
+    )
+
+
+# Verified on Hardware
+def test_code_insert_item_at_index_variable_item():
+    assert (
+        helper("insert_item_at_index_variable_item", "Variables")
+        == f"""{includes}
+# Create your objects here.
+my_list = []
+hub = MSHub()
+
+# Write your program here.
+my_variable = 'c'
+my_list.append('a')
+my_list.append('b')
+my_list.insert(int(1.0) - 1, my_variable)  # Note: This method expects integers so wee need to convert the value. Also starts with 0 not 1.
+hub.light_matrix.write(my_list[int(1.0) - 1])
+
+"""
+    )
+
+
+# - Replace item at index
+# Verified on Hardware
+def test_code_replace_item_at_index_base():
+    assert (
+        helper("replace_item_at_index_base", "Variables")
+        == f"""{includes}
+# Create your objects here.
+my_list = []
+hub = MSHub()
+
+# Write your program here.
+my_list.append('a')
+my_list[int(1.0) - 1] = 'c'  # Note: This method expects integers so wee need to convert the value. Also starts with 0 not 1.
+hub.light_matrix.write(my_list[int(1.0) - 1])
+
+"""
+    )
+
+
+# Verified on Hardware
+def test_code_replace_item_at_index_variable_index():
+    assert (
+        helper("replace_item_at_index_variable_index", "Variables")
+        == f"""{includes}
+# Create your objects here.
+my_list = []
+hub = MSHub()
+
+# Write your program here.
+my_variable = 2.0
+my_list.append('a')
+my_list.append('b')
+my_list[int(my_variable) - 1] = 'c'  # Note: This method expects integers so wee need to convert the value. Also starts with 0 not 1.
+hub.light_matrix.write(my_list[int(2.0) - 1])
+
+"""
+    )
+
+
+# Verified on Hardware
+def test_code_replace_item_at_index_variable_value():
+    assert (
+        helper("replace_item_at_index_variable_value", "Variables")
+        == f"""{includes}
+# Create your objects here.
+my_list = []
+hub = MSHub()
+
+# Write your program here.
+my_variable = 'c'
+my_list.append('a')
+my_list[int(1.0) - 1] = my_variable  # Note: This method expects integers so wee need to convert the value. Also starts with 0 not 1.
+hub.light_matrix.write(my_list[int(1.0) - 1])
+
+"""
+    )
+
+
+# - Item at Index
+# Verified on Hardware
+def test_code_item_at_index_base():
+    assert (
+        helper("item_at_index_base", "Variables")
+        == f"""{includes}
+# Create your objects here.
+my_list = []
+hub = MSHub()
+
+# Write your program here.
+my_list.append('a')
+my_list.append('b')
+hub.light_matrix.write(my_list[int(2.0) - 1])
+
+"""
+    )
+
+
+# Verified on Hardware
+def test_code_item_at_index_variable():
+    assert (
+        helper("item_at_index_variable", "Variables")
+        == f"""{includes}
+# Create your objects here.
+my_list = []
+hub = MSHub()
+
+# Write your program here.
+my_variable = 1.0
+my_list.append('a')
+my_list.append('b')
+hub.light_matrix.write(my_list[int(my_variable) - 1])
+
+"""
+    )
+
+
+# - Index of item
+# Verified on Hardware
+def test_code_index_of_item_base():
+    assert (
+        helper("index_of_item_base", "Variables")
+        == f"""{includes}
+# Create your objects here.
+my_list = []
+hub = MSHub()
+
+# Write your program here.
+my_list.append('a')
+my_list.append('b')
+hub.light_matrix.write(my_list.index('b') + 1)
+
+"""
+    )
+
+
+# Verified on Hardware
+def test_code_index_of_item_variable():
+    assert (
+        helper("index_of_item_variable", "Variables")
+        == f"""{includes}
+# Create your objects here.
+my_list = []
+hub = MSHub()
+
+# Write your program here.
+my_variable = 'a'
+my_list.append('a')
+my_list.append('b')
+hub.light_matrix.write(my_list.index(my_variable) + 1)
+
+"""
+    )
+
+
+# - Length of list
+# Verified on Hardware
+def test_code_length_of_list():
+    assert (
+        helper("length_of_list", "Variables")
+        == f"""{includes}
+# Create your objects here.
+my_list = []
+hub = MSHub()
+
+# Write your program here.
+my_list.append('a')
+my_list.append('b')
+hub.light_matrix.write(len(my_list))
+
+"""
+    )
+
+
+# - List contains
+# Verified on Hardware
+def test_code_list_contains_base():
+    assert (
+        helper("list_contains_base", "Variables")
+        == f"""{includes}
+# Create your objects here.
+my_list = []
+hub = MSHub()
+
+# Write your program here.
+my_list.append('a')
+if 'a' in my_list:
+\thub.light_matrix.write('a')
+
+"""
+    )
+
+
+# Verified on Hardware
+def test_code_list_contains_variable():
+    assert (
+        helper("list_contains_variable", "Variables")
+        == f"""{includes}
+# Create your objects here.
+my_list = []
+hub = MSHub()
+
+# Write your program here.
+my_variable = 'a'
+my_list.append('b')
+if my_variable in my_list:
+\thub.light_matrix.write('a')
+
+"""
+    )

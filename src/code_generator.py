@@ -1,4 +1,5 @@
 from src.abstract_syntax_tree import AST, CommentNode, LiteralNode, Node, NumericalNode
+from src.abstract_syntax_tree.control import IfThenNode
 from src.abstract_syntax_tree.events import WhenProgramStartsNode
 from src.abstract_syntax_tree.light import (
     LightUpDistanceSensorNode,
@@ -34,7 +35,15 @@ from src.abstract_syntax_tree.operators import ArithmeticalNode
 from src.abstract_syntax_tree.variables import (
     AddItemToListNode,
     ChangeVariableByNode,
+    DeleteAllItemsInListNode,
+    DeleteItemInListNode,
+    IndexOfItemNode,
+    InsertItemAtIndexNode,
+    ItemAtIndexNode,
+    LengthOfListNode,
+    ListContainsNode,
     ListLiteralNode,
+    ReplaceItemAtIndexNode,
     SetVariableToNode,
     VariableNode,
 )
@@ -59,6 +68,8 @@ import math
         self.objects_code = ""
         self.functions_code = ""
         self.program_code = ""
+
+        self.indentation = ""
 
         # Indicates wether safe code should be generated which might be a bit more verbose
         self.safe_flag = safe
@@ -159,6 +170,24 @@ import math
             return self.visit_set_center_button_node(node)
         elif isinstance(node, LightUpDistanceSensorNode):
             return self.visit_light_up_distance_sensor_node(node)
+        elif isinstance(node, DeleteItemInListNode):
+            return self.visit_delete_item_in_list_node(node)
+        elif isinstance(node, DeleteAllItemsInListNode):
+            return self.visit_delete_all_items_in_list_node(node)
+        elif isinstance(node, LengthOfListNode):
+            return self.visit_length_of_list_node(node)
+        elif isinstance(node, InsertItemAtIndexNode):
+            return self.visit_insert_item_at_index_node(node)
+        elif isinstance(node, ItemAtIndexNode):
+            return self.visit_item_at_index_node(node)
+        elif isinstance(node, ReplaceItemAtIndexNode):
+            return self.visit_replace_item_at_index_node(node)
+        elif isinstance(node, IndexOfItemNode):
+            return self.visit_index_of_item_node(node)
+        elif isinstance(node, IfThenNode):
+            return self.visit_if_then_node(node)
+        elif isinstance(node, ListContainsNode):
+            return self.visit_list_contains_node(node)
         else:
             raise NotImplementedError(f"Currently no code can be generated for {node}")
 
@@ -182,8 +211,8 @@ import math
     ):
         # Print a note if there are multiple ports that should run.
         if len(node.ports.value) > 1:
-            self.program_code += "# Note: This will turn the motors after each other rather than at the same time.\n"
-            self.program_code += "#   This is because there is no way to turn multiple Motors at the same time in Python.\n"
+            self.program_code += f"{self.indentation}# Note: This will turn the motors after each other rather than at the same time.\n"
+            self.program_code += f"{self.indentation}#   This is because there is no way to turn multiple Motors at the same time in Python.\n"
 
         for port in node.ports.value:
             # Generate the object to call the method on
@@ -197,7 +226,7 @@ import math
 
             # Add the code and keep exploring
             if node.unit.code() == "degrees":
-                self.program_code += f"{variable}.run_for_degrees(int({value_code}))  # Note: This method expects an integer so wee need to convert the value.\n"
+                self.program_code += f"{self.indentation}{variable}.run_for_degrees(int({value_code}))  # Note: This method expects an integer so wee need to convert the value.\n"
             else:
                 self.program_code += (
                     f"{variable}.run_for_{node.unit.code()}({value_code})\n"
@@ -209,11 +238,11 @@ import math
         self, node: RunMotorForDurationNode
     ):
         # Print a note as to why this code is needed and what it is doing
-        self.program_code += """# Note: Since the content of the variable can't always be inferred at the time of the conversion
-#   this code is needed. This will turn the motors after each other rather than at the same time.
-#   This is because there is no way to turn multiple Motors at the same time in Python.
+        self.program_code += f"""{self.indentation}# Note: Since the content of the variable can't always be inferred at the time of the conversion
+{self.indentation}#   this code is needed. This will turn the motors after each other rather than at the same time.
+{self.indentation}#   This is because there is no way to turn multiple Motors at the same time in Python.
 """
-        self.program_code += f"for port in {node.ports.name}:\n"
+        self.program_code += f"{self.indentation}for port in {node.ports.name}:\n"
 
         # If the direction is counter wise negate the value
         value_code = self.visit(node.value)
@@ -221,7 +250,7 @@ import math
             value_code = f"-{value_code}"
 
         if node.unit.code() == "degrees":
-            self.program_code += f"\tMotor(port).run_for_degrees(int({value_code}))  # Note: This method expects an integer so wee need to convert the value.\n"
+            self.program_code += f"{self.indentation}\tMotor(port).run_for_degrees(int({value_code}))  # Note: This method expects an integer so wee need to convert the value.\n"
         else:
             self.program_code += (
                 f"\tMotor(port).run_for_{node.unit.code()}({value_code})\n"
@@ -245,7 +274,9 @@ import math
         return f"({self.visit(node.left_hand)} {node.op.code()} {self.visit(node.right_hand)})"
 
     def visit_set_variable_to_node(self, node: SetVariableToNode):
-        self.program_code += f"{node.variable} = {self.visit(node.value)}\n"
+        self.program_code += (
+            f"{self.indentation}{node.variable} = {self.visit(node.value)}\n"
+        )
         self.visit(node.next)
 
     def visit_variable_node(self, node: VariableNode):
@@ -256,8 +287,8 @@ import math
     def visit_motor_got_to_position_node_fixed_ports(self, node: MotorGoToPositionNode):
         # Print a note if there are multiple ports that should run.
         if len(node.ports.value) > 1:
-            self.program_code += "# Note: This will turn the motors after each other rather than at the same time.\n"
-            self.program_code += "#   This is because there is no way to turn multiple Motors at the same time in Python.\n"
+            self.program_code += f"{self.indentation}# Note: This will turn the motors after each other rather than at the same time.\n"
+            self.program_code += f"{self.indentation}#   This is because there is no way to turn multiple Motors at the same time in Python.\n"
 
         for port in node.ports.value:
             # Generate the object to call the method on
@@ -270,18 +301,18 @@ import math
                 value_code = f"-{value_code}"  # TODO: Do some cashing for these.
 
             # Add the code and keep exploring
-            self.program_code += f"{variable}.run_to_position(int({value_code}), '{node.direction.code()}')  # Note: This method expects an integer so wee need to convert the value.\n"
+            self.program_code += f"{self.indentation}{variable}.run_to_position(int({value_code}), '{node.direction.code()}')  # Note: This method expects an integer so wee need to convert the value.\n"
         self.visit(node.next)
 
     def visit_motor_got_to_position_node_variable_ports(
         self, node: MotorGoToPositionNode
     ):
         # Print a note as to why this code is needed and what it is doing
-        self.program_code += """# Note: Since the content of the variable can't always be inferred at the time of the conversion
-#   this code is needed. This will turn the motors after each other rather than at the same time.
-#   This is because there is no way to turn multiple Motors at the same time in Python.
+        self.program_code += f"""{self.indentation}# Note: Since the content of the variable can't always be inferred at the time of the conversion
+{self.indentation}#   this code is needed. This will turn the motors after each other rather than at the same time.
+{self.indentation}#   This is because there is no way to turn multiple Motors at the same time in Python.
 """
-        self.program_code += f"for port in {node.ports.name}:\n"
+        self.program_code += f"{self.indentation}for port in {node.ports.name}:\n"
 
         # If the direction is counter wise negate the value
         value_code = self.visit(node.value)
@@ -289,7 +320,7 @@ import math
             value_code = f"-{value_code}"
 
         # Add the code and keep exploring
-        self.program_code += f"\tMotor(port).run_to_position(int({value_code}), '{node.direction.code()}')  # Note: This method expects an integer so wee need to convert the value.\n"
+        self.program_code += f"{self.indentation}\tMotor(port).run_to_position(int({value_code}), '{node.direction.code()}')  # Note: This method expects an integer so wee need to convert the value.\n"
         self.visit(node.next)
 
     def visit_motor_got_to_position_node(self, node: MotorGoToPositionNode):
@@ -305,8 +336,8 @@ import math
     def visit_start_motor_node_fixed_ports(self, node: StartMotorNode):
         # Print a note if there are multiple ports that should run.
         if len(node.ports.value) > 1:
-            self.program_code += "# Note: This will turn the motors after each other rather than at the same time.\n"
-            self.program_code += "#   This is because there is no way to turn multiple Motors at the same time in Python.\n"
+            self.program_code += f"{self.indentation}# Note: This will turn the motors after each other rather than at the same time.\n"
+            self.program_code += f"{self.indentation}#   This is because there is no way to turn multiple Motors at the same time in Python.\n"
 
         for port in node.ports.value:
             # Generate the object to call the method on
@@ -318,21 +349,21 @@ import math
                     f"{variable}.start(-{variable}.get_default_speed())\n"
                 )
             else:
-                self.program_code += f"{variable}.start()\n"
+                self.program_code += f"{self.indentation}{variable}.start()\n"
             self.visit(node.next)
 
         self.visit(node.next)
 
     def visit_start_motor_node_variable_ports(self, node: StartMotorNode):
         # Print a note as to why this code is needed and what it is doing
-        self.program_code += """# Note: Since the content of the variable can't always be inferred at the time of the conversion
-#   this code is needed. This will turn the motors after each other rather than at the same time.
-#   This is because there is no way to turn multiple Motors at the same time in Python.
+        self.program_code += f"""{self.indentation}# Note: Since the content of the variable can't always be inferred at the time of the conversion
+{self.indentation}#   this code is needed. This will turn the motors after each other rather than at the same time.
+{self.indentation}#   This is because there is no way to turn multiple Motors at the same time in Python.
 """
-        self.program_code += f"for port in {node.ports.name}:\n"
+        self.program_code += f"{self.indentation}for port in {node.ports.name}:\n"
 
         # Add the code and keep exploring
-        self.program_code += "\tMotor(port).start()\n"
+        self.program_code += f"{self.indentation}\tMotor(port).start()\n"
         self.visit(node.next)
 
     def visit_start_motor_node(self, node: StartMotorNode):
@@ -348,29 +379,29 @@ import math
     def visit_stop_motor_node_fixed_ports(self, node: StopMotorNode):
         # Print a note if there are multiple ports that should run.
         if len(node.ports.value) > 1:
-            self.program_code += "# Note: This will turn the motors after each other rather than at the same time.\n"
-            self.program_code += "#   This is because there is no way to turn multiple Motors at the same time in Python.\n"
+            self.program_code += f"{self.indentation}# Note: This will turn the motors after each other rather than at the same time.\n"
+            self.program_code += f"{self.indentation}#   This is because there is no way to turn multiple Motors at the same time in Python.\n"
 
         for port in node.ports.value:
             # Generate the object to call the method on
             variable = f"motor_{port.lower()}"
             self.generate_object(variable, "Motor", f"'{port}'")
 
-            self.program_code += f"{variable}.stop()\n"
+            self.program_code += f"{self.indentation}{variable}.stop()\n"
             self.visit(node.next)
 
         self.visit(node.next)
 
     def visit_stop_motor_node_variable_ports(self, node: StopMotorNode):
         # Print a note as to why this code is needed and what it is doing
-        self.program_code += """# Note: Since the content of the variable can't always be inferred at the time of the conversion
-#   this code is needed. This will turn the motors after each other rather than at the same time.
-#   This is because there is no way to turn multiple Motors at the same time in Python.
+        self.program_code += f"""{self.indentation}# Note: Since the content of the variable can't always be inferred at the time of the conversion
+{self.indentation}#   this code is needed. This will turn the motors after each other rather than at the same time.
+{self.indentation}#   This is because there is no way to turn multiple Motors at the same time in Python.
 """
-        self.program_code += f"for port in {node.ports.name}:\n"
+        self.program_code += f"{self.indentation}for port in {node.ports.name}:\n"
 
         # Add the code and keep exploring
-        self.program_code += "\tMotor(port).stop()\n"
+        self.program_code += f"{self.indentation}\tMotor(port).stop()\n"
         self.visit(node.next)
 
     def visit_stop_motor_node(self, node: StopMotorNode):
@@ -386,8 +417,8 @@ import math
     def visit_motor_speed_node_fixed_ports(self, node: SetMotorSpeedNode):
         # Print a note if there are multiple ports that should run.
         if len(node.ports.value) > 1:
-            self.program_code += "# Note: This will turn the motors after each other rather than at the same time.\n"
-            self.program_code += "#   This is because there is no way to turn multiple Motors at the same time in Python.\n"
+            self.program_code += f"{self.indentation}# Note: This will turn the motors after each other rather than at the same time.\n"
+            self.program_code += f"{self.indentation}#   This is because there is no way to turn multiple Motors at the same time in Python.\n"
 
         for port in node.ports.value:
             # Generate the object to call the method on
@@ -395,21 +426,21 @@ import math
             self.generate_object(variable, "Motor", f"'{port}'")
 
             # TODO: Do some cashing here
-            self.program_code += f"{variable}.set_default_speed(int({self.visit(node.value)}))  # Note: This method expects an integer so wee need to convert the value.\n"
+            self.program_code += f"{self.indentation}{variable}.set_default_speed(int({self.visit(node.value)}))  # Note: This method expects an integer so wee need to convert the value.\n"
             self.visit(node.next)
 
         self.visit(node.next)
 
     def visit_motor_speed_node_variable_ports(self, node: SetMotorSpeedNode):
         # Print a note as to why this code is needed and what it is doing
-        self.program_code += """# Note: Since the content of the variable can't always be inferred at the time of the conversion
-#   this code is needed. This will turn the motors after each other rather than at the same time.
-#   This is because there is no way to turn multiple Motors at the same time in Python.
+        self.program_code += f"""{self.indentation}# Note: Since the content of the variable can't always be inferred at the time of the conversion
+{self.indentation}#   this code is needed. This will turn the motors after each other rather than at the same time.
+{self.indentation}#   This is because there is no way to turn multiple Motors at the same time in Python.
 """
-        self.program_code += f"for port in {node.ports.name}:\n"
+        self.program_code += f"{self.indentation}for port in {node.ports.name}:\n"
 
         # Add the code and keep exploring
-        self.program_code += f"\tMotor(port).set_default_speed(int({self.visit(node.value)}))  # Note: This method expects an integer so wee need to convert the value.\n"
+        self.program_code += f"{self.indentation}\tMotor(port).set_default_speed(int({self.visit(node.value)}))  # Note: This method expects an integer so wee need to convert the value.\n"
         self.visit(node.next)
 
     def visit_set_motor_speed_node(self, node: SetMotorSpeedNode):
@@ -455,7 +486,9 @@ import math
             )
 
     def visit_change_variable_by_node(self, node: ChangeVariableByNode):
-        self.program_code += f"{node.variable} += {self.visit(node.value)}\n"
+        self.program_code += (
+            f"{self.indentation}{node.variable} += {self.visit(node.value)}\n"
+        )
         self.visit(node.next)
 
     def visit_literal_node(self, node: LiteralNode):
@@ -467,18 +500,22 @@ import math
             self.objects.add(variable)
             self.objects_code += f"{variable} = []\n"
 
-        self.program_code += f"{variable}.append({self.visit(node.value)})\n"
+        self.program_code += (
+            f"{self.indentation}{variable}.append({self.visit(node.value)})\n"
+        )
         self.visit(node.next)
 
     def visit_set_movement_motors_node(self, node: SetMovementMotorsNode):
         if isinstance(node.ports, ListLiteralNode):
-            self.program_code += f"motor_pair = MotorPair('{node.ports.value[0]}', '{node.ports.value[1]}')\n"
+            self.program_code += f"{self.indentation}motor_pair = MotorPair('{node.ports.value[0]}', '{node.ports.value[1]}')\n"
         else:
             ports = self.visit(node.ports)
-            self.program_code += f"# Note: This will fail if the first two items in {ports} are not valid ports.\n"
-            self.program_code += f"motor_pair = MotorPair({ports}[0], {ports}[1])\n"
+            self.program_code += f"{self.indentation}# Note: This will fail if the first two items in {ports} are not valid ports.\n"
+            self.program_code += (
+                f"{self.indentation}motor_pair = MotorPair({ports}[0], {ports}[1])\n"
+            )
 
-        self.program_code += "motor_pair.set_default_speed(50)  # Note: Needed since the default speed is 100, which is too fast.\n"
+        self.program_code += f"{self.indentation}motor_pair.set_default_speed(50)  # Note: Needed since the default speed is 100, which is too fast.\n"
         self.visit(node.next)
 
     def visit_move_for_duration_node(self, node: MoveForDurationNode):
@@ -494,38 +531,42 @@ import math
         else:
             if node.direction == MovementDirection.BACK:
                 value = f"-{value}"
-            self.program_code += f"motor_pair.move({value}, '{node.unit.code()}')\n"
+            self.program_code += (
+                f"{self.indentation}motor_pair.move({value}, '{node.unit.code()}')\n"
+            )
 
         self.visit(node.next)
 
     def visit_move_with_steering_node(self, node: MoveWithSteeringNode):
-        self.program_code += f"motor_pair.move({self.visit(node.value)}, '{node.unit.code()}', int({self.visit(node.steering)}))  # Note: This method expects an integer so wee need to convert the value.\n"
+        self.program_code += f"{self.indentation}motor_pair.move({self.visit(node.value)}, '{node.unit.code()}', int({self.visit(node.steering)}))  # Note: This method expects an integer so wee need to convert the value.\n"
         self.visit(node.next)
 
     def visit_start_moving_with_steering_node(self, node: SetMotorSpeedNode):
-        self.program_code += f"motor_pair.start(int({self.visit(node.steering)}))  # Note: This method expects an integer so wee need to convert the value.\n"
+        self.program_code += f"{self.indentation}motor_pair.start(int({self.visit(node.steering)}))  # Note: This method expects an integer so wee need to convert the value.\n"
         self.visit(node.next)
 
     def visit_stop_moving_node(self, node: StopMovingNode):
-        self.program_code += "motor_pair.stop()\n"
+        self.program_code += f"{self.indentation}motor_pair.stop()\n"
         self.visit(node.next)
 
     def visit_set_movement_speed_node(self, node: SetMovementSpeedNode):
-        self.program_code += f"motor_pair.set_default_speed(int({self.visit(node.value)}))  # Note: This method expects an integer so wee need to convert the value.\n"
+        self.program_code += f"{self.indentation}motor_pair.set_default_speed(int({self.visit(node.value)}))  # Note: This method expects an integer so wee need to convert the value.\n"
         self.visit(node.next)
 
     def visit_set_motor_rotation_node(self, node: SetMotorRotationNode):
-        self.program_code += f"motor_pair.set_motor_rotation({self.visit(node.value)}, '{node.unit.code()}')\n"
+        self.program_code += f"{self.indentation}motor_pair.set_motor_rotation({self.visit(node.value)}, '{node.unit.code()}')\n"
         self.visit(node.next)
 
     def visit_comment_node(self, node: CommentNode):
-        self.program_code += f"{node.value}\n"
+        self.program_code += f"{self.indentation}{node.value}\n"
         self.visit(node.next)
 
     def visit_set_center_button_node(self, node: SetCenterButtonNode):
         self.generate_object("hub", "MSHub", "")
 
-        self.program_code += f"hub.status_light.on('{node.color.code()}')\n"
+        self.program_code += (
+            f"{self.indentation}hub.status_light.on('{node.color.code()}')\n"
+        )
         self.visit(node.next)
 
     def visit_light_up_distance_sensor_node(self, node: LightUpDistanceSensorNode):
@@ -535,11 +576,11 @@ import math
             # Generate the object to call the method on
             variable = f"distance_sensor_{node.port.value[0].lower()}"
             self.generate_object(variable, "DistanceSensor", f"'{node.port.value[0]}'")
-            self.program_code += f"{variable}.light_up({pattern})\n"
+            self.program_code += f"{self.indentation}{variable}.light_up({pattern})\n"
 
         elif isinstance(node.port, VariableNode):
             port = self.visit(node.port)
-            self.program_code += f"# Note: This will fail if the first item in {port} is not valid port.\n"
+            self.program_code += f"{self.indentation}# Note: This will fail if the first item in {port} is not valid port.\n"
             self.program_code += (
                 f"DistanceSensor({node.port.name}[0].upper()).light_up({pattern})\n"
             )
@@ -553,24 +594,28 @@ import math
     def visit_write_node(self, node: WriteNode):
         self.generate_object("hub", "MSHub", "")
 
-        self.program_code += f"hub.light_matrix.write({self.visit(node.text)})\n"
+        self.program_code += (
+            f"{self.indentation}hub.light_matrix.write({self.visit(node.text)})\n"
+        )
         self.visit(node.next)
 
     def visit_turn_off_pixels_node(self, node: TurnOffPixelsNode):
         self.generate_object("hub", "MSHub", "")
 
-        self.program_code += f"hub.light_matrix.off()\n"
+        self.program_code += f"{self.indentation}hub.light_matrix.off()\n"
         self.visit(node.next)
 
     def visit_set_pixel_node(self, node: SetPixelNode):
         self.generate_object("hub", "MSHub", "")
 
-        self.program_code += f"hub.light_matrix.set_pixel(int({self.visit(node.x)})-1, int({self.visit(node.y)})-1, int({self.visit(node.brightness)}))  # Note: This method expects integers so wee need to convert the value. Also starts with 0 not 1.\n"
+        self.program_code += f"{self.indentation}hub.light_matrix.set_pixel(int({self.visit(node.x)})-1, int({self.visit(node.y)})-1, int({self.visit(node.brightness)}))  # Note: This method expects integers so wee need to convert the value. Also starts with 0 not 1.\n"
         self.visit(node.next)
 
     def visit_set_pixel_brightness_node(self, node: SetPixelBrightnessNode):
         self.objects.add("_brightness")
-        self.program_code += f"_brightness = {self.visit(node.brightness)}\n"
+        self.program_code += (
+            f"{self.indentation}_brightness = {self.visit(node.brightness)}\n"
+        )
         self.visit(node.next)
 
     def visit_turn_on_node(self, node: TurnOnNode):
@@ -586,9 +631,11 @@ def _turn_on_pattern(pattern, brightness=100):
 """
 
         if "_brightness" in self.objects:
-            self.program_code += f"_turn_on_pattern('{node.image}', _brightness)\n"
+            self.program_code += (
+                f"{self.indentation}_turn_on_pattern('{node.image}', _brightness)\n"
+            )
         else:
-            self.program_code += f"_turn_on_pattern('{node.image}')\n"
+            self.program_code += f"{self.indentation}_turn_on_pattern('{node.image}')\n"
 
         self.visit(node.next)
 
@@ -605,10 +652,50 @@ def _turn_on_pattern(pattern, brightness=100):
 """
 
         if "_brightness" in self.objects:
-            self.program_code += f"_turn_on_pattern('{node.image}', _brightness)\n"
+            self.program_code += (
+                f"{self.indentation}_turn_on_pattern('{node.image}', _brightness)\n"
+            )
         else:
-            self.program_code += f"_turn_on_pattern('{node.image}')\n"
+            self.program_code += f"{self.indentation}_turn_on_pattern('{node.image}')\n"
 
-        self.program_code += f"wait_for_seconds(int({self.visit(node.duration)}))\n"
-        self.program_code += "hub.light_matrix.off()\n"
+        self.program_code += (
+            f"{self.indentation}wait_for_seconds(int({self.visit(node.duration)}))\n"
+        )
+        self.program_code += f"{self.indentation}hub.light_matrix.off()\n"
         self.visit(node.next)
+
+    def visit_delete_item_in_list_node(self, node: DeleteItemInListNode):
+        self.program_code += f"{self.indentation}del {node.list}[int({self.visit(node.index)}) - 1]  # Note: This method expects integers so wee need to convert the value. Also starts with 0 not 1.\n"
+        self.visit(node.next)
+
+    def visit_delete_all_items_in_list_node(self, node: DeleteAllItemsInListNode):
+        self.program_code += f"{self.indentation}{node.list}.clear()\n"
+        self.visit(node.next)
+
+    def visit_length_of_list_node(self, node: LengthOfListNode):
+        return f"len({node.variable})"
+
+    def visit_insert_item_at_index_node(self, node: InsertItemAtIndexNode):
+        self.program_code += f"{self.indentation}{node.variable}.insert(int({self.visit(node.index)}) - 1, {self.visit(node.value)})  # Note: This method expects integers so wee need to convert the value. Also starts with 0 not 1.\n"
+        self.visit(node.next)
+
+    def visit_item_at_index_node(self, node: ItemAtIndexNode):
+        return f"{node.variable}[int({self.visit(node.index)}) - 1]"
+
+    def visit_replace_item_at_index_node(self, node: ReplaceItemAtIndexNode):
+        self.program_code += f"{self.indentation}{node.variable}[int({self.visit(node.index)}) - 1] = {self.visit(node.value)}  # Note: This method expects integers so wee need to convert the value. Also starts with 0 not 1.\n"
+        self.visit(node.next)
+
+    def visit_index_of_item_node(self, node: IndexOfItemNode):
+        return f"{node.variable}.index({self.visit(node.value)}) + 1"
+
+    def visit_if_then_node(self, node: IfThenNode):
+        self.program_code += f"{self.indentation}if {self.visit(node.condition)}:\n"
+        # TODO: Need to increase the indentation also need to retrospectively change all code to include the padding in the beginning
+        self.indentation += "\t"
+        self.visit(node.body)
+        self.indentation[:-1]
+        self.visit(node.next)
+
+    def visit_list_contains_node(self, node: ListContainsNode):
+        return f"{self.visit(node.value)} in {node.variable}"

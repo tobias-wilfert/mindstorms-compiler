@@ -88,6 +88,10 @@ class Node:
         self.custom_representation(nodes, connections, node_id, uid_generator)
 
 
+class BooleanNode(Node):
+    pass
+
+
 class StackNode(Node):
     """The Base class for all Stack block, that are blocks which have a next pointer."""
 

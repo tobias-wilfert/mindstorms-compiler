@@ -1929,3 +1929,425 @@ def test_ast_item_to_list_variable():
 1 -> 3
 3 -> 4}"""
     )
+
+
+# - Delete item in list
+def test_ast_delete_item_in_list_base():
+    assert (
+        helper("delete_item_in_list_base", "Variables")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="AddItemToListNode(variable:'my_list')"]
+2 [label="LiteralNode('a')"]
+3 [label="AddItemToListNode(variable:'my_list')"]
+4 [label="LiteralNode('b')"]
+5 [label="DeleteItemInListNode(variable:'my_list')"]
+6 [label="NumericalNode(2.0)"]
+7 [label="WriteNode"]
+8 [label="VariableNode(name:'my_list')"]
+0 -> 1
+1 -> 2
+1 -> 3
+3 -> 4
+3 -> 5
+5 -> 6
+5 -> 7
+7 -> 8}"""
+    )
+
+
+def test_ast_delete_item_in_list_variable():
+    assert (
+        helper("delete_item_in_list_variable", "Variables")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="SetVariableToNode(variable:'my_variable')"]
+2 [label="NumericalNode(1.0)"]
+3 [label="AddItemToListNode(variable:'my_list')"]
+4 [label="LiteralNode('a')"]
+5 [label="AddItemToListNode(variable:'my_list')"]
+6 [label="LiteralNode('b')"]
+7 [label="DeleteItemInListNode(variable:'my_list')"]
+8 [label="VariableNode(name:'my_variable')"]
+9 [label="WriteNode"]
+10 [label="VariableNode(name:'my_list')"]
+0 -> 1
+1 -> 2
+1 -> 3
+3 -> 4
+3 -> 5
+5 -> 6
+5 -> 7
+7 -> 8
+7 -> 9
+9 -> 10}"""
+    )
+
+
+# - Delete all items in list
+def test_ast_delete_all_items_in_list():
+    assert (
+        helper("delete_all_items_in_list", "Variables")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="AddItemToListNode(variable:'my_list')"]
+2 [label="LiteralNode('a')"]
+3 [label="AddItemToListNode(variable:'my_list')"]
+4 [label="LiteralNode('b')"]
+5 [label="DeleteAllItemsInListNode(variable:'my_list')"]
+6 [label="WriteNode"]
+7 [label="LengthOfListNode(variable:'my_list')"]
+0 -> 1
+1 -> 2
+1 -> 3
+3 -> 4
+3 -> 5
+5 -> 6
+6 -> 7}"""
+    )
+
+
+# - Insert item at index
+def test_ast_insert_item_at_index_base():
+    assert (
+        helper("insert_item_at_index_base", "Variables")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="AddItemToListNode(variable:'my_list')"]
+2 [label="LiteralNode('a')"]
+3 [label="AddItemToListNode(variable:'my_list')"]
+4 [label="LiteralNode('b')"]
+5 [label="InsertItemAtIndexNode(variable:'my_list')"]
+6 [label="LiteralNode('c')"]
+7 [label="NumericalNode(1.0)"]
+8 [label="WriteNode"]
+9 [label="ItemAtIndexNode(variable:'my_list')"]
+10 [label="NumericalNode(1.0)"]
+0 -> 1
+1 -> 2
+1 -> 3
+3 -> 4
+3 -> 5
+5 -> 6
+5 -> 7
+5 -> 8
+8 -> 9
+9 -> 10}"""
+    )
+
+
+def test_ast_insert_item_at_index_variable_index():
+    assert (
+        helper("insert_item_at_index_variable_index", "Variables")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="SetVariableToNode(variable:'my_variable')"]
+2 [label="NumericalNode(2.0)"]
+3 [label="AddItemToListNode(variable:'my_list')"]
+4 [label="LiteralNode('a')"]
+5 [label="AddItemToListNode(variable:'my_list')"]
+6 [label="LiteralNode('b')"]
+7 [label="InsertItemAtIndexNode(variable:'my_list')"]
+8 [label="LiteralNode('c')"]
+9 [label="VariableNode(name:'my_variable')"]
+10 [label="WriteNode"]
+11 [label="ItemAtIndexNode(variable:'my_list')"]
+12 [label="NumericalNode(2.0)"]
+0 -> 1
+1 -> 2
+1 -> 3
+3 -> 4
+3 -> 5
+5 -> 6
+5 -> 7
+7 -> 8
+7 -> 9
+7 -> 10
+10 -> 11
+11 -> 12}"""
+    )
+
+
+def test_ast_insert_item_at_index_variable_item():
+    assert (
+        helper("insert_item_at_index_variable_item", "Variables")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="SetVariableToNode(variable:'my_variable')"]
+2 [label="LiteralNode('c')"]
+3 [label="AddItemToListNode(variable:'my_list')"]
+4 [label="LiteralNode('a')"]
+5 [label="AddItemToListNode(variable:'my_list')"]
+6 [label="LiteralNode('b')"]
+7 [label="InsertItemAtIndexNode(variable:'my_list')"]
+8 [label="VariableNode(name:'my_variable')"]
+9 [label="NumericalNode(1.0)"]
+10 [label="WriteNode"]
+11 [label="ItemAtIndexNode(variable:'my_list')"]
+12 [label="NumericalNode(1.0)"]
+0 -> 1
+1 -> 2
+1 -> 3
+3 -> 4
+3 -> 5
+5 -> 6
+5 -> 7
+7 -> 8
+7 -> 9
+7 -> 10
+10 -> 11
+11 -> 12}"""
+    )
+
+
+# - Replace item at index
+def test_ast_replace_item_at_index_base():
+    assert (
+        helper("replace_item_at_index_base", "Variables")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="AddItemToListNode(variable:'my_list')"]
+2 [label="LiteralNode('a')"]
+3 [label="ReplaceItemAtIndexNode(variable:'my_list')"]
+4 [label="NumericalNode(1.0)"]
+5 [label="LiteralNode('c')"]
+6 [label="WriteNode"]
+7 [label="ItemAtIndexNode(variable:'my_list')"]
+8 [label="NumericalNode(1.0)"]
+0 -> 1
+1 -> 2
+1 -> 3
+3 -> 4
+3 -> 5
+3 -> 6
+6 -> 7
+7 -> 8}"""
+    )
+
+
+def test_ast_replace_item_at_index_variable_index():
+    assert (
+        helper("replace_item_at_index_variable_index", "Variables")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="SetVariableToNode(variable:'my_variable')"]
+2 [label="NumericalNode(2.0)"]
+3 [label="AddItemToListNode(variable:'my_list')"]
+4 [label="LiteralNode('a')"]
+5 [label="AddItemToListNode(variable:'my_list')"]
+6 [label="LiteralNode('b')"]
+7 [label="ReplaceItemAtIndexNode(variable:'my_list')"]
+8 [label="VariableNode(name:'my_variable')"]
+9 [label="LiteralNode('c')"]
+10 [label="WriteNode"]
+11 [label="ItemAtIndexNode(variable:'my_list')"]
+12 [label="NumericalNode(2.0)"]
+0 -> 1
+1 -> 2
+1 -> 3
+3 -> 4
+3 -> 5
+5 -> 6
+5 -> 7
+7 -> 8
+7 -> 9
+7 -> 10
+10 -> 11
+11 -> 12}"""
+    )
+
+
+def test_ast_replace_item_at_index_variable_value():
+    assert (
+        helper("replace_item_at_index_variable_value", "Variables")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="SetVariableToNode(variable:'my_variable')"]
+2 [label="LiteralNode('c')"]
+3 [label="AddItemToListNode(variable:'my_list')"]
+4 [label="LiteralNode('a')"]
+5 [label="ReplaceItemAtIndexNode(variable:'my_list')"]
+6 [label="NumericalNode(1.0)"]
+7 [label="VariableNode(name:'my_variable')"]
+8 [label="WriteNode"]
+9 [label="ItemAtIndexNode(variable:'my_list')"]
+10 [label="NumericalNode(1.0)"]
+0 -> 1
+1 -> 2
+1 -> 3
+3 -> 4
+3 -> 5
+5 -> 6
+5 -> 7
+5 -> 8
+8 -> 9
+9 -> 10}"""
+    )
+
+
+# - Item at Index
+def test_ast_item_at_index_base():
+    assert (
+        helper("item_at_index_base", "Variables")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="AddItemToListNode(variable:'my_list')"]
+2 [label="LiteralNode('a')"]
+3 [label="AddItemToListNode(variable:'my_list')"]
+4 [label="LiteralNode('b')"]
+5 [label="WriteNode"]
+6 [label="ItemAtIndexNode(variable:'my_list')"]
+7 [label="NumericalNode(2.0)"]
+0 -> 1
+1 -> 2
+1 -> 3
+3 -> 4
+3 -> 5
+5 -> 6
+6 -> 7}"""
+    )
+
+
+def test_ast_item_at_index_variable():
+    assert (
+        helper("item_at_index_variable", "Variables")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="SetVariableToNode(variable:'my_variable')"]
+2 [label="NumericalNode(1.0)"]
+3 [label="AddItemToListNode(variable:'my_list')"]
+4 [label="LiteralNode('a')"]
+5 [label="AddItemToListNode(variable:'my_list')"]
+6 [label="LiteralNode('b')"]
+7 [label="WriteNode"]
+8 [label="ItemAtIndexNode(variable:'my_list')"]
+9 [label="VariableNode(name:'my_variable')"]
+0 -> 1
+1 -> 2
+1 -> 3
+3 -> 4
+3 -> 5
+5 -> 6
+5 -> 7
+7 -> 8
+8 -> 9}"""
+    )
+
+
+# - Index of item
+def test_ast_index_of_item_base():
+    assert (
+        helper("index_of_item_base", "Variables")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="AddItemToListNode(variable:'my_list')"]
+2 [label="LiteralNode('a')"]
+3 [label="AddItemToListNode(variable:'my_list')"]
+4 [label="LiteralNode('b')"]
+5 [label="WriteNode"]
+6 [label="IndexOfItemNode(variable:'my_list')"]
+7 [label="LiteralNode('b')"]
+0 -> 1
+1 -> 2
+1 -> 3
+3 -> 4
+3 -> 5
+5 -> 6
+6 -> 7}"""
+    )
+
+
+def test_ast_index_of_item_variable():
+    assert (
+        helper("index_of_item_variable", "Variables")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="SetVariableToNode(variable:'my_variable')"]
+2 [label="LiteralNode('a')"]
+3 [label="AddItemToListNode(variable:'my_list')"]
+4 [label="LiteralNode('a')"]
+5 [label="AddItemToListNode(variable:'my_list')"]
+6 [label="LiteralNode('b')"]
+7 [label="WriteNode"]
+8 [label="IndexOfItemNode(variable:'my_list')"]
+9 [label="VariableNode(name:'my_variable')"]
+0 -> 1
+1 -> 2
+1 -> 3
+3 -> 4
+3 -> 5
+5 -> 6
+5 -> 7
+7 -> 8
+8 -> 9}"""
+    )
+
+
+# - Length of list
+def test_ast_length_of_list():
+    assert (
+        helper("length_of_list", "Variables")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="AddItemToListNode(variable:'my_list')"]
+2 [label="LiteralNode('a')"]
+3 [label="AddItemToListNode(variable:'my_list')"]
+4 [label="LiteralNode('b')"]
+5 [label="WriteNode"]
+6 [label="LengthOfListNode(variable:'my_list')"]
+0 -> 1
+1 -> 2
+1 -> 3
+3 -> 4
+3 -> 5
+5 -> 6}"""
+    )
+
+
+# - List contains
+def test_ast_list_contains_base():
+    assert (
+        helper("list_contains_base", "Variables")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="AddItemToListNode(variable:'my_list')"]
+2 [label="LiteralNode('a')"]
+3 [label="IfThenNode"]
+4 [label="ListContainsNode(variable:'my_list')"]
+5 [label="LiteralNode('a')"]
+6 [label="WriteNode"]
+7 [label="LiteralNode('a')"]
+0 -> 1
+1 -> 2
+1 -> 3
+3 -> 4
+4 -> 5
+3 -> 6
+6 -> 7}"""
+    )
+
+
+def test_ast_list_contains_variable():
+    assert (
+        helper("list_contains_variable", "Variables")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="SetVariableToNode(variable:'my_variable')"]
+2 [label="LiteralNode('a')"]
+3 [label="AddItemToListNode(variable:'my_list')"]
+4 [label="LiteralNode('b')"]
+5 [label="IfThenNode"]
+6 [label="ListContainsNode(variable:'my_list')"]
+7 [label="VariableNode(name:'my_variable')"]
+8 [label="WriteNode"]
+9 [label="LiteralNode('a')"]
+0 -> 1
+1 -> 2
+1 -> 3
+3 -> 4
+3 -> 5
+5 -> 6
+6 -> 7
+5 -> 8
+8 -> 9}"""
+    )
