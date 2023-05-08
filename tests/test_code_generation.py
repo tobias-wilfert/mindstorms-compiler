@@ -1879,6 +1879,239 @@ DistanceSensor(my_variable[0].upper()).light_up(100, 100, 100, 100)
     )
 
 
+# ---------- Control ----------
+# - Wait for seconds
+# Verified on Hardware
+def test_code_wait_for_seconds_base():
+    assert (
+        helper("wait_for_seconds_base", "Control")
+        == f"""{includes}
+# Create your objects here.
+hub = MSHub()
+
+# Write your program here.
+wait_for_seconds(1.0)
+hub.light_matrix.write('Y')
+
+"""
+    )
+
+
+# Verified on Hardware
+def test_code_wait_for_seconds_variable():
+    assert (
+        helper("wait_for_seconds_variable", "Control")
+        == f"""{includes}
+# Create your objects here.
+hub = MSHub()
+
+# Write your program here.
+my_variable = 2.0
+wait_for_seconds(my_variable)
+hub.light_matrix.write('Y')
+
+"""
+    )
+
+
+# - Wait until
+# Verified on Hardware
+def test_code_wait_until():
+    assert (
+        helper("wait_until", "Control")
+        == f"""{includes}
+# Create your objects here.
+hub = MSHub()
+
+# Write your program here.
+wait_until(lambda: hub.motion_sensor.get_gesture() == 'shaken')
+hub.light_matrix.write('Y')
+
+"""
+    )
+
+
+# - Repeat loop
+# Verified on Hardware
+def test_code_repeat_loop_base():
+    assert (
+        helper("repeat_loop_base", "Control")
+        == f"""{includes}
+# Create your objects here.
+hub = MSHub()
+
+# Write your program here.
+for _ in range(3.0):
+\thub.light_matrix.write('Y')
+\thub.light_matrix.write('_')
+
+"""
+    )
+
+
+# Verified on Hardware
+def test_code_repeat_loop_variable():
+    assert (
+        helper("repeat_loop_variable", "Control")
+        == f"""{includes}
+# Create your objects here.
+hub = MSHub()
+
+# Write your program here.
+my_variable = 2.0
+for _ in range(my_variable):
+\thub.light_matrix.write('Y')
+\thub.light_matrix.write('_')
+
+"""
+    )
+
+
+# - Forever loop
+# Verified on Hardware
+def test_code_forever_loop():
+    assert (
+        helper("forever_loop", "Control")
+        == f"""{includes}
+# Create your objects here.
+hub = MSHub()
+
+# Write your program here.
+while True:
+\thub.light_matrix.write('Y')
+\thub.light_matrix.write('_')
+
+"""
+    )
+
+
+# - Repeat until loop
+# Verified on Hardware
+def test_code_repeat_until_loop():
+    assert (
+        helper("repeat_until_loop", "Control")
+        == f"""{includes}
+# Create your objects here.
+hub = MSHub()
+
+# Write your program here.
+while not (hub.motion_sensor.get_gesture() == 'shaken'):
+\thub.light_matrix.write('Y')
+\thub.light_matrix.write('_')
+
+"""
+    )
+
+
+# - If then
+# Verified on Hardware
+def test_code_if_then():
+    assert (
+        helper("if_then", "Control")
+        == f"""{includes}
+# Create your objects here.
+hub = MSHub()
+
+# Write your program here.
+if (1.0 == 1.0):
+\thub.light_matrix.write('Y')
+
+"""
+    )
+
+
+# - If then else
+# Verified on Hardware
+def test_code_if_then_else():
+    assert (
+        helper("if_then_else", "Control")
+        == f"""{includes}
+# Create your objects here.
+hub = MSHub()
+
+# Write your program here.
+if (1.0 == 2.0):
+\thub.light_matrix.write('Y')
+else:
+\thub.light_matrix.write('N')
+
+"""
+    )
+
+
+# - Do this and this
+# Verified on Hardware
+def test_code_do_this_and_this():
+    assert (
+        helper("do_this_and_this", "Control")
+        == f"""{includes}
+# Create your objects here.
+
+# Write your program here.
+# Placeholder for the DO THIS AND THIS block. Note: that parallelism is not supported in Python at the moment.
+
+"""
+    )
+
+
+# - Stop other stacks
+# Verified on Hardware
+def test_code_stop_other_stacks():
+    assert (
+        helper("stop_other_stacks", "Control")
+        == f"""{includes}
+# Create your objects here.
+
+# Write your program here.
+# Placeholder for the STOP OTHER STACKS block. Note: that parallelism is not supported in Python at the moment.
+
+"""
+    )
+
+
+# - Stop
+# Verified on Hardware
+def test_code_stop_base():
+    assert (
+        helper("stop_base", "Control")
+        == f"""{includes}
+# Create your objects here.
+
+# Write your program here.
+# Placeholder for the STOP block. Note: that parallelism is not supported in Python at the moment.
+
+"""
+    )
+
+
+# Verified on Hardware
+def test_code_stop_this_stack():
+    assert (
+        helper("stop_this_stack", "Control")
+        == f"""{includes}
+# Create your objects here.
+
+# Write your program here.
+# Placeholder for the STOP block. Note: that parallelism is not supported in Python at the moment.
+
+"""
+    )
+
+
+# Verified on Hardware
+def test_code_stop_exit_program():
+    assert (
+        helper("stop_exit_program", "Control")
+        == f"""{includes}
+# Create your objects here.
+
+# Write your program here.
+# Placeholder for the STOP block. Note: that parallelism is not supported in Python at the moment.
+
+"""
+    )
+
+
 # ---------- Operators ----------
 # Verified on Hardware
 def test_code_arithmetic():

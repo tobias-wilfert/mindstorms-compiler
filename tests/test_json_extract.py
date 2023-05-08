@@ -478,6 +478,275 @@ def test_extract_json_light_up_distance_sensor_port_variable():
     helper("light_up_distance_sensor_port_variable", "Light")
 
 
+# ---------- Control ----------
+# - Wait for seconds
+def test_extract_json_wait_for_seconds_base():
+    helper("wait_for_seconds_base", "Control")
+
+
+def test_extract_json_wait_for_seconds_variable():
+    helper("wait_for_seconds_variable", "Control")
+
+
+# - Wait until
+def test_extract_json_wait_until():
+    helper("wait_until", "Control")
+
+
+# - Repeat loop
+def test_extract_json_repeat_loop_base():
+    helper("repeat_loop_base", "Control")
+
+
+def test_extract_json_repeat_loop_variable():
+    helper("repeat_loop_variable", "Control")
+
+
+# - Forever loop
+def test_extract_json_forever_loop():
+    helper("forever_loop", "Control")
+
+
+# - Repeat until loop
+def test_extract_json_repeat_until_loop():
+    helper("repeat_until_loop", "Control")
+
+
+# - If then
+def test_extract_json_if_then():
+    helper("if_then", "Control")
+
+
+# - If then else
+def test_extract_json_if_then_else():
+    helper("if_then_else", "Control")
+
+
+# - Do this and this
+def test_extract_json_do_this_and_this():
+    helper("do_this_and_this", "Control")
+
+
+# - Stop other stacks
+def test_extract_json_stop_other_stacks():
+    helper("stop_other_stacks", "Control")
+
+
+# - Stop
+def test_extract_json_stop_base():
+    helper("stop_base", "Control")
+
+
+def test_extract_json_stop_this_stack():
+    helper("stop_this_stack", "Control")
+
+
+def test_extract_json_stop_exit_program():
+    helper("stop_exit_program", "Control")
+
+
+# ---------- Sensors ----------
+# - Is color
+# black
+def test_extract_json_is_color_black():
+    helper("is_color_black", "Sensors")
+
+
+# violet
+def test_extract_json_is_color_violet():
+    helper("is_color_violet", "Sensors")
+
+
+# blue
+def test_extract_json_is_color_blue():
+    helper("is_color_blue", "Sensors")
+
+
+# light blue
+def test_extract_json_is_color_light_blue():
+    helper("is_color_light_blue", "Sensors")
+
+
+# green
+def test_extract_json_is_color_green():
+    helper("is_color_green", "Sensors")
+
+
+# yellow
+def test_extract_json_is_color_yellow():
+    helper("is_color_yellow", "Sensors")
+
+
+# red
+def test_extract_json_is_color_red():
+    helper("is_color_red", "Sensors")
+
+
+# white
+def test_extract_json_is_color_white():
+    helper("is_color_white", "Sensors")
+
+
+# no color
+def test_extract_json_is_color_no_color():
+    helper("is_color_no_color", "Sensors")
+
+
+# - Color
+def test_extract_json_color():
+    helper("color", "Sensors")
+
+
+# - Is reflected light
+def test_extract_json_is_reflected_light_base():
+    helper("is_reflected_light_base", "Sensors")
+
+
+def test_extract_json_is_reflected_light_equal():
+    helper("is_reflected_light_equal", "Sensors")
+
+
+def test_extract_json_is_reflected_light_greater():
+    helper("is_reflected_light_greater", "Sensors")
+
+
+def test_extract_json_is_reflected_light_variable():
+    helper("is_reflected_light_variable", "Sensors")
+
+
+# - Reflected light
+def test_extract_json_reflected_light():
+    helper("reflected_light", "Sensors")
+
+
+# - Is distance
+def test_extract_json_is_distance_base():
+    helper("is_distance_base", "Sensors")
+
+
+def test_extract_json_is_distance_cm():
+    helper("is_distance_cm", "Sensors")
+
+
+def test_extract_json_is_distance_inches():
+    helper("is_distance_inches", "Sensors")
+
+
+def test_extract_json_is_distance_exactly_at():
+    helper("is_distance_exactly_at", "Sensors")
+
+
+def test_extract_json_is_distance_farther_than():
+    helper("is_distance_farther_than", "Sensors")
+
+
+# - Distance
+def test_extract_json_distance_base():
+    helper("distance_base", "Sensors")
+
+
+def test_extract_json_distance_cm():
+    helper("distance_cm", "Sensors")
+
+
+def test_extract_json_distance_inches():
+    helper("distance_inches", "Sensors")
+
+
+# - Gesture
+def test_extract_json_gesture():
+    helper("gesture", "Sensors")
+
+
+# - Is hub shaken
+def test_extract_json_is_hub_shaken_base():
+    helper("is_hub_shaken_base", "Sensors")
+
+
+def test_extract_json_is_hub_shaken_falling():
+    helper("is_hub_shaken_falling", "Sensors")
+
+
+def test_extract_json_is_hub_shaken_tapped():
+    helper("is_hub_shaken_tapped", "Sensors")
+
+
+# - Is hub orientation
+def test_extract_json_is_hub_orientation_base():
+    helper("is_hub_orientation_base", "Sensors")
+
+
+def test_extract_json_is_hub_orientation_back():
+    helper("is_hub_orientation_back", "Sensors")
+
+
+def test_extract_json_is_hub_orientation_bottom():
+    helper("is_hub_orientation_bottom", "Sensors")
+
+
+def test_extract_json_is_hub_orientation_left_side():
+    helper("is_hub_orientation_left_side", "Sensors")
+
+
+def test_extract_json_is_hub_orientation_right_side():
+    helper("is_hub_orientation_right_side", "Sensors")
+
+
+def test_extract_json_is_hub_orientation_top():
+    helper("is_hub_orientation_top", "Sensors")
+
+
+# - Hub orientation
+def test_extract_json_hub_orientation():
+    helper("hub_orientation", "Sensors")
+
+
+# - Set yaw angle
+def test_extract_json_set_yaw_angle():
+    helper("set_yaw_angle", "Sensors")
+
+
+# - Is button pressed
+def test_extract_json_is_button_pressed_base():
+    helper("is_button_pressed_base", "Sensors")
+
+
+def test_extract_json_is_button_pressed_released():
+    helper("is_button_pressed_released", "Sensors")
+
+
+def test_extract_json_is_button_pressed_right():
+    helper("is_button_pressed_right", "Sensors")
+
+
+# - Hub angle
+def test_extract_json_hub_angle_base():
+    helper("hub_angle_base", "Sensors")
+
+
+def test_extract_json_hub_angle_roll():
+    helper("hub_angle_roll", "Sensors")
+
+
+def test_extract_json_hub_angle_yaw():
+    helper("hub_angle_yaw", "Sensors")
+
+
+# - Timer
+def test_extract_json_timer():
+    helper("timer", "Sensors")
+
+
+# - Reset timer
+def test_extract_json_reset_timer():
+    helper("reset_timer", "Sensors")
+
+
+# - Key pressed
+def test_extract_json_key_pressed():
+    helper("key_pressed", "Sensors")
+
+
 # ---------- Operators ----------
 def test_extract_json_arithmetic():
     helper("arithmetic", "Operators")

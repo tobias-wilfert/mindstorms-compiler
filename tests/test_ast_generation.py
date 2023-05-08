@@ -1665,6 +1665,245 @@ def test_ast_light_up_distance_sensor_port_variable():
     )
 
 
+# ---------- Control ----------
+# - Wait for seconds
+def test_ast_wait_for_seconds_base():
+    assert (
+        helper("wait_for_seconds_base", "Control")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="WaitForSecondsNode"]
+2 [label="NumericalNode(1.0)"]
+3 [label="WriteNode"]
+4 [label="LiteralNode('Y')"]
+0 -> 1
+1 -> 2
+1 -> 3
+3 -> 4}"""
+    )
+
+
+def test_ast_wait_for_seconds_variable():
+    assert (
+        helper("wait_for_seconds_variable", "Control")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="SetVariableToNode(variable:'my_variable')"]
+2 [label="NumericalNode(2.0)"]
+3 [label="WaitForSecondsNode"]
+4 [label="VariableNode(name:'my_variable')"]
+5 [label="WriteNode"]
+6 [label="LiteralNode('Y')"]
+0 -> 1
+1 -> 2
+1 -> 3
+3 -> 4
+3 -> 5
+5 -> 6}"""
+    )
+
+
+# - Wait until
+def test_ast_wait_until():
+    assert (
+        helper("wait_until", "Control")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="WaitUntilNode"]
+2 [label="HubInteractionNode(interaction: 'HubInteraction.SHAKE')"]
+3 [label="WriteNode"]
+4 [label="LiteralNode('Y')"]
+0 -> 1
+1 -> 2
+1 -> 3
+3 -> 4}"""
+    )
+
+
+# - Repeat loop
+def test_ast_repeat_loop_base():
+    assert (
+        helper("repeat_loop_base", "Control")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="RepeatLoopNode"]
+2 [label="NumericalNode(3.0)"]
+3 [label="WriteNode"]
+4 [label="LiteralNode('Y')"]
+5 [label="WriteNode"]
+6 [label="LiteralNode('_')"]
+0 -> 1
+1 -> 2
+1 -> 3
+3 -> 4
+3 -> 5
+5 -> 6}"""
+    )
+
+
+def test_ast_repeat_loop_variable():
+    assert (
+        helper("repeat_loop_variable", "Control")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="SetVariableToNode(variable:'my_variable')"]
+2 [label="NumericalNode(2.0)"]
+3 [label="RepeatLoopNode"]
+4 [label="VariableNode(name:'my_variable')"]
+5 [label="WriteNode"]
+6 [label="LiteralNode('Y')"]
+7 [label="WriteNode"]
+8 [label="LiteralNode('_')"]
+0 -> 1
+1 -> 2
+1 -> 3
+3 -> 4
+3 -> 5
+5 -> 6
+5 -> 7
+7 -> 8}"""
+    )
+
+
+# - Forever loop
+def test_ast_forever_loop():
+    assert (
+        helper("forever_loop", "Control")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="ForeverLoopNode"]
+2 [label="WriteNode"]
+3 [label="LiteralNode('Y')"]
+4 [label="WriteNode"]
+5 [label="LiteralNode('_')"]
+0 -> 1
+1 -> 2
+2 -> 3
+2 -> 4
+4 -> 5}"""
+    )
+
+
+# - Repeat until loop
+def test_ast_repeat_until_loop():
+    assert (
+        helper("repeat_until_loop", "Control")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="RepeatUntilNode"]
+2 [label="HubInteractionNode(interaction: 'HubInteraction.SHAKE')"]
+3 [label="WriteNode"]
+4 [label="LiteralNode('Y')"]
+5 [label="WriteNode"]
+6 [label="LiteralNode('_')"]
+0 -> 1
+1 -> 2
+1 -> 3
+3 -> 4
+3 -> 5
+5 -> 6}"""
+    )
+
+
+# - If then
+def test_ast_if_then():
+    assert (
+        helper("if_then", "Control")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="IfThenNode"]
+2 [label="ComparisonNode(op:'ComparisonOperator.EQUAL')"]
+3 [label="NumericalNode(1.0)"]
+4 [label="NumericalNode(1.0)"]
+5 [label="WriteNode"]
+6 [label="LiteralNode('Y')"]
+0 -> 1
+1 -> 2
+2 -> 3
+2 -> 4
+1 -> 5
+5 -> 6}"""
+    )
+
+
+# - If then else
+def test_ast_if_then_else():
+    assert (
+        helper("if_then_else", "Control")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="IfElseNode"]
+2 [label="ComparisonNode(op:'ComparisonOperator.EQUAL')"]
+3 [label="NumericalNode(1.0)"]
+4 [label="NumericalNode(2.0)"]
+5 [label="WriteNode"]
+6 [label="LiteralNode('Y')"]
+7 [label="WriteNode"]
+8 [label="LiteralNode('N')"]
+0 -> 1
+1 -> 2
+2 -> 3
+2 -> 4
+1 -> 5
+5 -> 6
+1 -> 7
+7 -> 8}"""
+    )
+
+
+# - Do this and this
+def test_ast_do_this_and_this():
+    assert (
+        helper("do_this_and_this", "Control")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="CommentNode('# Placeholder for the DO THIS AND THIS block. Note: that parallelism is not supported in Python at the moment.')"]
+0 -> 1}"""
+    )
+
+
+# - Stop other stacks
+def test_ast_stop_other_stacks():
+    assert (
+        helper("stop_other_stacks", "Control")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="CommentNode('# Placeholder for the STOP OTHER STACKS block. Note: that parallelism is not supported in Python at the moment.')"]
+0 -> 1}"""
+    )
+
+
+# - Stop
+def test_ast_stop_base():
+    assert (
+        helper("stop_base", "Control")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="CommentNode('# Placeholder for the STOP block. Note: that parallelism is not supported in Python at the moment.')"]
+0 -> 1}"""
+    )
+
+
+def test_ast_stop_this_stack():
+    assert (
+        helper("stop_this_stack", "Control")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="CommentNode('# Placeholder for the STOP block. Note: that parallelism is not supported in Python at the moment.')"]
+0 -> 1}"""
+    )
+
+
+def test_ast_stop_exit_program():
+    assert (
+        helper("stop_exit_program", "Control")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="CommentNode('# Placeholder for the STOP block. Note: that parallelism is not supported in Python at the moment.')"]
+0 -> 1}"""
+    )
+
+
 # ---------- Operators ----------
 def test_ast_arithmetic():
     assert (

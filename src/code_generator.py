@@ -1,5 +1,13 @@
 from src.abstract_syntax_tree import AST, CommentNode, LiteralNode, Node, NumericalNode
-from src.abstract_syntax_tree.control import IfThenNode
+from src.abstract_syntax_tree.control import (
+    ForeverLoopNode,
+    IfElseNode,
+    IfThenNode,
+    RepeatLoopNode,
+    RepeatUntilNode,
+    WaitForSecondsNode,
+    WaitUntilNode,
+)
 from src.abstract_syntax_tree.events import WhenProgramStartsNode
 from src.abstract_syntax_tree.light import (
     LightUpDistanceSensorNode,
@@ -46,6 +54,7 @@ from src.abstract_syntax_tree.operators import (
     StringContainsNode,
     UnaryMathFunctionNode,
 )
+from src.abstract_syntax_tree.sensors import HubInteractionNode
 from src.abstract_syntax_tree.variables import (
     AddItemToListNode,
     ChangeVariableByNode,
@@ -226,6 +235,20 @@ import math
             return self.visit_unary_math_function_node(node)
         elif isinstance(node, BinaryMathFunctionNode):
             return self.visit_binary_math_function_node(node)
+        elif isinstance(node, WaitForSecondsNode):
+            return self.visit_wait_for_seconds_node(node)
+        elif isinstance(node, WaitUntilNode):
+            return self.visit_wait_until_node(node)
+        elif isinstance(node, HubInteractionNode):
+            return self.visit_hub_interaction_node(node)
+        elif isinstance(node, RepeatLoopNode):
+            return self.visit_repeat_loop_node(node)
+        elif isinstance(node, ForeverLoopNode):
+            return self.visit_forever_loop_node(node)
+        elif isinstance(node, RepeatUntilNode):
+            return self.visit_repeat_until_node(node)
+        elif isinstance(node, IfElseNode):
+            return self.visit_if_else_node(node)
         else:
             raise NotImplementedError(f"Currently no code can be generated for {node}")
 
@@ -775,3 +798,55 @@ def _turn_on_pattern(pattern, brightness=100):
 
     def visit_binary_math_function_node(self, node: BinaryMathFunctionNode):
         return f"{node.function.code()}({self.visit(node.left_hand)}, {self.visit(node.right_hand)})"
+
+    def visit_wait_for_seconds_node(self, node: WaitForSecondsNode):
+        self.program_code += (
+            f"{self.indentation}wait_for_seconds({self.visit(node.seconds)})\n"
+        )
+        self.visit(node.next)
+
+    def visit_wait_until_node(self, node: WaitUntilNode):
+        self.program_code += (
+            f"{self.indentation}wait_until(lambda: {self.visit(node.condition)})\n"
+        )
+        self.visit(node.next)
+
+    def visit_hub_interaction_node(self, node: HubInteractionNode):
+        self.generate_object("hub", "MSHub", "")
+        return f"hub.motion_sensor.get_gesture() == '{node.interaction.code()}'"
+
+    def visit_repeat_loop_node(self, node: RepeatLoopNode):
+        self.program_code += (
+            f"{self.indentation}for _ in range({self.visit(node.times)}):\n"
+        )
+        self.indentation += "\t"
+        self.visit(node.body)
+        self.indentation = self.indentation[:-1]
+        self.visit(node.next)
+
+    def visit_forever_loop_node(self, node: ForeverLoopNode):
+        self.program_code += f"{self.indentation}while True:\n"
+        self.indentation += "\t"
+        self.visit(node.body)
+        self.indentation = self.indentation[:-1]
+        self.visit(node.next)
+
+    def visit_repeat_until_node(self, node: RepeatUntilNode):
+        self.program_code += (
+            f"{self.indentation}while not ({self.visit(node.condition)}):\n"
+        )
+        self.indentation += "\t"
+        self.visit(node.body)
+        self.indentation = self.indentation[:-1]
+        self.visit(node.next)
+
+    def visit_if_else_node(self, node: IfElseNode):
+        self.program_code += f"{self.indentation}if {self.visit(node.condition)}:\n"
+        self.indentation += "\t"
+        self.visit(node.body)
+        self.indentation = self.indentation[:-1]
+        self.program_code += f"{self.indentation}else:\n"
+        self.indentation += "\t"
+        self.visit(node.else_body)
+        self.indentation = self.indentation[:-1]
+        self.visit(node.next)

@@ -1,5 +1,13 @@
 from src.abstract_syntax_tree import AST, CommentNode, LiteralNode, Node, NumericalNode
-from src.abstract_syntax_tree.control import IfThenNode
+from src.abstract_syntax_tree.control import (
+    ForeverLoopNode,
+    IfElseNode,
+    IfThenNode,
+    RepeatLoopNode,
+    RepeatUntilNode,
+    WaitForSecondsNode,
+    WaitUntilNode,
+)
 from src.abstract_syntax_tree.events import WhenProgramStartsNode
 from src.abstract_syntax_tree.light import (
     CenterButtonColor,
@@ -55,6 +63,7 @@ from src.abstract_syntax_tree.operators import (
     UnaryFunction,
     UnaryMathFunctionNode,
 )
+from src.abstract_syntax_tree.sensors import HubInteraction, HubInteractionNode
 from src.abstract_syntax_tree.variables import (
     AddItemToListNode,
     ChangeVariableByNode,
@@ -207,6 +216,27 @@ class Visitor:
             return self.visit_list_contains_item(node)
         elif opcode == "control_if":
             return self.visit_if_then(node)
+        elif opcode == "control_wait":
+            return self.visit_for_seconds(node)
+        elif opcode == "control_wait_until":
+            return self.visit_wait_until(node)
+        elif opcode == "control_repeat":
+            return self.visit_repeat_loop(node)
+        elif opcode == "control_forever":
+            return self.visit_forever_loop(node)
+        elif opcode == "control_if_else":
+            return self.visit_if_else(node)
+        elif opcode == "control_repeat_until":
+            return self.visit_repeat_until(node)
+        elif opcode == "flippercontrol_fork":
+            return self.visit_do_this_and_this(node)
+        elif opcode == "flippercontrol_stopOtherStacks":
+            return self.visit_stop_other_stacks(node)
+        elif opcode == "flippercontrol_stop":
+            return self.visit_stop(node)
+
+        elif opcode == "flippersensors_ismotion":
+            return self.visit_hub_is_shaken(node)
         elif opcode == "operator_add":
             return self.visit_operator(Operation.PLUS, node)
         elif opcode == "operator_subtract":
@@ -993,3 +1023,109 @@ class Visitor:
         num1 = self.visit_input(node["inputs"]["ARG1"][1])
         num2 = self.visit_input(node["inputs"]["ARG2"][1])
         return BinaryMathFunctionNode(function, num1, num2)
+
+    def visit_for_seconds(self, node) -> WaitForSecondsNode:
+        """Constructs the AST representation of the WaitForSeconds node.
+
+        :param node: The Node representation.
+        :return: The AST representation.
+        """
+        seconds = self.visit_input(node["inputs"]["DURATION"][1])
+        next_node = self.visit_node(node["next"])
+        return WaitForSecondsNode(seconds, next_node)
+
+    def visit_wait_until(self, node) -> WaitUntilNode:
+        """Constructs the AST representation of the WaitUntil node.
+
+        :param node: The Node representation.
+        :return: The AST representation.
+        """
+        condition = self.visit_input(node["inputs"]["CONDITION"][1])
+        next_node = self.visit_node(node["next"])
+        return WaitUntilNode(condition, next_node)
+
+    def visit_repeat_loop(self, node) -> RepeatLoopNode:
+        """Constructs the AST representation of the RepeatLoop node.
+
+        :param node: The Node representation.
+        :return: The AST representation.
+        """
+        times = self.visit_input(node["inputs"]["TIMES"][1])
+        body = self.visit_node(node["inputs"]["SUBSTACK"][1])
+        next_node = self.visit_node(node["next"])
+        return RepeatLoopNode(times, body, next_node)
+
+    def visit_forever_loop(self, node) -> ForeverLoopNode:
+        """Constructs the AST representation of the ForeverLoop node.
+
+        :param node: The Node representation.
+        :return: The AST representation.
+        """
+        body = self.visit_node(node["inputs"]["SUBSTACK"][1])
+        next_node = self.visit_node(node["next"])
+        return ForeverLoopNode(body, next_node)
+
+    def visit_if_else(self, node) -> IfElseNode:
+        """Constructs the AST representation of the IfElse node.
+
+        :param node: The Node representation.
+        :return: The AST representation.
+        """
+        condition = self.visit_input(node["inputs"]["CONDITION"][1])
+        body = self.visit_node(node["inputs"]["SUBSTACK"][1])
+        else_body = self.visit_node(node["inputs"]["SUBSTACK2"][1])
+        next_node = self.visit_node(node["next"])
+        return IfElseNode(condition, body, else_body, next_node)
+
+    def visit_repeat_until(self, node) -> RepeatUntilNode:
+        """Constructs the AST representation of the RepeatUntil node.
+
+        :param node: The Node representation.
+        :return: The AST representation.
+        """
+        condition = self.visit_input(node["inputs"]["CONDITION"][1])
+        body = self.visit_node(node["inputs"]["SUBSTACK"][1])
+        next_node = self.visit_node(node["next"])
+        return RepeatUntilNode(condition, body, next_node)
+
+    def visit_do_this_and_this(self, node) -> CommentNode:
+        if not self.best_effort:
+            raise NotImplementedError(
+                "Parallelism is not supported, use the best_effort flag to generate code without rotations."
+            )
+        next_node = self.visit_node(node["next"])
+        return CommentNode(
+            "# Placeholder for the DO THIS AND THIS block. Note: that parallelism is not supported in Python at the moment.",
+            next_node,
+        )
+
+    def visit_stop_other_stacks(self, node) -> CommentNode:
+        if not self.best_effort:
+            raise NotImplementedError(
+                "Parallelism is not supported, use the best_effort flag to generate code without rotations."
+            )
+        next_node = self.visit_node(node["next"])
+        return CommentNode(
+            "# Placeholder for the STOP OTHER STACKS block. Note: that parallelism is not supported in Python at the moment.",
+            next_node,
+        )
+
+    def visit_stop(self, node) -> CommentNode:
+        if not self.best_effort:
+            raise NotImplementedError(
+                "Parallelism is not supported, use the best_effort flag to generate code without rotations."
+            )
+        next_node = self.visit_node(node["next"])
+        return CommentNode(
+            "# Placeholder for the STOP block. Note: that parallelism is not supported in Python at the moment.",
+            next_node,
+        )
+
+    def visit_hub_is_shaken(self, node) -> HubInteractionNode:
+        """Constructs the AST representation of the HubInteraction node.
+
+        :param node: The Node representation.
+        :return: The AST representation.
+        """
+        interaction = HubInteraction[node["fields"]["MOTION"][0].upper()]
+        return HubInteractionNode(interaction)
