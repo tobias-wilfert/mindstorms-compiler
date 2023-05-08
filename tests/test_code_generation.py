@@ -1972,6 +1972,768 @@ motor_a.run_for_rotations((my_variable1 + my_variable2))
     )
 
 
+# - Pick random number
+# Verified on Hardware
+def test_code_pick_random_number_base():
+    assert (
+        helper("pick_random_number_base", "Operators")
+        == f"""{includes}from random import randint\n
+# Create your objects here.
+hub = MSHub()
+
+# Write your program here.
+hub.light_matrix.write(randint(int(1.0), int(10.0)))
+
+"""
+    )
+
+
+# Verified on Hardware
+def test_code_pick_random_number_variable():
+    assert (
+        helper("pick_random_number_variable", "Operators")
+        == f"""{includes}from random import randint\n
+# Create your objects here.
+hub = MSHub()
+
+# Write your program here.
+my_variable1 = 1.0
+my_variable2 = 10.0
+hub.light_matrix.write(randint(int(my_variable1), int(my_variable2)))
+
+"""
+    )
+
+
+# - Less than
+# Verified on Hardware
+def test_code_less_than_base():
+    assert (
+        helper("less_than_base", "Operators")
+        == f"""{includes}
+# Create your objects here.
+hub = MSHub()
+
+# Write your program here.
+if (0.0 < 100.0):
+\thub.light_matrix.write('Y')
+
+"""
+    )
+
+
+# Verified on Hardware
+def test_code_less_than_variable():
+    assert (
+        helper("less_than_variable", "Operators")
+        == f"""{includes}
+# Create your objects here.
+hub = MSHub()
+
+# Write your program here.
+my_variable1 = 1.0
+my_variable2 = 10.0
+if (my_variable1 < my_variable2):
+\thub.light_matrix.write('Y')
+
+"""
+    )
+
+
+# - Equal
+# Verified on Hardware
+def test_code_equal_base():
+    assert (
+        helper("equal_base", "Operators")
+        == f"""{includes}
+# Create your objects here.
+hub = MSHub()
+
+# Write your program here.
+if (100.0 == 100.0):
+\thub.light_matrix.write('Y')
+
+"""
+    )
+
+
+# Verified on Hardware
+def test_code_equal_variable():
+    assert (
+        helper("equal_variable", "Operators")
+        == f"""{includes}
+# Create your objects here.
+hub = MSHub()
+
+# Write your program here.
+my_variable1 = 1.0
+my_variable2 = 1.0
+if (my_variable1 == my_variable2):
+\thub.light_matrix.write('Y')
+
+"""
+    )
+
+
+# - Greater than
+# Verified on Hardware
+def test_code_greater_than_base():
+    assert (
+        helper("greater_than_base", "Operators")
+        == f"""{includes}
+# Create your objects here.
+hub = MSHub()
+
+# Write your program here.
+if (110.0 > 100.0):
+\thub.light_matrix.write('Y')
+
+"""
+    )
+
+
+# Verified on Hardware
+def test_code_greater_than_variable():
+    assert (
+        helper("greater_than_variable", "Operators")
+        == f"""{includes}
+# Create your objects here.
+hub = MSHub()
+
+# Write your program here.
+my_variable1 = 10.0
+my_variable2 = 1.0
+if (my_variable1 > my_variable2):
+\thub.light_matrix.write('Y')
+
+"""
+    )
+
+
+# - And
+# Verified on Hardware
+def test_code_and():
+    assert (
+        helper("and", "Operators")
+        == f"""{includes}
+# Create your objects here.
+hub = MSHub()
+
+# Write your program here.
+if ((1.0 == 1.0) and (2.0 == 2.0)):
+\thub.light_matrix.write('Y')
+
+"""
+    )
+
+
+# - Or
+# Verified on Hardware
+def test_code_or():
+    assert (
+        helper("or", "Operators")
+        == f"""{includes}
+# Create your objects here.
+hub = MSHub()
+
+# Write your program here.
+if ((0.0 == 1.0) or (1.0 == 1.0)):
+\thub.light_matrix.write('Y')
+
+"""
+    )
+
+
+# - Not
+# Verified on Hardware
+def test_code_not():
+    assert (
+        helper("not", "Operators")
+        == f"""{includes}
+# Create your objects here.
+hub = MSHub()
+
+# Write your program here.
+if not (0.0 == 1.0):
+\thub.light_matrix.write('Y')
+
+"""
+    )
+
+
+# - Is between
+# Verified on Hardware
+def test_code_is_between_base():
+    assert (
+        helper("is_between_base", "Operators")
+        == f"""{includes}
+# Create your objects here.
+hub = MSHub()
+
+# Write your program here.
+if -10.0 <= 0.0 <= 10.0:
+\thub.light_matrix.write('Y')
+
+"""
+    )
+
+
+# Verified on Hardware
+def test_code_is_between_variable():
+    assert (
+        helper("is_between_variable", "Operators")
+        == f"""{includes}
+# Create your objects here.
+hub = MSHub()
+
+# Write your program here.
+my_variable1 = 0.0
+my_variable2 = -10.0
+my_variable3 = 10.0
+if my_variable2 <= my_variable1 <= my_variable3:
+\thub.light_matrix.write('Y')
+
+"""
+    )
+
+
+# Join strings
+# Verified on Hardware
+def test_code_join_strings_base():
+    assert (
+        helper("join_strings_base", "Operators")
+        == f"""{includes}
+# Create your objects here.
+hub = MSHub()
+
+# Write your program here.
+hub.light_matrix.write('Hello' + 'World')
+
+"""
+    )
+
+
+# Verified on Hardware
+def test_code_join_strings_variable():
+    assert (
+        helper("join_strings_variable", "Operators")
+        == f"""{includes}
+# Create your objects here.
+hub = MSHub()
+
+# Write your program here.
+my_variable1 = 'Hello'
+my_variable2 = 'World'
+hub.light_matrix.write(my_variable1 + my_variable2)
+
+"""
+    )
+
+
+# - Letter of string
+# Verified on Hardware
+def test_code_letter_of_string_base():
+    assert (
+        helper("letter_of_string_base", "Operators")
+        == f"""{includes}
+# Create your objects here.
+hub = MSHub()
+
+# Write your program here.
+hub.light_matrix.write('apple'[int(1.0) - 1])
+
+"""
+    )
+
+
+# Verified on Hardware
+def test_code_letter_of_string_variable():
+    assert (
+        helper("letter_of_string_variable", "Operators")
+        == f"""{includes}
+# Create your objects here.
+hub = MSHub()
+
+# Write your program here.
+my_variable1 = 1.0
+my_variable2 = 'apple'
+hub.light_matrix.write(my_variable2[int(my_variable1) - 1])
+
+"""
+    )
+
+
+# - Length of string
+# Verified on Hardware
+def test_code_length_of_string_base():
+    assert (
+        helper("length_of_string_base", "Operators")
+        == f"""{includes}
+# Create your objects here.
+hub = MSHub()
+
+# Write your program here.
+hub.light_matrix.write(len('apple'))
+
+"""
+    )
+
+
+# Verified on Hardware
+def test_code_length_of_string_variable():
+    assert (
+        helper("length_of_string_variable", "Operators")
+        == f"""{includes}
+# Create your objects here.
+hub = MSHub()
+
+# Write your program here.
+my_variable = 'apple'
+hub.light_matrix.write(len(my_variable))
+
+"""
+    )
+
+
+# - String contains
+# Verified on Hardware
+def test_code_string_contains_base():
+    assert (
+        helper("string_contains_base", "Operators")
+        == f"""{includes}
+# Create your objects here.
+hub = MSHub()
+
+# Write your program here.
+if 'a' in 'apple':
+\thub.light_matrix.write('Y')
+
+"""
+    )
+
+
+# Verified on Hardware
+def test_code_string_contains_variable():
+    assert (
+        helper("string_contains_variable", "Operators")
+        == f"""{includes}
+# Create your objects here.
+hub = MSHub()
+
+# Write your program here.
+my_variable1 = 'apple'
+my_variable2 = 'a'
+if my_variable2 in my_variable1:
+\thub.light_matrix.write('Y')
+
+"""
+    )
+
+
+# - Mod
+# Verified on Hardware
+def test_code_mod_base():
+    assert (
+        helper("mod_base", "Operators")
+        == f"""{includes}
+# Create your objects here.
+hub = MSHub()
+
+# Write your program here.
+hub.light_matrix.write(4.0 % 2.0)
+
+"""
+    )
+
+
+# Verified on Hardware
+def test_code_mod_variable():
+    assert (
+        helper("mod_variable", "Operators")
+        == f"""{includes}
+# Create your objects here.
+hub = MSHub()
+
+# Write your program here.
+my_variable1 = 4.0
+my_variable2 = 2.0
+hub.light_matrix.write(my_variable1 % my_variable2)
+
+"""
+    )
+
+
+# - Round
+# Verified on Hardware
+def test_code_round_base():
+    assert (
+        helper("round_base", "Operators")
+        == f"""{includes}
+# Create your objects here.
+hub = MSHub()
+
+# Write your program here.
+hub.light_matrix.write(int(4.2 + 0.5))
+
+"""
+    )
+
+
+# Verified on Hardware
+def test_code_round_variable():
+    assert (
+        helper("round_variable", "Operators")
+        == f"""{includes}
+# Create your objects here.
+hub = MSHub()
+
+# Write your program here.
+my_variable = 4.5
+hub.light_matrix.write(int(my_variable + 0.5))
+
+"""
+    )
+
+
+# - Math function
+# 10
+# Verified on Hardware
+def test_code_math_function_10():
+    assert (
+        helper("math_function_10", "Operators")
+        == f"""{includes}
+# Create your objects here.
+hub = MSHub()
+
+# Write your program here.
+hub.light_matrix.write(pow(10, 1.0))
+
+"""
+    )
+
+
+# abs
+# Verified on Hardware
+def test_code_math_function_abs():
+    assert (
+        helper("math_function_abs", "Operators")
+        == f"""{includes}
+# Create your objects here.
+hub = MSHub()
+
+# Write your program here.
+hub.light_matrix.write(abs(-1.0))
+
+"""
+    )
+
+
+# acos
+# Verified on Hardware
+def test_code_math_function_acos():
+    assert (
+        helper("math_function_acos", "Operators")
+        == f"""{includes}
+# Create your objects here.
+hub = MSHub()
+
+# Write your program here.
+hub.light_matrix.write(math.acos(1.0))
+
+"""
+    )
+
+
+# asin
+# Verified on Hardware
+def test_code_math_function_asin():
+    assert (
+        helper("math_function_asin", "Operators")
+        == f"""{includes}
+# Create your objects here.
+hub = MSHub()
+
+# Write your program here.
+hub.light_matrix.write(math.asin(1.0))
+
+"""
+    )
+
+
+# atan
+# Verified on Hardware
+def test_code_math_function_atan():
+    assert (
+        helper("math_function_atan", "Operators")
+        == f"""{includes}
+# Create your objects here.
+hub = MSHub()
+
+# Write your program here.
+hub.light_matrix.write(math.atan(1.0))
+
+"""
+    )
+
+
+# atan2
+# Verified on Hardware
+def test_code_math_function_atan2():
+    assert (
+        helper("math_function_atan2", "Operators")
+        == f"""{includes}
+# Create your objects here.
+hub = MSHub()
+
+# Write your program here.
+hub.light_matrix.write(math.atan2(0.0, 180.0))
+
+"""
+    )
+
+
+# ceiling
+# Verified on Hardware
+def test_code_math_function_ceiling():
+    assert (
+        helper("math_function_ceiling", "Operators")
+        == f"""{includes}
+# Create your objects here.
+hub = MSHub()
+
+# Write your program here.
+hub.light_matrix.write(math.ceil(0.9))
+
+"""
+    )
+
+
+# copysign
+# Verified on Hardware
+def test_code_math_function_copysign():
+    assert (
+        helper("math_function_copysign", "Operators")
+        == f"""{includes}
+# Create your objects here.
+hub = MSHub()
+
+# Write your program here.
+hub.light_matrix.write(math.copysign(1.0, -1.0))
+
+"""
+    )
+
+
+# cos
+# Verified on Hardware
+def test_code_math_function_cos():
+    assert (
+        helper("math_function_cos", "Operators")
+        == f"""{includes}
+# Create your objects here.
+hub = MSHub()
+
+# Write your program here.
+hub.light_matrix.write(math.cos(180.0))
+
+"""
+    )
+
+
+# e
+# Verified on Hardware
+def test_code_math_function_e():
+    assert (
+        helper("math_function_e", "Operators")
+        == f"""{includes}
+# Create your objects here.
+hub = MSHub()
+
+# Write your program here.
+hub.light_matrix.write(pow(math.e, 1.0))
+
+"""
+    )
+
+
+# floor
+# Verified on Hardware
+def test_code_math_function_floor():
+    assert (
+        helper("math_function_floor", "Operators")
+        == f"""{includes}
+# Create your objects here.
+hub = MSHub()
+
+# Write your program here.
+hub.light_matrix.write(math.floor(1.9))
+
+"""
+    )
+
+
+# hypot
+# TODO: THis one is not found
+def test_code_math_function_hypot():
+    assert (
+        helper("math_function_hypot", "Operators")
+        == f"""{includes}
+# Create your objects here.
+hub = MSHub()
+
+# Write your program here.
+hub.light_matrix.write(math.hypot(3.0, 4.0))
+
+"""
+    )
+
+
+# ln
+# Verified on Hardware
+def test_code_math_function_ln():
+    assert (
+        helper("math_function_ln", "Operators")
+        == f"""{includes}
+# Create your objects here.
+hub = MSHub()
+
+# Write your program here.
+hub.light_matrix.write(math.log(1.0))
+
+"""
+    )
+
+
+# log
+# Verified on Hardware
+def test_code_math_function_log():
+    assert (
+        helper("math_function_log", "Operators")
+        == f"""{includes}
+# Create your objects here.
+hub = MSHub()
+
+# Write your program here.
+hub.light_matrix.write(math.log2(1.0))
+
+"""
+    )
+
+
+# max
+# Verified on Hardware
+def test_code_math_function_max():
+    assert (
+        helper("math_function_max", "Operators")
+        == f"""{includes}
+# Create your objects here.
+hub = MSHub()
+
+# Write your program here.
+hub.light_matrix.write(max(0.0, 1.0))
+
+"""
+    )
+
+
+# min
+# Verified on Hardware
+def test_code_math_function_min():
+    assert (
+        helper("math_function_min", "Operators")
+        == f"""{includes}
+# Create your objects here.
+hub = MSHub()
+
+# Write your program here.
+hub.light_matrix.write(min(1.0, 10.0))
+
+"""
+    )
+
+
+# pow
+# Verified on Hardware
+def test_code_math_function_pow():
+    assert (
+        helper("math_function_pow", "Operators")
+        == f"""{includes}
+# Create your objects here.
+hub = MSHub()
+
+# Write your program here.
+hub.light_matrix.write(pow(2.0, 3.0))
+
+"""
+    )
+
+
+# sin
+# Verified on Hardware
+def test_code_math_function_sin():
+    assert (
+        helper("math_function_sin", "Operators")
+        == f"""{includes}
+# Create your objects here.
+hub = MSHub()
+
+# Write your program here.
+hub.light_matrix.write(math.sin(180.0))
+
+"""
+    )
+
+
+# sqrt
+# Verified on Hardware
+def test_code_math_function_sqrt():
+    assert (
+        helper("math_function_sqrt", "Operators")
+        == f"""{includes}
+# Create your objects here.
+hub = MSHub()
+
+# Write your program here.
+hub.light_matrix.write(math.sqrt(4.0))
+
+"""
+    )
+
+
+# tan
+# Verified on Hardware
+def test_code_math_function_tan():
+    assert (
+        helper("math_function_tan", "Operators")
+        == f"""{includes}
+# Create your objects here.
+hub = MSHub()
+
+# Write your program here.
+hub.light_matrix.write(math.tan(180.0))
+
+"""
+    )
+
+
+# variable
+# Verified on Hardware
+def test_code_math_function_variable():
+    assert (
+        helper("math_function_variable", "Operators")
+        == f"""{includes}
+# Create your objects here.
+hub = MSHub()
+
+# Write your program here.
+my_variable1 = 1.0
+my_variable2 = 10.0
+hub.light_matrix.write(min(my_variable1, my_variable2))
+
+"""
+    )
+
+
 # ---------- Variables ----------
 # Verified on Hardware
 def test_code_change_variable_by():

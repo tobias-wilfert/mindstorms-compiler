@@ -31,7 +31,21 @@ from src.abstract_syntax_tree.movement import (
     StartMovingWithSteering,
     StopMovingNode,
 )
-from src.abstract_syntax_tree.operators import ArithmeticalNode
+from src.abstract_syntax_tree.operators import (
+    ArithmeticalNode,
+    BinaryMathFunctionNode,
+    ComparisonNode,
+    IsBetweenNode,
+    JoinStringsNode,
+    LengthOfStringNode,
+    LetterOfStringNode,
+    ModNode,
+    NotNode,
+    PickRandomNumberNode,
+    RoundNode,
+    StringContainsNode,
+    UnaryMathFunctionNode,
+)
 from src.abstract_syntax_tree.variables import (
     AddItemToListNode,
     ChangeVariableByNode,
@@ -188,6 +202,30 @@ import math
             return self.visit_if_then_node(node)
         elif isinstance(node, ListContainsNode):
             return self.visit_list_contains_node(node)
+        elif isinstance(node, PickRandomNumberNode):
+            return self.visit_pick_random_number_node(node)
+        elif isinstance(node, ComparisonNode):
+            return self.visit_comparison_node(node)
+        elif isinstance(node, NotNode):
+            return self.visit_not_node(node)
+        elif isinstance(node, IsBetweenNode):
+            return self.visit_is_between_node(node)
+        elif isinstance(node, JoinStringsNode):
+            return self.visit_join_strings_node(node)
+        elif isinstance(node, LetterOfStringNode):
+            return self.visit_letter_of_string_node(node)
+        elif isinstance(node, LengthOfStringNode):
+            return self.visit_length_of_string_node(node)
+        elif isinstance(node, StringContainsNode):
+            return self.visit_string_contains_node(node)
+        elif isinstance(node, ModNode):
+            return self.visit_mod_node(node)
+        elif isinstance(node, RoundNode):
+            return self.visit_round_node(node)
+        elif isinstance(node, UnaryMathFunctionNode):
+            return self.visit_unary_math_function_node(node)
+        elif isinstance(node, BinaryMathFunctionNode):
+            return self.visit_binary_math_function_node(node)
         else:
             raise NotImplementedError(f"Currently no code can be generated for {node}")
 
@@ -691,7 +729,6 @@ def _turn_on_pattern(pattern, brightness=100):
 
     def visit_if_then_node(self, node: IfThenNode):
         self.program_code += f"{self.indentation}if {self.visit(node.condition)}:\n"
-        # TODO: Need to increase the indentation also need to retrospectively change all code to include the padding in the beginning
         self.indentation += "\t"
         self.visit(node.body)
         self.indentation[:-1]
@@ -699,3 +736,42 @@ def _turn_on_pattern(pattern, brightness=100):
 
     def visit_list_contains_node(self, node: ListContainsNode):
         return f"{self.visit(node.value)} in {node.variable}"
+
+    def visit_pick_random_number_node(self, node: PickRandomNumberNode):
+        # TODO: Need to check if the random module is already imported
+        if not "from random import randint" in self.includes:
+            self.includes += "from random import randint\n"
+        return f"randint(int({self.visit(node.left_hand)}), int({self.visit(node.right_hand)}))"
+
+    def visit_comparison_node(self, node: ComparisonNode):
+        return f"({self.visit(node.left_hand)} {node.op.code()} {self.visit(node.right_hand)})"
+
+    def visit_not_node(self, node: NotNode):
+        return f"not {self.visit(node.left_hand)}"
+
+    def visit_is_between_node(self, node: IsBetweenNode):
+        return f"{self.visit(node.left_hand)} <= {self.visit(node.value)} <= {self.visit(node.right_hand)}"
+
+    def visit_join_strings_node(self, node: JoinStringsNode):
+        return f"{self.visit(node.left_hand)} + {self.visit(node.right_hand)}"
+
+    def visit_letter_of_string_node(self, node: LetterOfStringNode):
+        return f"{self.visit(node.right_hand)}[int({self.visit(node.left_hand)}) - 1]"
+
+    def visit_length_of_string_node(self, node: LengthOfStringNode):
+        return f"len({self.visit(node.left_hand)})"
+
+    def visit_string_contains_node(self, node: StringContainsNode):
+        return f"{self.visit(node.right_hand)} in {self.visit(node.left_hand)}"
+
+    def visit_mod_node(self, node: ModNode):
+        return f"{self.visit(node.left_hand)} % {self.visit(node.right_hand)}"
+
+    def visit_round_node(self, node: RoundNode):
+        return f"int({self.visit(node.left_hand)} + 0.5)"
+
+    def visit_unary_math_function_node(self, node: UnaryMathFunctionNode):
+        return f"{node.function.code()}{self.visit(node.left_hand)})"
+
+    def visit_binary_math_function_node(self, node: BinaryMathFunctionNode):
+        return f"{node.function.code()}({self.visit(node.left_hand)}, {self.visit(node.right_hand)})"

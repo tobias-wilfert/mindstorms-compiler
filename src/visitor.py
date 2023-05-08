@@ -36,7 +36,25 @@ from src.abstract_syntax_tree.movement import (
     StartMovingWithSteering,
     StopMovingNode,
 )
-from src.abstract_syntax_tree.operators import ArithmeticalNode, Operation
+from src.abstract_syntax_tree.operators import (
+    ArithmeticalNode,
+    BinaryFunction,
+    BinaryMathFunctionNode,
+    ComparisonNode,
+    ComparisonOperator,
+    IsBetweenNode,
+    JoinStringsNode,
+    LengthOfStringNode,
+    LetterOfStringNode,
+    ModNode,
+    NotNode,
+    Operation,
+    PickRandomNumberNode,
+    RoundNode,
+    StringContainsNode,
+    UnaryFunction,
+    UnaryMathFunctionNode,
+)
 from src.abstract_syntax_tree.variables import (
     AddItemToListNode,
     ChangeVariableByNode,
@@ -197,6 +215,38 @@ class Visitor:
             return self.visit_operator(Operation.DIVIDE, node)
         elif opcode == "operator_multiply":
             return self.visit_operator(Operation.MULTIPLY, node)
+        elif opcode == "operator_random":
+            return self.visit_pick_random(node)
+        elif opcode == "operator_lt":
+            return self.visit_comparison(node, ComparisonOperator.LESS)
+        elif opcode == "operator_equals":
+            return self.visit_comparison(node, ComparisonOperator.EQUAL)
+        elif opcode == "operator_gt":
+            return self.visit_comparison(node, ComparisonOperator.GREATER)
+        elif opcode == "operator_and":
+            return self.visit_comparison(node, ComparisonOperator.AND)
+        elif opcode == "operator_or":
+            return self.visit_comparison(node, ComparisonOperator.OR)
+        elif opcode == "operator_contains":
+            return self.visit_string_contains(node)
+        elif opcode == "operator_not":
+            return self.visit_not_node(node)
+        elif opcode == "flipperoperator_isInBetween":
+            return self.visit_is_between(node)
+        elif opcode == "operator_join":
+            return self.visit_join_strings(node)
+        elif opcode == "operator_letter_of":
+            return self.visit_letter_of_string(node)
+        elif opcode == "operator_length":
+            return self.visit_length_of_string(node)
+        elif opcode == "operator_mod":
+            return self.visit_mod(node)
+        elif opcode == "operator_round":
+            return self.visit_round(node)
+        elif opcode == "operator_mathop":
+            return self.visit_unary_math_function(node)
+        elif opcode == "flipperoperator_mathFunc2Params":
+            return self.visit_binary_math_function(node)
         else:
             raise NotImplementedError(opcode)
 
@@ -820,3 +870,126 @@ class Visitor:
         list = node["fields"]["LIST"][0]
         item = self.visit_input(node["inputs"]["ITEM"][1])
         return ListContainsNode(list, item)
+
+    def visit_pick_random(self, node) -> PickRandomNumberNode:
+        """Constructs the AST representation of the PickRandom node.
+
+        :param node: The Node representation.
+        :return: The AST representation.
+        """
+        low = self.visit_input(node["inputs"]["FROM"][1])
+        high = self.visit_input(node["inputs"]["TO"][1])
+        return PickRandomNumberNode(low, high)
+
+    def visit_comparison(self, node, operator) -> ComparisonNode:
+        """Constructs the AST representation of the Comparison node.
+
+        :param node: The Node representation.
+        :param operator: The operator of the comparison.
+        :return: The AST representation.
+        """
+        left = self.visit_input(node["inputs"]["OPERAND1"][1])
+        right = self.visit_input(node["inputs"]["OPERAND2"][1])
+        return ComparisonNode(operator, left, right)
+
+    def visit_not_node(self, node) -> NotNode:
+        """Constructs the AST representation of the Not node.
+
+        :param node: The Node representation.
+        :return: The AST representation.
+        """
+        operand = self.visit_input(node["inputs"]["OPERAND"][1])
+        return NotNode(operand)
+
+    def visit_is_between(self, node) -> IsBetweenNode:
+        """Constructs the AST representation of the IsBetween node.
+
+        :param node: The Node representation.
+        :return: The AST representation.
+        """
+        value = self.visit_input(node["inputs"]["VALUE"][1])
+        low = self.visit_input(node["inputs"]["LOW"][1])
+        high = self.visit_input(node["inputs"]["HIGH"][1])
+        return IsBetweenNode(value, low, high)
+
+    def visit_join_strings(self, node) -> JoinStringsNode:
+        """Constructs the AST representation of the JoinStrings node.
+
+        :param node: The Node representation.
+        :return: The AST representation.
+        """
+        string1 = self.visit_input(node["inputs"]["STRING1"][1])
+        string2 = self.visit_input(node["inputs"]["STRING2"][1])
+        return JoinStringsNode(string1, string2)
+
+    def visit_letter_of_string(self, node) -> LetterOfStringNode:
+        """Constructs the AST representation of the LetterOfString node.
+
+        :param node: The Node representation.
+        :return: The AST representation.
+        """
+        index = self.visit_input(node["inputs"]["LETTER"][1])
+        string = self.visit_input(node["inputs"]["STRING"][1])
+        return LetterOfStringNode(index, string)
+
+    def visit_length_of_string(self, node) -> LengthOfStringNode:
+        """Constructs the AST representation of the LengthOfString node.
+
+        :param node: The Node representation.
+        :return: The AST representation.
+        """
+        string = self.visit_input(node["inputs"]["STRING"][1])
+        return LengthOfStringNode(string)
+
+    def visit_string_contains(self, node) -> StringContainsNode:
+        """Constructs the AST representation of the StringContains node.
+
+        :param node: The Node representation.
+        :return: The AST representation.
+        """
+        string1 = self.visit_input(node["inputs"]["STRING1"][1])
+        string2 = self.visit_input(node["inputs"]["STRING2"][1])
+        return StringContainsNode(string1, string2)
+
+    def visit_mod(self, node) -> ModNode:
+        """Constructs the AST representation of the Mod node.
+
+        :param node: The Node representation.
+        :return: The AST representation.
+        """
+        dividend = self.visit_input(node["inputs"]["NUM1"][1])
+        divisor = self.visit_input(node["inputs"]["NUM2"][1])
+        return ModNode(dividend, divisor)
+
+    def visit_round(self, node) -> RoundNode:
+        """Constructs the AST representation of the Round node.
+
+        :param node: The Node representation.
+        :return: The AST representation.
+        """
+        num = self.visit_input(node["inputs"]["NUM"][1])
+        return RoundNode(num)
+
+    def visit_unary_math_function(self, node) -> UnaryMathFunctionNode:
+        """Constructs the AST representation of the MathFunction node.
+
+        :param node: The Node representation.
+        :param function: The function of the UnaryMathFunction.
+        :return: The AST representation.
+        """
+        function = UnaryFunction.parse(node["fields"]["OPERATOR"][0])
+        num = self.visit_input(node["inputs"]["NUM"][1])
+        # TODO: Parse the second if there are any
+        return UnaryMathFunctionNode(function, num)
+
+    def visit_binary_math_function(self, node) -> BinaryMathFunctionNode:
+        """Constructs the AST representation of the MathFunction node.
+
+        :param node: The Node representation.
+        :param function: The function of the BinaryMathFunction.
+        :return: The AST representation.
+        """
+        function = BinaryFunction.parse(node["fields"]["TYPE"][0])
+        num1 = self.visit_input(node["inputs"]["ARG1"][1])
+        num2 = self.visit_input(node["inputs"]["ARG2"][1])
+        return BinaryMathFunctionNode(function, num1, num2)

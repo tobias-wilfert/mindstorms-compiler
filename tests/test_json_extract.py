@@ -503,6 +503,226 @@ def test_extract_json_arithmetic_variable():
     helper("arithmetic_variable", "Operators")
 
 
+# - Pick random number
+def test_extract_json_pick_random_number_base():
+    helper("pick_random_number_base", "Operators")
+
+
+def test_extract_json_pick_random_number_variable():
+    helper("pick_random_number_variable", "Operators")
+
+
+# - Less than
+def test_extract_json_less_than_base():
+    helper("less_than_base", "Operators")
+
+
+def test_extract_json_less_than_variable():
+    helper("less_than_variable", "Operators")
+
+
+# - Equal
+def test_extract_json_equal_base():
+    helper("equal_base", "Operators")
+
+
+def test_extract_json_equal_variable():
+    helper("equal_variable", "Operators")
+
+
+# - Greater than
+def test_extract_json_greater_than_base():
+    helper("greater_than_base", "Operators")
+
+
+def test_extract_json_greater_than_variable():
+    helper("greater_than_variable", "Operators")
+
+
+# - And
+def test_extract_json_and():
+    helper("and", "Operators")
+
+
+# - Or
+def test_extract_json_or():
+    helper("or", "Operators")
+
+
+# - Not
+def test_extract_json_not():
+    helper("not", "Operators")
+
+
+# - Is between
+def test_extract_json_is_between_base():
+    helper("is_between_base", "Operators")
+
+
+def test_extract_json_is_between_variable():
+    helper("is_between_variable", "Operators")
+
+
+# Join strings
+def test_extract_json_join_strings_base():
+    helper("join_strings_base", "Operators")
+
+
+def test_extract_json_join_strings_variable():
+    helper("join_strings_variable", "Operators")
+
+
+# - Letter of string
+def test_extract_json_letter_of_string_base():
+    helper("letter_of_string_base", "Operators")
+
+
+def test_extract_json_letter_of_string_variable():
+    helper("letter_of_string_variable", "Operators")
+
+
+# - Length of string
+def test_extract_json_length_of_string_base():
+    helper("length_of_string_base", "Operators")
+
+
+def test_extract_json_length_of_string_variable():
+    helper("length_of_string_variable", "Operators")
+
+
+# - String contains
+def test_extract_json_string_contains_base():
+    helper("string_contains_base", "Operators")
+
+
+def test_extract_json_string_contains_variable():
+    helper("string_contains_variable", "Operators")
+
+
+# - Mod
+def test_extract_json_mod_base():
+    helper("mod_base", "Operators")
+
+
+def test_extract_json_mod_variable():
+    helper("mod_variable", "Operators")
+
+
+# - Round
+def test_extract_json_round_base():
+    helper("round_base", "Operators")
+
+
+def test_extract_json_round_variable():
+    helper("round_variable", "Operators")
+
+
+# - Math function
+# 10
+def test_extract_json_math_function_10():
+    helper("math_function_10", "Operators")
+
+
+# abs
+def test_extract_json_math_function_abs():
+    helper("math_function_abs", "Operators")
+
+
+# acos
+def test_extract_json_math_function_acos():
+    helper("math_function_acos", "Operators")
+
+
+# asin
+def test_extract_json_math_function_asin():
+    helper("math_function_asin", "Operators")
+
+
+# atan
+def test_extract_json_math_function_atan():
+    helper("math_function_atan", "Operators")
+
+
+# atan2
+def test_extract_json_math_function_atan2():
+    helper("math_function_atan2", "Operators")
+
+
+# ceiling
+def test_extract_json_math_function_ceiling():
+    helper("math_function_ceiling", "Operators")
+
+
+# copysign
+def test_extract_json_math_function_copysign():
+    helper("math_function_copysign", "Operators")
+
+
+# cos
+def test_extract_json_math_function_cos():
+    helper("math_function_cos", "Operators")
+
+
+# e
+def test_extract_json_math_function_e():
+    helper("math_function_e", "Operators")
+
+
+# floor
+def test_extract_json_math_function_floor():
+    helper("math_function_floor", "Operators")
+
+
+# hypot
+def test_extract_json_math_function_hypot():
+    helper("math_function_hypot", "Operators")
+
+
+# ln
+def test_extract_json_math_function_ln():
+    helper("math_function_ln", "Operators")
+
+
+# log
+def test_extract_json_math_function_log():
+    helper("math_function_log", "Operators")
+
+
+# max
+def test_extract_json_math_function_max():
+    helper("math_function_max", "Operators")
+
+
+# min
+def test_extract_json_math_function_min():
+    helper("math_function_min", "Operators")
+
+
+# pow
+def test_extract_json_math_function_pow():
+    helper("math_function_pow", "Operators")
+
+
+# sin
+def test_extract_json_math_function_sin():
+    helper("math_function_sin", "Operators")
+
+
+# sqrt
+def test_extract_json_math_function_sqrt():
+    helper("math_function_sqrt", "Operators")
+
+
+# tan
+def test_extract_json_math_function_tan():
+    helper("math_function_tan", "Operators")
+
+
+# variable
+def test_extract_json_math_function_variable():
+    helper("math_function_variable", "Operators")
+
+
 # ---------- Variables ----------
 # - Change Variable by
 def test_extract_json_change_variable_by():

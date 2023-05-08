@@ -1794,6 +1794,908 @@ def test_ast_arithmetic_variable():
     )
 
 
+# - Pick random number
+def test_ast_pick_random_number_base():
+    assert (
+        helper("pick_random_number_base", "Operators")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="WriteNode"]
+2 [label="PickRandomNumberNode"]
+3 [label="NumericalNode(1.0)"]
+4 [label="NumericalNode(10.0)"]
+0 -> 1
+1 -> 2
+2 -> 3
+2 -> 4}"""
+    )
+
+
+def test_ast_pick_random_number_variable():
+    assert (
+        helper("pick_random_number_variable", "Operators")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="SetVariableToNode(variable:'my_variable1')"]
+2 [label="NumericalNode(1.0)"]
+3 [label="SetVariableToNode(variable:'my_variable2')"]
+4 [label="NumericalNode(10.0)"]
+5 [label="WriteNode"]
+6 [label="PickRandomNumberNode"]
+7 [label="VariableNode(name:'my_variable1')"]
+8 [label="VariableNode(name:'my_variable2')"]
+0 -> 1
+1 -> 2
+1 -> 3
+3 -> 4
+3 -> 5
+5 -> 6
+6 -> 7
+6 -> 8}"""
+    )
+
+
+# - Less than
+def test_ast_less_than_base():
+    assert (
+        helper("less_than_base", "Operators")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="IfThenNode"]
+2 [label="ComparisonNode(op:'ComparisonOperator.LESS')"]
+3 [label="NumericalNode(0.0)"]
+4 [label="NumericalNode(100.0)"]
+5 [label="WriteNode"]
+6 [label="LiteralNode('Y')"]
+0 -> 1
+1 -> 2
+2 -> 3
+2 -> 4
+1 -> 5
+5 -> 6}"""
+    )
+
+
+def test_ast_less_than_variable():
+    assert (
+        helper("less_than_variable", "Operators")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="SetVariableToNode(variable:'my_variable1')"]
+2 [label="NumericalNode(1.0)"]
+3 [label="SetVariableToNode(variable:'my_variable2')"]
+4 [label="NumericalNode(10.0)"]
+5 [label="IfThenNode"]
+6 [label="ComparisonNode(op:'ComparisonOperator.LESS')"]
+7 [label="VariableNode(name:'my_variable1')"]
+8 [label="VariableNode(name:'my_variable2')"]
+9 [label="WriteNode"]
+10 [label="LiteralNode('Y')"]
+0 -> 1
+1 -> 2
+1 -> 3
+3 -> 4
+3 -> 5
+5 -> 6
+6 -> 7
+6 -> 8
+5 -> 9
+9 -> 10}"""
+    )
+
+
+# - Equal
+def test_ast_equal_base():
+    assert (
+        helper("equal_base", "Operators")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="IfThenNode"]
+2 [label="ComparisonNode(op:'ComparisonOperator.EQUAL')"]
+3 [label="NumericalNode(100.0)"]
+4 [label="NumericalNode(100.0)"]
+5 [label="WriteNode"]
+6 [label="LiteralNode('Y')"]
+0 -> 1
+1 -> 2
+2 -> 3
+2 -> 4
+1 -> 5
+5 -> 6}"""
+    )
+
+
+def test_ast_equal_variable():
+    assert (
+        helper("equal_variable", "Operators")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="SetVariableToNode(variable:'my_variable1')"]
+2 [label="NumericalNode(1.0)"]
+3 [label="SetVariableToNode(variable:'my_variable2')"]
+4 [label="NumericalNode(1.0)"]
+5 [label="IfThenNode"]
+6 [label="ComparisonNode(op:'ComparisonOperator.EQUAL')"]
+7 [label="VariableNode(name:'my_variable1')"]
+8 [label="VariableNode(name:'my_variable2')"]
+9 [label="WriteNode"]
+10 [label="LiteralNode('Y')"]
+0 -> 1
+1 -> 2
+1 -> 3
+3 -> 4
+3 -> 5
+5 -> 6
+6 -> 7
+6 -> 8
+5 -> 9
+9 -> 10}"""
+    )
+
+
+# - Greater than
+def test_ast_greater_than_base():
+    assert (
+        helper("greater_than_base", "Operators")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="IfThenNode"]
+2 [label="ComparisonNode(op:'ComparisonOperator.GREATER')"]
+3 [label="NumericalNode(110.0)"]
+4 [label="NumericalNode(100.0)"]
+5 [label="WriteNode"]
+6 [label="LiteralNode('Y')"]
+0 -> 1
+1 -> 2
+2 -> 3
+2 -> 4
+1 -> 5
+5 -> 6}"""
+    )
+
+
+def test_ast_greater_than_variable():
+    assert (
+        helper("greater_than_variable", "Operators")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="SetVariableToNode(variable:'my_variable1')"]
+2 [label="NumericalNode(10.0)"]
+3 [label="SetVariableToNode(variable:'my_variable2')"]
+4 [label="NumericalNode(1.0)"]
+5 [label="IfThenNode"]
+6 [label="ComparisonNode(op:'ComparisonOperator.GREATER')"]
+7 [label="VariableNode(name:'my_variable1')"]
+8 [label="VariableNode(name:'my_variable2')"]
+9 [label="WriteNode"]
+10 [label="LiteralNode('Y')"]
+0 -> 1
+1 -> 2
+1 -> 3
+3 -> 4
+3 -> 5
+5 -> 6
+6 -> 7
+6 -> 8
+5 -> 9
+9 -> 10}"""
+    )
+
+
+# - And
+def test_ast_and():
+    assert (
+        helper("and", "Operators")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="IfThenNode"]
+2 [label="ComparisonNode(op:'ComparisonOperator.AND')"]
+3 [label="ComparisonNode(op:'ComparisonOperator.EQUAL')"]
+4 [label="NumericalNode(1.0)"]
+5 [label="NumericalNode(1.0)"]
+6 [label="ComparisonNode(op:'ComparisonOperator.EQUAL')"]
+7 [label="NumericalNode(2.0)"]
+8 [label="NumericalNode(2.0)"]
+9 [label="WriteNode"]
+10 [label="LiteralNode('Y')"]
+0 -> 1
+1 -> 2
+2 -> 3
+3 -> 4
+3 -> 5
+2 -> 6
+6 -> 7
+6 -> 8
+1 -> 9
+9 -> 10}"""
+    )
+
+
+# - Or
+def test_ast_or():
+    assert (
+        helper("or", "Operators")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="IfThenNode"]
+2 [label="ComparisonNode(op:'ComparisonOperator.OR')"]
+3 [label="ComparisonNode(op:'ComparisonOperator.EQUAL')"]
+4 [label="NumericalNode(0.0)"]
+5 [label="NumericalNode(1.0)"]
+6 [label="ComparisonNode(op:'ComparisonOperator.EQUAL')"]
+7 [label="NumericalNode(1.0)"]
+8 [label="NumericalNode(1.0)"]
+9 [label="WriteNode"]
+10 [label="LiteralNode('Y')"]
+0 -> 1
+1 -> 2
+2 -> 3
+3 -> 4
+3 -> 5
+2 -> 6
+6 -> 7
+6 -> 8
+1 -> 9
+9 -> 10}"""
+    )
+
+
+# - Not
+def test_ast_not():
+    assert (
+        helper("not", "Operators")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="IfThenNode"]
+2 [label="NotNode"]
+3 [label="ComparisonNode(op:'ComparisonOperator.EQUAL')"]
+4 [label="NumericalNode(0.0)"]
+5 [label="NumericalNode(1.0)"]
+6 [label="WriteNode"]
+7 [label="LiteralNode('Y')"]
+0 -> 1
+1 -> 2
+2 -> 3
+3 -> 4
+3 -> 5
+1 -> 6
+6 -> 7}"""
+    )
+
+
+# - Is between
+def test_ast_is_between_base():
+    assert (
+        helper("is_between_base", "Operators")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="IfThenNode"]
+2 [label="IsBetweenNode"]
+3 [label="NumericalNode(0.0)"]
+4 [label="NumericalNode(-10.0)"]
+5 [label="NumericalNode(10.0)"]
+6 [label="WriteNode"]
+7 [label="LiteralNode('Y')"]
+0 -> 1
+1 -> 2
+2 -> 3
+2 -> 4
+2 -> 5
+1 -> 6
+6 -> 7}"""
+    )
+
+
+def test_ast_is_between_variable():
+    assert (
+        helper("is_between_variable", "Operators")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="SetVariableToNode(variable:'my_variable1')"]
+2 [label="NumericalNode(0.0)"]
+3 [label="SetVariableToNode(variable:'my_variable2')"]
+4 [label="NumericalNode(-10.0)"]
+5 [label="SetVariableToNode(variable:'my_variable3')"]
+6 [label="NumericalNode(10.0)"]
+7 [label="IfThenNode"]
+8 [label="IsBetweenNode"]
+9 [label="VariableNode(name:'my_variable1')"]
+10 [label="VariableNode(name:'my_variable2')"]
+11 [label="VariableNode(name:'my_variable3')"]
+12 [label="WriteNode"]
+13 [label="LiteralNode('Y')"]
+0 -> 1
+1 -> 2
+1 -> 3
+3 -> 4
+3 -> 5
+5 -> 6
+5 -> 7
+7 -> 8
+8 -> 9
+8 -> 10
+8 -> 11
+7 -> 12
+12 -> 13}"""
+    )
+
+
+# Join strings
+def test_ast_join_strings_base():
+    assert (
+        helper("join_strings_base", "Operators")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="WriteNode"]
+2 [label="JoinStringsNode"]
+3 [label="LiteralNode('Hello')"]
+4 [label="LiteralNode('World')"]
+0 -> 1
+1 -> 2
+2 -> 3
+2 -> 4}"""
+    )
+
+
+def test_ast_join_strings_variable():
+    assert (
+        helper("join_strings_variable", "Operators")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="SetVariableToNode(variable:'my_variable1')"]
+2 [label="LiteralNode('Hello')"]
+3 [label="SetVariableToNode(variable:'my_variable2')"]
+4 [label="LiteralNode('World')"]
+5 [label="WriteNode"]
+6 [label="JoinStringsNode"]
+7 [label="VariableNode(name:'my_variable1')"]
+8 [label="VariableNode(name:'my_variable2')"]
+0 -> 1
+1 -> 2
+1 -> 3
+3 -> 4
+3 -> 5
+5 -> 6
+6 -> 7
+6 -> 8}"""
+    )
+
+
+# - Letter of string
+def test_ast_letter_of_string_base():
+    assert (
+        helper("letter_of_string_base", "Operators")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="WriteNode"]
+2 [label="LetterOfStringNode"]
+3 [label="NumericalNode(1.0)"]
+4 [label="LiteralNode('apple')"]
+0 -> 1
+1 -> 2
+2 -> 3
+2 -> 4}"""
+    )
+
+
+def test_ast_letter_of_string_variable():
+    assert (
+        helper("letter_of_string_variable", "Operators")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="SetVariableToNode(variable:'my_variable1')"]
+2 [label="NumericalNode(1.0)"]
+3 [label="SetVariableToNode(variable:'my_variable2')"]
+4 [label="LiteralNode('apple')"]
+5 [label="WriteNode"]
+6 [label="LetterOfStringNode"]
+7 [label="VariableNode(name:'my_variable1')"]
+8 [label="VariableNode(name:'my_variable2')"]
+0 -> 1
+1 -> 2
+1 -> 3
+3 -> 4
+3 -> 5
+5 -> 6
+6 -> 7
+6 -> 8}"""
+    )
+
+
+# - Length of string
+def test_ast_length_of_string_base():
+    assert (
+        helper("length_of_string_base", "Operators")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="WriteNode"]
+2 [label="LengthOfStringNode"]
+3 [label="LiteralNode('apple')"]
+0 -> 1
+1 -> 2
+2 -> 3}"""
+    )
+
+
+def test_ast_length_of_string_variable():
+    assert (
+        helper("length_of_string_variable", "Operators")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="SetVariableToNode(variable:'my_variable')"]
+2 [label="LiteralNode('apple')"]
+3 [label="WriteNode"]
+4 [label="LengthOfStringNode"]
+5 [label="VariableNode(name:'my_variable')"]
+0 -> 1
+1 -> 2
+1 -> 3
+3 -> 4
+4 -> 5}"""
+    )
+
+
+# - String contains
+def test_ast_string_contains_base():
+    assert (
+        helper("string_contains_base", "Operators")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="IfThenNode"]
+2 [label="StringContainsNode"]
+3 [label="LiteralNode('apple')"]
+4 [label="LiteralNode('a')"]
+5 [label="WriteNode"]
+6 [label="LiteralNode('Y')"]
+0 -> 1
+1 -> 2
+2 -> 3
+2 -> 4
+1 -> 5
+5 -> 6}"""
+    )
+
+
+def test_ast_string_contains_variable():
+    assert (
+        helper("string_contains_variable", "Operators")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="SetVariableToNode(variable:'my_variable1')"]
+2 [label="LiteralNode('apple')"]
+3 [label="SetVariableToNode(variable:'my_variable2')"]
+4 [label="LiteralNode('a')"]
+5 [label="IfThenNode"]
+6 [label="StringContainsNode"]
+7 [label="VariableNode(name:'my_variable1')"]
+8 [label="VariableNode(name:'my_variable2')"]
+9 [label="WriteNode"]
+10 [label="LiteralNode('Y')"]
+0 -> 1
+1 -> 2
+1 -> 3
+3 -> 4
+3 -> 5
+5 -> 6
+6 -> 7
+6 -> 8
+5 -> 9
+9 -> 10}"""
+    )
+
+
+# - Mod
+def test_ast_mod_base():
+    assert (
+        helper("mod_base", "Operators")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="WriteNode"]
+2 [label="ModNode"]
+3 [label="NumericalNode(4.0)"]
+4 [label="NumericalNode(2.0)"]
+0 -> 1
+1 -> 2
+2 -> 3
+2 -> 4}"""
+    )
+
+
+def test_ast_mod_variable():
+    assert (
+        helper("mod_variable", "Operators")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="SetVariableToNode(variable:'my_variable1')"]
+2 [label="NumericalNode(4.0)"]
+3 [label="SetVariableToNode(variable:'my_variable2')"]
+4 [label="NumericalNode(2.0)"]
+5 [label="WriteNode"]
+6 [label="ModNode"]
+7 [label="VariableNode(name:'my_variable1')"]
+8 [label="VariableNode(name:'my_variable2')"]
+0 -> 1
+1 -> 2
+1 -> 3
+3 -> 4
+3 -> 5
+5 -> 6
+6 -> 7
+6 -> 8}"""
+    )
+
+
+# - Round
+def test_ast_round_base():
+    assert (
+        helper("round_base", "Operators")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="WriteNode"]
+2 [label="RoundNode"]
+3 [label="NumericalNode(4.2)"]
+0 -> 1
+1 -> 2
+2 -> 3}"""
+    )
+
+
+def test_ast_round_variable():
+    assert (
+        helper("round_variable", "Operators")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="SetVariableToNode(variable:'my_variable')"]
+2 [label="NumericalNode(4.5)"]
+3 [label="WriteNode"]
+4 [label="RoundNode"]
+5 [label="VariableNode(name:'my_variable')"]
+0 -> 1
+1 -> 2
+1 -> 3
+3 -> 4
+4 -> 5}"""
+    )
+
+
+# - Math function
+# 10
+def test_ast_math_function_10():
+    assert (
+        helper("math_function_10", "Operators")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="WriteNode"]
+2 [label="UnaryMathFunctionNode(function:'UnaryFunction.TEN')"]
+3 [label="NumericalNode(1.0)"]
+0 -> 1
+1 -> 2
+2 -> 3}"""
+    )
+
+
+# abs
+def test_ast_math_function_abs():
+    assert (
+        helper("math_function_abs", "Operators")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="WriteNode"]
+2 [label="UnaryMathFunctionNode(function:'UnaryFunction.ABS')"]
+3 [label="NumericalNode(-1.0)"]
+0 -> 1
+1 -> 2
+2 -> 3}"""
+    )
+
+
+# acos
+def test_ast_math_function_acos():
+    assert (
+        helper("math_function_acos", "Operators")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="WriteNode"]
+2 [label="UnaryMathFunctionNode(function:'UnaryFunction.ACOS')"]
+3 [label="NumericalNode(1.0)"]
+0 -> 1
+1 -> 2
+2 -> 3}"""
+    )
+
+
+# asin
+def test_ast_math_function_asin():
+    assert (
+        helper("math_function_asin", "Operators")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="WriteNode"]
+2 [label="UnaryMathFunctionNode(function:'UnaryFunction.ASIN')"]
+3 [label="NumericalNode(1.0)"]
+0 -> 1
+1 -> 2
+2 -> 3}"""
+    )
+
+
+# atan
+def test_ast_math_function_atan():
+    assert (
+        helper("math_function_atan", "Operators")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="WriteNode"]
+2 [label="UnaryMathFunctionNode(function:'UnaryFunction.ATAN')"]
+3 [label="NumericalNode(1.0)"]
+0 -> 1
+1 -> 2
+2 -> 3}"""
+    )
+
+
+# atan2
+def test_ast_math_function_atan2():
+    assert (
+        helper("math_function_atan2", "Operators")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="WriteNode"]
+2 [label="BinaryMathFunction(function:'BinaryFunction.ATAN2')"]
+3 [label="NumericalNode(0.0)"]
+4 [label="NumericalNode(180.0)"]
+0 -> 1
+1 -> 2
+2 -> 3
+2 -> 4}"""
+    )
+
+
+# ceiling
+def test_ast_math_function_ceiling():
+    assert (
+        helper("math_function_ceiling", "Operators")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="WriteNode"]
+2 [label="UnaryMathFunctionNode(function:'UnaryFunction.CEIL')"]
+3 [label="NumericalNode(0.9)"]
+0 -> 1
+1 -> 2
+2 -> 3}"""
+    )
+
+
+# copysign
+def test_ast_math_function_copysign():
+    assert (
+        helper("math_function_copysign", "Operators")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="WriteNode"]
+2 [label="BinaryMathFunction(function:'BinaryFunction.COPYSIGN')"]
+3 [label="NumericalNode(1.0)"]
+4 [label="NumericalNode(-1.0)"]
+0 -> 1
+1 -> 2
+2 -> 3
+2 -> 4}"""
+    )
+
+
+# cos
+def test_ast_math_function_cos():
+    assert (
+        helper("math_function_cos", "Operators")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="WriteNode"]
+2 [label="UnaryMathFunctionNode(function:'UnaryFunction.COS')"]
+3 [label="NumericalNode(180.0)"]
+0 -> 1
+1 -> 2
+2 -> 3}"""
+    )
+
+
+# e
+def test_ast_math_function_e():
+    assert (
+        helper("math_function_e", "Operators")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="WriteNode"]
+2 [label="UnaryMathFunctionNode(function:'UnaryFunction.E')"]
+3 [label="NumericalNode(1.0)"]
+0 -> 1
+1 -> 2
+2 -> 3}"""
+    )
+
+
+# floor
+def test_ast_math_function_floor():
+    assert (
+        helper("math_function_floor", "Operators")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="WriteNode"]
+2 [label="UnaryMathFunctionNode(function:'UnaryFunction.FLOOR')"]
+3 [label="NumericalNode(1.9)"]
+0 -> 1
+1 -> 2
+2 -> 3}"""
+    )
+
+
+# hypot
+def test_ast_math_function_hypot():
+    assert (
+        helper("math_function_hypot", "Operators")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="WriteNode"]
+2 [label="BinaryMathFunction(function:'BinaryFunction.HYPOT')"]
+3 [label="NumericalNode(3.0)"]
+4 [label="NumericalNode(4.0)"]
+0 -> 1
+1 -> 2
+2 -> 3
+2 -> 4}"""
+    )
+
+
+# ln
+def test_ast_math_function_ln():
+    assert (
+        helper("math_function_ln", "Operators")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="WriteNode"]
+2 [label="UnaryMathFunctionNode(function:'UnaryFunction.LN')"]
+3 [label="NumericalNode(1.0)"]
+0 -> 1
+1 -> 2
+2 -> 3}"""
+    )
+
+
+# log
+def test_ast_math_function_log():
+    assert (
+        helper("math_function_log", "Operators")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="WriteNode"]
+2 [label="UnaryMathFunctionNode(function:'UnaryFunction.LOG')"]
+3 [label="NumericalNode(1.0)"]
+0 -> 1
+1 -> 2
+2 -> 3}"""
+    )
+
+
+# max
+def test_ast_math_function_max():
+    assert (
+        helper("math_function_max", "Operators")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="WriteNode"]
+2 [label="BinaryMathFunction(function:'BinaryFunction.MAX')"]
+3 [label="NumericalNode(0.0)"]
+4 [label="NumericalNode(1.0)"]
+0 -> 1
+1 -> 2
+2 -> 3
+2 -> 4}"""
+    )
+
+
+# min
+def test_ast_math_function_min():
+    assert (
+        helper("math_function_min", "Operators")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="WriteNode"]
+2 [label="BinaryMathFunction(function:'BinaryFunction.MIN')"]
+3 [label="NumericalNode(1.0)"]
+4 [label="NumericalNode(10.0)"]
+0 -> 1
+1 -> 2
+2 -> 3
+2 -> 4}"""
+    )
+
+
+# pow
+def test_ast_math_function_pow():
+    assert (
+        helper("math_function_pow", "Operators")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="WriteNode"]
+2 [label="BinaryMathFunction(function:'BinaryFunction.POW')"]
+3 [label="NumericalNode(2.0)"]
+4 [label="NumericalNode(3.0)"]
+0 -> 1
+1 -> 2
+2 -> 3
+2 -> 4}"""
+    )
+
+
+# sin
+def test_ast_math_function_sin():
+    assert (
+        helper("math_function_sin", "Operators")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="WriteNode"]
+2 [label="UnaryMathFunctionNode(function:'UnaryFunction.SIN')"]
+3 [label="NumericalNode(180.0)"]
+0 -> 1
+1 -> 2
+2 -> 3}"""
+    )
+
+
+# sqrt
+def test_ast_math_function_sqrt():
+    assert (
+        helper("math_function_sqrt", "Operators")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="WriteNode"]
+2 [label="UnaryMathFunctionNode(function:'UnaryFunction.SQRT')"]
+3 [label="NumericalNode(4.0)"]
+0 -> 1
+1 -> 2
+2 -> 3}"""
+    )
+
+
+# tan
+def test_ast_math_function_tan():
+    assert (
+        helper("math_function_tan", "Operators")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="WriteNode"]
+2 [label="UnaryMathFunctionNode(function:'UnaryFunction.TAN')"]
+3 [label="NumericalNode(180.0)"]
+0 -> 1
+1 -> 2
+2 -> 3}"""
+    )
+
+
+# variable
+def test_ast_math_function_variable():
+    assert (
+        helper("math_function_variable", "Operators")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="SetVariableToNode(variable:'my_variable1')"]
+2 [label="NumericalNode(1.0)"]
+3 [label="SetVariableToNode(variable:'my_variable2')"]
+4 [label="NumericalNode(10.0)"]
+5 [label="WriteNode"]
+6 [label="BinaryMathFunction(function:'BinaryFunction.MIN')"]
+7 [label="VariableNode(name:'my_variable1')"]
+8 [label="VariableNode(name:'my_variable2')"]
+0 -> 1
+1 -> 2
+1 -> 3
+3 -> 4
+3 -> 5
+5 -> 6
+6 -> 7
+6 -> 8}"""
+    )
+
+
 # ---------- Variables ----------
 def test_ast_change_variable_by():
     assert (
