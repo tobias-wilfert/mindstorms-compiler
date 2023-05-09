@@ -1,4 +1,5 @@
 # Test to check that the Code is generated correctly
+from pytest import raises
 
 from src.code_generator import CodeGenerator
 from src.json_parser import extract_json, filter_json
@@ -2110,6 +2111,742 @@ def test_code_stop_exit_program():
 
 """
     )
+
+
+# ---------- Sensors ----------
+# - Is color
+# black
+# Verified on Hardware
+def test_code_is_color_black():
+    assert (
+        helper("is_color_black", "Sensors")
+        == f"""{includes}
+# Create your objects here.
+color_sensor_a = ColorSensor('A')
+hub = MSHub()
+
+# Write your program here.
+wait_until(lambda: color_sensor_a.get_color() == 'black')
+hub.light_matrix.write('Y')
+
+"""
+    )
+
+
+# violet
+# Verified on Hardware
+def test_code_is_color_violet():
+    assert (
+        helper("is_color_violet", "Sensors")
+        == f"""{includes}
+# Create your objects here.
+color_sensor_a = ColorSensor('A')
+hub = MSHub()
+
+# Write your program here.
+wait_until(lambda: color_sensor_a.get_color() == 'violet')
+hub.light_matrix.write('Y')
+
+"""
+    )
+
+
+# blue
+# Verified on Hardware
+def test_code_is_color_blue():
+    assert (
+        helper("is_color_blue", "Sensors")
+        == f"""{includes}
+# Create your objects here.
+color_sensor_a = ColorSensor('A')
+hub = MSHub()
+
+# Write your program here.
+wait_until(lambda: color_sensor_a.get_color() == 'blue')
+hub.light_matrix.write('Y')
+
+"""
+    )
+
+
+# light blue
+# Verified on Hardware
+def test_code_is_color_light_blue():
+    assert (
+        helper("is_color_light_blue", "Sensors")
+        == f"""{includes}
+# Create your objects here.
+color_sensor_a = ColorSensor('A')
+hub = MSHub()
+
+# Write your program here.
+wait_until(lambda: color_sensor_a.get_color() == 'cyan')
+hub.light_matrix.write('Y')
+
+"""
+    )
+
+
+# green
+# Verified on Hardware
+def test_code_is_color_green():
+    assert (
+        helper("is_color_green", "Sensors")
+        == f"""{includes}
+# Create your objects here.
+color_sensor_a = ColorSensor('A')
+hub = MSHub()
+
+# Write your program here.
+wait_until(lambda: color_sensor_a.get_color() == 'green')
+hub.light_matrix.write('Y')
+
+"""
+    )
+
+
+# yellow
+# Verified on Hardware
+def test_code_is_color_yellow():
+    assert (
+        helper("is_color_yellow", "Sensors")
+        == f"""{includes}
+# Create your objects here.
+color_sensor_a = ColorSensor('A')
+hub = MSHub()
+
+# Write your program here.
+wait_until(lambda: color_sensor_a.get_color() == 'yellow')
+hub.light_matrix.write('Y')
+
+"""
+    )
+
+
+# red
+# Verified on Hardware
+def test_code_is_color_red():
+    assert (
+        helper("is_color_red", "Sensors")
+        == f"""{includes}
+# Create your objects here.
+color_sensor_a = ColorSensor('A')
+hub = MSHub()
+
+# Write your program here.
+wait_until(lambda: color_sensor_a.get_color() == 'red')
+hub.light_matrix.write('Y')
+
+"""
+    )
+
+
+# white
+# Verified on Hardware
+def test_code_is_color_white():
+    assert (
+        helper("is_color_white", "Sensors")
+        == f"""{includes}
+# Create your objects here.
+color_sensor_a = ColorSensor('A')
+hub = MSHub()
+
+# Write your program here.
+wait_until(lambda: color_sensor_a.get_color() == 'white')
+hub.light_matrix.write('Y')
+
+"""
+    )
+
+
+# no color
+# Verified on Hardware
+def test_code_is_color_no_color():
+    assert (
+        helper("is_color_no_color", "Sensors")
+        == f"""{includes}
+# Create your objects here.
+color_sensor_a = ColorSensor('A')
+hub = MSHub()
+
+# Write your program here.
+wait_until(lambda: color_sensor_a.get_color() == None)
+hub.light_matrix.write('Y')
+
+"""
+    )
+
+
+# - Color
+# Verified on Hardware
+def test_code_color():
+    assert (
+        helper("color", "Sensors")
+        == f"""{includes}
+# Create your objects here.
+hub = MSHub()
+color_sensor_a = ColorSensor('A')
+
+# Write your program here.
+hub.light_matrix.write({{None:-1, 'black':0, 'violet':1, 'blue':3, 'cyan':4, 'green':5, 'yellow': 7, 'red':9, 'white':10}}[color_sensor_a.get_color()])
+
+"""
+    )
+
+
+# - Is reflected light
+# Verified on Hardware
+def test_code_is_reflected_light_base():
+    assert (
+        helper("is_reflected_light_base", "Sensors")
+        == f"""{includes}
+# Create your objects here.
+color_sensor_a = ColorSensor('A')
+hub = MSHub()
+
+# Write your program here.
+wait_until(lambda: color_sensor_a.get_reflected_light() < 50.0)
+hub.light_matrix.write('Y')
+
+"""
+    )
+
+
+# Verified on Hardware
+def test_code_is_reflected_light_equal():
+    assert (
+        helper("is_reflected_light_equal", "Sensors")
+        == f"""{includes}
+# Create your objects here.
+color_sensor_a = ColorSensor('A')
+hub = MSHub()
+
+# Write your program here.
+wait_until(lambda: color_sensor_a.get_reflected_light() == 50.0)
+hub.light_matrix.write('Y')
+
+"""
+    )
+
+
+# Verified on Hardware
+def test_code_is_reflected_light_greater():
+    assert (
+        helper("is_reflected_light_greater", "Sensors")
+        == f"""{includes}
+# Create your objects here.
+color_sensor_a = ColorSensor('A')
+hub = MSHub()
+
+# Write your program here.
+wait_until(lambda: color_sensor_a.get_reflected_light() > 50.0)
+hub.light_matrix.write('Y')
+
+"""
+    )
+
+
+# Verified on Hardware
+def test_code_is_reflected_light_variable():
+    assert (
+        helper("is_reflected_light_variable", "Sensors")
+        == f"""{includes}
+# Create your objects here.
+color_sensor_a = ColorSensor('A')
+hub = MSHub()
+
+# Write your program here.
+my_variable = 75.0
+wait_until(lambda: color_sensor_a.get_reflected_light() < my_variable)
+hub.light_matrix.write('Y')
+
+"""
+    )
+
+
+# - Reflected light
+# Verified on Hardware
+def test_code_reflected_light():
+    assert (
+        helper("reflected_light", "Sensors")
+        == f"""{includes}
+# Create your objects here.
+hub = MSHub()
+color_sensor_a = ColorSensor('A')
+
+# Write your program here.
+hub.light_matrix.write(color_sensor_a.get_reflected_light())
+
+"""
+    )
+
+
+# - Is distance
+# Verified on Hardware
+def test_code_is_distance_base():
+    assert (
+        helper("is_distance_base", "Sensors")
+        == f"""{includes}
+# Create your objects here.
+distance_sensor_a = DistanceSensor('A')
+hub = MSHub()
+
+# Write your program here.
+wait_until(lambda: distance_sensor_a.get_distance_percentage() < 15.0)
+hub.light_matrix.write('Y')
+
+"""
+    )
+
+
+# Verified on Hardware
+def test_code_is_distance_cm():
+    assert (
+        helper("is_distance_cm", "Sensors")
+        == f"""{includes}
+# Create your objects here.
+distance_sensor_a = DistanceSensor('A')
+hub = MSHub()
+
+# Write your program here.
+wait_until(lambda: distance_sensor_a.get_distance_cm() < 15.0)
+hub.light_matrix.write('Y')
+
+"""
+    )
+
+
+# Verified on Hardware
+def test_code_is_distance_inches():
+    assert (
+        helper("is_distance_inches", "Sensors")
+        == f"""{includes}
+# Create your objects here.
+distance_sensor_a = DistanceSensor('A')
+hub = MSHub()
+
+# Write your program here.
+wait_until(lambda: distance_sensor_a.get_distance_inches() < 5.0)
+hub.light_matrix.write('Y')
+
+"""
+    )
+
+
+# Verified on Hardware
+def test_code_is_distance_exactly_at():
+    assert (
+        helper("is_distance_exactly_at", "Sensors")
+        == f"""{includes}
+# Create your objects here.
+distance_sensor_a = DistanceSensor('A')
+hub = MSHub()
+
+# Write your program here.
+wait_until(lambda: distance_sensor_a.get_distance_percentage() == 15.0)
+hub.light_matrix.write('Y')
+
+"""
+    )
+
+
+# Verified on Hardware
+def test_code_is_distance_farther_than():
+    assert (
+        helper("is_distance_farther_than", "Sensors")
+        == f"""{includes}
+# Create your objects here.
+distance_sensor_a = DistanceSensor('A')
+hub = MSHub()
+
+# Write your program here.
+wait_until(lambda: distance_sensor_a.get_distance_percentage() > 15.0)
+hub.light_matrix.write('Y')
+
+"""
+    )
+
+
+# - Distance
+# Verified on Hardware
+def test_code_distance_base():
+    assert (
+        helper("distance_base", "Sensors")
+        == f"""{includes}
+# Create your objects here.
+hub = MSHub()
+distance_sensor_a = DistanceSensor('A')
+
+# Write your program here.
+hub.light_matrix.write(distance_sensor_a.get_distance_percentage())
+
+"""
+    )
+
+
+# Verified on Hardware
+def test_code_distance_cm():
+    assert (
+        helper("distance_cm", "Sensors")
+        == f"""{includes}
+# Create your objects here.
+hub = MSHub()
+distance_sensor_a = DistanceSensor('A')
+
+# Write your program here.
+hub.light_matrix.write(distance_sensor_a.get_distance_cm())
+
+"""
+    )
+
+
+# Verified on Hardware
+def test_code_distance_inches():
+    assert (
+        helper("distance_inches", "Sensors")
+        == f"""{includes}
+# Create your objects here.
+hub = MSHub()
+distance_sensor_a = DistanceSensor('A')
+
+# Write your program here.
+hub.light_matrix.write(distance_sensor_a.get_distance_inches())
+
+"""
+    )
+
+
+# - Gesture
+# Verified on Hardware
+def test_code_gesture():
+    assert (
+        helper("gesture", "Sensors")
+        == f"""{includes}
+# Create your objects here.
+hub = MSHub()
+
+# Write your program here.
+hub.light_matrix.write({{None:-1, 'shaken':0, 'tapped':1, 'falling':3}}[hub.motion_sensor.get_gesture()])
+
+"""
+    )
+
+
+# - Is hub shaken
+# Verified on Hardware
+def test_code_is_hub_shaken_base():
+    assert (
+        helper("is_hub_shaken_base", "Sensors")
+        == f"""{includes}
+# Create your objects here.
+hub = MSHub()
+
+# Write your program here.
+wait_until(lambda: hub.motion_sensor.get_gesture() == 'shaken')
+hub.light_matrix.write('Y')
+
+"""
+    )
+
+
+# Verified on Hardware
+def test_code_is_hub_shaken_falling():
+    assert (
+        helper("is_hub_shaken_falling", "Sensors")
+        == f"""{includes}
+# Create your objects here.
+hub = MSHub()
+
+# Write your program here.
+wait_until(lambda: hub.motion_sensor.get_gesture() == 'falling')
+hub.light_matrix.write('Y')
+
+"""
+    )
+
+
+# Verified on Hardware
+def test_code_is_hub_shaken_tapped():
+    assert (
+        helper("is_hub_shaken_tapped", "Sensors")
+        == f"""{includes}
+# Create your objects here.
+hub = MSHub()
+
+# Write your program here.
+wait_until(lambda: hub.motion_sensor.get_gesture() == 'tapped')
+hub.light_matrix.write('Y')
+
+"""
+    )
+
+
+# - Is hub orientation
+# Verified on Hardware
+def test_code_is_hub_orientation_base():
+    assert (
+        helper("is_hub_orientation_base", "Sensors")
+        == f"""{includes}
+# Create your objects here.
+hub = MSHub()
+
+# Write your program here.
+wait_until(lambda: hub.motion_sensor.get_orientation() == 'front')
+hub.light_matrix.write('Y')
+
+"""
+    )
+
+
+# Verified on Hardware
+def test_code_is_hub_orientation_back():
+    assert (
+        helper("is_hub_orientation_back", "Sensors")
+        == f"""{includes}
+# Create your objects here.
+hub = MSHub()
+
+# Write your program here.
+wait_until(lambda: hub.motion_sensor.get_orientation() == 'back')
+hub.light_matrix.write('Y')
+
+"""
+    )
+
+
+# Verified on Hardware
+def test_code_is_hub_orientation_bottom():
+    assert (
+        helper("is_hub_orientation_bottom", "Sensors")
+        == f"""{includes}
+# Create your objects here.
+hub = MSHub()
+
+# Write your program here.
+wait_until(lambda: hub.motion_sensor.get_orientation() == 'down')
+hub.light_matrix.write('Y')
+
+"""
+    )
+
+
+# Verified on Hardware
+def test_code_is_hub_orientation_left_side():
+    assert (
+        helper("is_hub_orientation_left_side", "Sensors")
+        == f"""{includes}
+# Create your objects here.
+hub = MSHub()
+
+# Write your program here.
+wait_until(lambda: hub.motion_sensor.get_orientation() == 'leftside')
+hub.light_matrix.write('Y')
+
+"""
+    )
+
+
+# Verified on Hardware
+def test_code_is_hub_orientation_right_side():
+    assert (
+        helper("is_hub_orientation_right_side", "Sensors")
+        == f"""{includes}
+# Create your objects here.
+hub = MSHub()
+
+# Write your program here.
+wait_until(lambda: hub.motion_sensor.get_orientation() == 'rightside')
+hub.light_matrix.write('Y')
+
+"""
+    )
+
+
+# Verified on Hardware
+def test_code_is_hub_orientation_top():
+    assert (
+        helper("is_hub_orientation_top", "Sensors")
+        == f"""{includes}
+# Create your objects here.
+hub = MSHub()
+
+# Write your program here.
+wait_until(lambda: hub.motion_sensor.get_orientation() == 'up')
+hub.light_matrix.write('Y')
+
+"""
+    )
+
+
+# - Hub orientation
+# Verified on Hardware
+def test_code_hub_orientation():
+    assert (
+        helper("hub_orientation", "Sensors")
+        == f"""{includes}
+# Create your objects here.
+hub = MSHub()
+
+# Write your program here.
+hub.light_matrix.write({{'front':0, 'back':1, 'up':2, 'down':3, 'leftside':4, 'rightside':5}}[hub.motion_sensor.get_orientation()])
+
+"""
+    )
+
+
+# - Set yaw angle
+# Verified on Hardware
+def test_code_set_yaw_angle():
+    assert (
+        helper("set_yaw_angle", "Sensors")
+        == f"""{includes}
+# Create your objects here.
+hub = MSHub()
+
+# Write your program here.
+hub.motion_sensor.reset_yaw_angle()
+hub.light_matrix.write({{'front':0, 'back':1, 'up':2, 'down':3, 'leftside':4, 'rightside':5}}[hub.motion_sensor.get_orientation()])
+
+"""
+    )
+
+
+# - Is button pressed
+# Verified on Hardware
+def test_code_is_button_pressed_base():
+    assert (
+        helper("is_button_pressed_base", "Sensors")
+        == f"""{includes}
+# Create your objects here.
+hub = MSHub()
+
+# Write your program here.
+wait_until(lambda: hub.left_button.is_pressed())
+hub.light_matrix.write('Y')
+
+"""
+    )
+
+
+# Verified on Hardware
+def test_code_is_button_pressed_released():
+    assert (
+        helper("is_button_pressed_released", "Sensors")
+        == f"""{includes}
+# Create your objects here.
+hub = MSHub()
+
+# Write your program here.
+wait_until(lambda: hub.left_button.is_released())
+hub.light_matrix.write('Y')
+
+"""
+    )
+
+
+# Verified on Hardware
+def test_code_is_button_pressed_right():
+    assert (
+        helper("is_button_pressed_right", "Sensors")
+        == f"""{includes}
+# Create your objects here.
+hub = MSHub()
+
+# Write your program here.
+wait_until(lambda: hub.right_button.is_pressed())
+hub.light_matrix.write('Y')
+
+"""
+    )
+
+
+# - Hub angle
+# Verified on Hardware
+def test_code_hub_angle_base():
+    assert (
+        helper("hub_angle_base", "Sensors")
+        == f"""{includes}
+# Create your objects here.
+hub = MSHub()
+
+# Write your program here.
+hub.light_matrix.write(hub.motion_sensor.get_pitch_angle())
+
+"""
+    )
+
+
+# Verified on Hardware
+def test_code_hub_angle_roll():
+    assert (
+        helper("hub_angle_roll", "Sensors")
+        == f"""{includes}
+# Create your objects here.
+hub = MSHub()
+
+# Write your program here.
+hub.light_matrix.write(hub.motion_sensor.get_roll_angle())
+
+"""
+    )
+
+
+# Verified on Hardware
+def test_code_hub_angle_yaw():
+    assert (
+        helper("hub_angle_yaw", "Sensors")
+        == f"""{includes}
+# Create your objects here.
+hub = MSHub()
+
+# Write your program here.
+hub.light_matrix.write(hub.motion_sensor.get_yaw_angle())
+
+"""
+    )
+
+
+# - Timer
+# Verified on Hardware
+def test_code_timer():
+    assert (
+        helper("timer", "Sensors")
+        == f"""{includes}
+# Create your objects here.
+hub = MSHub()
+timer = Timer()
+
+# Write your program here.
+hub.light_matrix.write(timer.now())
+
+"""
+    )
+
+
+# - Reset timer
+# Verified on Hardware
+def test_code_reset_timer():
+    assert (
+        helper("reset_timer", "Sensors")
+        == f"""{includes}
+# Create your objects here.
+timer = Timer()
+hub = MSHub()
+
+# Write your program here.
+timer.reset()
+hub.light_matrix.write(timer.now())
+
+"""
+    )
+
+
+# - Key pressed
+# Verified on Hardware
+# TODO: Supper funcky that this currently doesn't work in MINDSTORMS, maybe only a mac thing :thinking:
+def test_code_key_pressed():
+    with raises(Exception) as _:
+        helper("key_pressed", "Sensors")
 
 
 # ---------- Operators ----------

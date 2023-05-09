@@ -63,7 +63,33 @@ from src.abstract_syntax_tree.operators import (
     UnaryFunction,
     UnaryMathFunctionNode,
 )
-from src.abstract_syntax_tree.sensors import HubInteraction, HubInteractionNode
+from src.abstract_syntax_tree.sensors import (
+    AngleUnit,
+    ButtonAction,
+    ButtonType,
+    ColorNode,
+    DistanceComparator,
+    DistanceNode,
+    DistanceUnit,
+    GestureNode,
+    HubAngleNode,
+    HubInteraction,
+    HubInteractionNode,
+    HubOrientation,
+    IsButtonPressedNode,
+    IsColorNode,
+    IsDistanceNode,
+    IsKeyPressedNode,
+    IsOrientationNode,
+    IsReflectionNode,
+    OrientationNode,
+    ReflectedLightNode,
+    ReflectionComparator,
+    ResetTimerNode,
+    SensorColor,
+    SetYawAngleNode,
+    TimerNode,
+)
 from src.abstract_syntax_tree.variables import (
     AddItemToListNode,
     ChangeVariableByNode,
@@ -234,7 +260,36 @@ class Visitor:
             return self.visit_stop_other_stacks(node)
         elif opcode == "flippercontrol_stop":
             return self.visit_stop(node)
-
+        elif opcode == "flippersensors_color":
+            return self.visit_color(node)
+        elif opcode == "flippersensors_isColor":
+            return self.visit_is_color(node)
+        elif opcode == "flippersensors_isReflectivity":
+            return self.visit_is_reflectivity(node)
+        elif opcode == "flippersensors_reflectivity":
+            return self.visit_reflectivity(node)
+        elif opcode == "flippersensors_isDistance":
+            return self.visit_is_distance(node)
+        elif opcode == "flippersensors_distance":
+            return self.visit_distance(node)
+        elif opcode == "flippersensors_motion":
+            return self.visit_gesture(node)
+        elif opcode == "flippersensors_isorientation":
+            return self.visit_is_orientation(node)
+        elif opcode == "flippersensors_orientation":
+            return self.visit_orientation(node)
+        elif opcode == "flippersensors_resetYaw":
+            return self.visit_reset_yaw(node)
+        elif opcode == "flippersensors_buttonIsPressed":
+            return self.visit_is_button_pressed(node)
+        elif opcode == "flippersensors_orientationAxis":
+            return self.visit_hub_angle(node)
+        elif opcode == "flippersensors_timer":
+            return self.visit_hub_timer(node)
+        elif opcode == "flippersensors_resetTimer":
+            return self.visit_hub_reset_timer(node)
+        elif opcode == "sensing_keypressed":
+            return self.visit_key_pressed(node)
         elif opcode == "flippersensors_ismotion":
             return self.visit_hub_is_shaken(node)
         elif opcode == "operator_add":
@@ -1129,3 +1184,148 @@ class Visitor:
         """
         interaction = HubInteraction[node["fields"]["MOTION"][0].upper()]
         return HubInteractionNode(interaction)
+
+    def visit_is_color(self, node) -> IsColorNode:
+        """Constructs the AST representation of the IsColor node.
+
+        :param node: The Node representation.
+        :return: The AST representation.
+        """
+        port = self.visit_run_motor_for_duration_port(node)
+        color_index = int(
+            self.cst[node["inputs"]["VALUE"][1]]["fields"][
+                "field_flippersensors_color-selector"
+            ][0]
+        )
+        color = SensorColor.at(color_index)
+        return IsColorNode(port, color)
+
+    def visit_color(self, node) -> ColorNode:
+        """Constructs the AST representation of the Color node.
+
+        :param node: The Node representation.
+        :return: The AST representation.
+        """
+        port = self.visit_run_motor_for_duration_port(node)
+        return ColorNode(port)
+
+    def visit_is_reflectivity(self, node) -> IsReflectionNode:
+        """Constructs the AST representation of the IsReflection node.
+
+        :param node: The Node representation.
+        :return: The AST representation.
+        """
+        port = self.visit_run_motor_for_duration_port(node)
+        comparator = ReflectionComparator.parse(node["fields"]["COMPARATOR"][0])
+        value = self.visit_input(node["inputs"]["VALUE"][1])
+        return IsReflectionNode(port, comparator, value)
+
+    def visit_reflectivity(self, node) -> ReflectedLightNode:
+        """Constructs the AST representation of the ReflectedLight node.
+
+        :param node: The Node representation.
+        :return: The AST representation.
+        """
+        port = self.visit_run_motor_for_duration_port(node)
+        return ReflectedLightNode(port)
+
+    def visit_is_distance(self, node) -> IsDistanceNode:
+        """Constructs the AST representation of the IsDistance node.
+
+        :param node: The Node representation.
+        :return: The AST representation.
+        """
+        port = self.visit_run_motor_for_duration_port(node)
+        comparator = DistanceComparator.parse(node["fields"]["COMPARATOR"][0])
+        value = self.visit_input(node["inputs"]["VALUE"][1])
+        unit = DistanceUnit.parse(node["fields"]["UNIT"][0])
+        return IsDistanceNode(port, comparator, value, unit)
+
+    def visit_distance(self, node) -> DistanceNode:
+        """Constructs the AST representation of the Distance node.
+
+        :param node: The Node representation.
+        :return: The AST representation.
+        """
+        port = self.visit_run_motor_for_duration_port(node)
+        unit = DistanceUnit.parse(node["fields"]["UNIT"][0])
+        return DistanceNode(port, unit)
+
+    def visit_gesture(self, node) -> GestureNode:
+        """Constructs the AST representation of the Gesture node.
+
+        :param node: The Node representation.
+        :return: The AST representation.
+        """
+        return GestureNode()
+
+    def visit_is_orientation(self, node) -> IsOrientationNode:
+        """Constructs the AST representation of the IsOrientation node.
+
+        :param node: The Node representation.
+        :return: The AST representation.
+        """
+        comparator = HubOrientation[node["fields"]["ORIENTATION"][0].upper()]
+        return IsOrientationNode(comparator)
+
+    def visit_orientation(self, node) -> OrientationNode:
+        """Constructs the AST representation of the Orientation node.
+
+        :param node: The Node representation.
+        :return: The AST representation.
+        """
+        return OrientationNode()
+
+    def visit_reset_yaw(self, node) -> SetYawAngleNode:
+        """Constructs the AST representation of the ResetYaw node.
+
+        :param node: The Node representation.
+        :return: The AST representation.
+        """
+        next_node = self.visit_node(node["next"])
+        return SetYawAngleNode(next_node)
+
+    def visit_is_button_pressed(self, node) -> IsButtonPressedNode:
+        """Constructs the AST representation of the IsButtonPressed node.
+
+        :param node: The Node representation.
+        :return: The AST representation.
+        """
+        button = ButtonType[node["fields"]["BUTTON"][0].upper()]
+        action = ButtonAction[node["fields"]["EVENT"][0].upper()]
+        return IsButtonPressedNode(button, action)
+
+    def visit_hub_angle(self, node) -> HubAngleNode:
+        """Constructs the AST representation of the HubAngle node.
+
+        :param node: The Node representation.
+        :return: The AST representation.
+        """
+        unit = AngleUnit[node["fields"]["AXIS"][0].upper()]
+        return HubAngleNode(unit)
+
+    def visit_hub_timer(self, node) -> TimerNode:
+        """Constructs the AST representation of the HubTimer node.
+
+        :param node: The Node representation.
+        :return: The AST representation.
+        """
+        return TimerNode()
+
+    def visit_hub_reset_timer(self, node) -> ResetTimerNode:
+        """Constructs the AST representation of the HubResetTimer node.
+
+        :param node: The Node representation.
+        :return: The AST representation.
+        """
+        next_node = self.visit_node(node["next"])
+        return ResetTimerNode(next_node)
+
+    def visit_key_pressed(self, node) -> IsKeyPressedNode:
+        """Constructs the AST representation of the IsKeyPressed node.
+
+        :param node: The Node representation.
+        :return: The AST representation.
+        """
+        key = self.cst[node["inputs"]["KEY_OPTION"][1]]["fields"]["KEY_OPTION"][0]
+        return IsKeyPressedNode(key)

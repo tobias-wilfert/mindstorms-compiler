@@ -1904,6 +1904,756 @@ def test_ast_stop_exit_program():
     )
 
 
+# ---------- Sensors ----------
+# - Is color
+# black
+def test_ast_is_color_black():
+    assert (
+        helper("is_color_black", "Sensors")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="WaitUntilNode"]
+2 [label="IsColorNode(color: 'SensorColor.BLACK')"]
+3 [label="ListLiteralNode('['A']')"]
+4 [label="WriteNode"]
+5 [label="LiteralNode('Y')"]
+0 -> 1
+1 -> 2
+2 -> 3
+1 -> 4
+4 -> 5}"""
+    )
+
+
+# violet
+def test_ast_is_color_violet():
+    assert (
+        helper("is_color_violet", "Sensors")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="WaitUntilNode"]
+2 [label="IsColorNode(color: 'SensorColor.VIOLET')"]
+3 [label="ListLiteralNode('['A']')"]
+4 [label="WriteNode"]
+5 [label="LiteralNode('Y')"]
+0 -> 1
+1 -> 2
+2 -> 3
+1 -> 4
+4 -> 5}"""
+    )
+
+
+# blue
+def test_ast_is_color_blue():
+    assert (
+        helper("is_color_blue", "Sensors")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="WaitUntilNode"]
+2 [label="IsColorNode(color: 'SensorColor.BLUE')"]
+3 [label="ListLiteralNode('['A']')"]
+4 [label="WriteNode"]
+5 [label="LiteralNode('Y')"]
+0 -> 1
+1 -> 2
+2 -> 3
+1 -> 4
+4 -> 5}"""
+    )
+
+
+# light blue
+def test_ast_is_color_light_blue():
+    assert (
+        helper("is_color_light_blue", "Sensors")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="WaitUntilNode"]
+2 [label="IsColorNode(color: 'SensorColor.CYAN')"]
+3 [label="ListLiteralNode('['A']')"]
+4 [label="WriteNode"]
+5 [label="LiteralNode('Y')"]
+0 -> 1
+1 -> 2
+2 -> 3
+1 -> 4
+4 -> 5}"""
+    )
+
+
+# green
+def test_ast_is_color_green():
+    assert (
+        helper("is_color_green", "Sensors")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="WaitUntilNode"]
+2 [label="IsColorNode(color: 'SensorColor.GREEN')"]
+3 [label="ListLiteralNode('['A']')"]
+4 [label="WriteNode"]
+5 [label="LiteralNode('Y')"]
+0 -> 1
+1 -> 2
+2 -> 3
+1 -> 4
+4 -> 5}"""
+    )
+
+
+# yellow
+def test_ast_is_color_yellow():
+    assert (
+        helper("is_color_yellow", "Sensors")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="WaitUntilNode"]
+2 [label="IsColorNode(color: 'SensorColor.YELLOW')"]
+3 [label="ListLiteralNode('['A']')"]
+4 [label="WriteNode"]
+5 [label="LiteralNode('Y')"]
+0 -> 1
+1 -> 2
+2 -> 3
+1 -> 4
+4 -> 5}"""
+    )
+
+
+# red
+def test_ast_is_color_red():
+    assert (
+        helper("is_color_red", "Sensors")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="WaitUntilNode"]
+2 [label="IsColorNode(color: 'SensorColor.RED')"]
+3 [label="ListLiteralNode('['A']')"]
+4 [label="WriteNode"]
+5 [label="LiteralNode('Y')"]
+0 -> 1
+1 -> 2
+2 -> 3
+1 -> 4
+4 -> 5}"""
+    )
+
+
+# white
+def test_ast_is_color_white():
+    assert (
+        helper("is_color_white", "Sensors")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="WaitUntilNode"]
+2 [label="IsColorNode(color: 'SensorColor.WHITE')"]
+3 [label="ListLiteralNode('['A']')"]
+4 [label="WriteNode"]
+5 [label="LiteralNode('Y')"]
+0 -> 1
+1 -> 2
+2 -> 3
+1 -> 4
+4 -> 5}"""
+    )
+
+
+# no color
+def test_ast_is_color_no_color():
+    assert (
+        helper("is_color_no_color", "Sensors")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="WaitUntilNode"]
+2 [label="IsColorNode(color: 'SensorColor.NONE')"]
+3 [label="ListLiteralNode('['A']')"]
+4 [label="WriteNode"]
+5 [label="LiteralNode('Y')"]
+0 -> 1
+1 -> 2
+2 -> 3
+1 -> 4
+4 -> 5}"""
+    )
+
+
+# - Color
+def test_ast_color():
+    assert (
+        helper("color", "Sensors")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="WriteNode"]
+2 [label="ColorNode"]
+3 [label="ListLiteralNode('['A']')"]
+0 -> 1
+1 -> 2
+2 -> 3}"""
+    )
+
+
+# - Is reflected light
+def test_ast_is_reflected_light_base():
+    assert (
+        helper("is_reflected_light_base", "Sensors")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="WaitUntilNode"]
+2 [label="IsReflectionNode(reflection: 'ReflectionComparator.LESS')"]
+3 [label="ListLiteralNode('['A']')"]
+4 [label="NumericalNode(50.0)"]
+5 [label="WriteNode"]
+6 [label="LiteralNode('Y')"]
+0 -> 1
+1 -> 2
+2 -> 3
+2 -> 4
+1 -> 5
+5 -> 6}"""
+    )
+
+
+def test_ast_is_reflected_light_equal():
+    assert (
+        helper("is_reflected_light_equal", "Sensors")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="WaitUntilNode"]
+2 [label="IsReflectionNode(reflection: 'ReflectionComparator.EQUAL')"]
+3 [label="ListLiteralNode('['A']')"]
+4 [label="NumericalNode(50.0)"]
+5 [label="WriteNode"]
+6 [label="LiteralNode('Y')"]
+0 -> 1
+1 -> 2
+2 -> 3
+2 -> 4
+1 -> 5
+5 -> 6}"""
+    )
+
+
+def test_ast_is_reflected_light_greater():
+    assert (
+        helper("is_reflected_light_greater", "Sensors")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="WaitUntilNode"]
+2 [label="IsReflectionNode(reflection: 'ReflectionComparator.GREATER')"]
+3 [label="ListLiteralNode('['A']')"]
+4 [label="NumericalNode(50.0)"]
+5 [label="WriteNode"]
+6 [label="LiteralNode('Y')"]
+0 -> 1
+1 -> 2
+2 -> 3
+2 -> 4
+1 -> 5
+5 -> 6}"""
+    )
+
+
+def test_ast_is_reflected_light_variable():
+    assert (
+        helper("is_reflected_light_variable", "Sensors")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="SetVariableToNode(variable:'my_variable')"]
+2 [label="NumericalNode(75.0)"]
+3 [label="WaitUntilNode"]
+4 [label="IsReflectionNode(reflection: 'ReflectionComparator.LESS')"]
+5 [label="ListLiteralNode('['A']')"]
+6 [label="VariableNode(name:'my_variable')"]
+7 [label="WriteNode"]
+8 [label="LiteralNode('Y')"]
+0 -> 1
+1 -> 2
+1 -> 3
+3 -> 4
+4 -> 5
+4 -> 6
+3 -> 7
+7 -> 8}"""
+    )
+
+
+# - Reflected light
+def test_ast_reflected_light():
+    assert (
+        helper("reflected_light", "Sensors")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="WriteNode"]
+2 [label="ReflectedLightNode"]
+3 [label="ListLiteralNode('['A']')"]
+0 -> 1
+1 -> 2
+2 -> 3}"""
+    )
+
+
+# - Is distance
+def test_ast_is_distance_base():
+    assert (
+        helper("is_distance_base", "Sensors")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="WaitUntilNode"]
+2 [label="IsDistanceNode(distance: 'DistanceComparator.LESS', unit: 'DistanceUnit.PERCENT')"]
+3 [label="ListLiteralNode('['A']')"]
+4 [label="NumericalNode(15.0)"]
+5 [label="WriteNode"]
+6 [label="LiteralNode('Y')"]
+0 -> 1
+1 -> 2
+2 -> 3
+2 -> 4
+1 -> 5
+5 -> 6}"""
+    )
+
+
+def test_ast_is_distance_cm():
+    assert (
+        helper("is_distance_cm", "Sensors")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="WaitUntilNode"]
+2 [label="IsDistanceNode(distance: 'DistanceComparator.LESS', unit: 'DistanceUnit.CM')"]
+3 [label="ListLiteralNode('['A']')"]
+4 [label="NumericalNode(15.0)"]
+5 [label="WriteNode"]
+6 [label="LiteralNode('Y')"]
+0 -> 1
+1 -> 2
+2 -> 3
+2 -> 4
+1 -> 5
+5 -> 6}"""
+    )
+
+
+def test_ast_is_distance_inches():
+    assert (
+        helper("is_distance_inches", "Sensors")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="WaitUntilNode"]
+2 [label="IsDistanceNode(distance: 'DistanceComparator.LESS', unit: 'DistanceUnit.INCHES')"]
+3 [label="ListLiteralNode('['A']')"]
+4 [label="NumericalNode(5.0)"]
+5 [label="WriteNode"]
+6 [label="LiteralNode('Y')"]
+0 -> 1
+1 -> 2
+2 -> 3
+2 -> 4
+1 -> 5
+5 -> 6}"""
+    )
+
+
+def test_ast_is_distance_exactly_at():
+    assert (
+        helper("is_distance_exactly_at", "Sensors")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="WaitUntilNode"]
+2 [label="IsDistanceNode(distance: 'DistanceComparator.EQUAL', unit: 'DistanceUnit.PERCENT')"]
+3 [label="ListLiteralNode('['A']')"]
+4 [label="NumericalNode(15.0)"]
+5 [label="WriteNode"]
+6 [label="LiteralNode('Y')"]
+0 -> 1
+1 -> 2
+2 -> 3
+2 -> 4
+1 -> 5
+5 -> 6}"""
+    )
+
+
+def test_ast_is_distance_farther_than():
+    assert (
+        helper("is_distance_farther_than", "Sensors")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="WaitUntilNode"]
+2 [label="IsDistanceNode(distance: 'DistanceComparator.GREATER', unit: 'DistanceUnit.PERCENT')"]
+3 [label="ListLiteralNode('['A']')"]
+4 [label="NumericalNode(15.0)"]
+5 [label="WriteNode"]
+6 [label="LiteralNode('Y')"]
+0 -> 1
+1 -> 2
+2 -> 3
+2 -> 4
+1 -> 5
+5 -> 6}"""
+    )
+
+
+# - Distance
+def test_ast_distance_base():
+    assert (
+        helper("distance_base", "Sensors")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="WriteNode"]
+2 [label="DistanceNode(unit: 'DistanceUnit.PERCENT')"]
+3 [label="ListLiteralNode('['A']')"]
+0 -> 1
+1 -> 2
+2 -> 3}"""
+    )
+
+
+def test_ast_distance_cm():
+    assert (
+        helper("distance_cm", "Sensors")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="WriteNode"]
+2 [label="DistanceNode(unit: 'DistanceUnit.CM')"]
+3 [label="ListLiteralNode('['A']')"]
+0 -> 1
+1 -> 2
+2 -> 3}"""
+    )
+
+
+def test_ast_distance_inches():
+    assert (
+        helper("distance_inches", "Sensors")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="WriteNode"]
+2 [label="DistanceNode(unit: 'DistanceUnit.INCHES')"]
+3 [label="ListLiteralNode('['A']')"]
+0 -> 1
+1 -> 2
+2 -> 3}"""
+    )
+
+
+# - Gesture
+def test_ast_gesture():
+    assert (
+        helper("gesture", "Sensors")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="WriteNode"]
+2 [label="GestureNode"]
+0 -> 1
+1 -> 2}"""
+    )
+
+
+# - Is hub shaken
+def test_ast_is_hub_shaken_base():
+    assert (
+        helper("is_hub_shaken_base", "Sensors")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="WaitUntilNode"]
+2 [label="HubInteractionNode(interaction: 'HubInteraction.SHAKE')"]
+3 [label="WriteNode"]
+4 [label="LiteralNode('Y')"]
+0 -> 1
+1 -> 2
+1 -> 3
+3 -> 4}"""
+    )
+
+
+def test_ast_is_hub_shaken_falling():
+    assert (
+        helper("is_hub_shaken_falling", "Sensors")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="WaitUntilNode"]
+2 [label="HubInteractionNode(interaction: 'HubInteraction.FREEFALL')"]
+3 [label="WriteNode"]
+4 [label="LiteralNode('Y')"]
+0 -> 1
+1 -> 2
+1 -> 3
+3 -> 4}"""
+    )
+
+
+def test_ast_is_hub_shaken_tapped():
+    assert (
+        helper("is_hub_shaken_tapped", "Sensors")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="WaitUntilNode"]
+2 [label="HubInteractionNode(interaction: 'HubInteraction.TAPPED')"]
+3 [label="WriteNode"]
+4 [label="LiteralNode('Y')"]
+0 -> 1
+1 -> 2
+1 -> 3
+3 -> 4}"""
+    )
+
+
+# - Is hub orientation
+def test_ast_is_hub_orientation_base():
+    assert (
+        helper("is_hub_orientation_base", "Sensors")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="WaitUntilNode"]
+2 [label="IsOrientationNode(orientation: 'HubOrientation.FRONT')"]
+3 [label="WriteNode"]
+4 [label="LiteralNode('Y')"]
+0 -> 1
+1 -> 2
+1 -> 3
+3 -> 4}"""
+    )
+
+
+def test_ast_is_hub_orientation_back():
+    assert (
+        helper("is_hub_orientation_back", "Sensors")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="WaitUntilNode"]
+2 [label="IsOrientationNode(orientation: 'HubOrientation.BACK')"]
+3 [label="WriteNode"]
+4 [label="LiteralNode('Y')"]
+0 -> 1
+1 -> 2
+1 -> 3
+3 -> 4}"""
+    )
+
+
+def test_ast_is_hub_orientation_bottom():
+    assert (
+        helper("is_hub_orientation_bottom", "Sensors")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="WaitUntilNode"]
+2 [label="IsOrientationNode(orientation: 'HubOrientation.DOWN')"]
+3 [label="WriteNode"]
+4 [label="LiteralNode('Y')"]
+0 -> 1
+1 -> 2
+1 -> 3
+3 -> 4}"""
+    )
+
+
+def test_ast_is_hub_orientation_left_side():
+    assert (
+        helper("is_hub_orientation_left_side", "Sensors")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="WaitUntilNode"]
+2 [label="IsOrientationNode(orientation: 'HubOrientation.LEFTSIDE')"]
+3 [label="WriteNode"]
+4 [label="LiteralNode('Y')"]
+0 -> 1
+1 -> 2
+1 -> 3
+3 -> 4}"""
+    )
+
+
+def test_ast_is_hub_orientation_right_side():
+    assert (
+        helper("is_hub_orientation_right_side", "Sensors")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="WaitUntilNode"]
+2 [label="IsOrientationNode(orientation: 'HubOrientation.RIGHTSIDE')"]
+3 [label="WriteNode"]
+4 [label="LiteralNode('Y')"]
+0 -> 1
+1 -> 2
+1 -> 3
+3 -> 4}"""
+    )
+
+
+def test_ast_is_hub_orientation_top():
+    assert (
+        helper("is_hub_orientation_top", "Sensors")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="WaitUntilNode"]
+2 [label="IsOrientationNode(orientation: 'HubOrientation.UP')"]
+3 [label="WriteNode"]
+4 [label="LiteralNode('Y')"]
+0 -> 1
+1 -> 2
+1 -> 3
+3 -> 4}"""
+    )
+
+
+# - Hub orientation
+def test_ast_hub_orientation():
+    assert (
+        helper("hub_orientation", "Sensors")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="WriteNode"]
+2 [label="OrientationNode"]
+0 -> 1
+1 -> 2}"""
+    )
+
+
+# - Set yaw angle
+def test_ast_set_yaw_angle():
+    assert (
+        helper("set_yaw_angle", "Sensors")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="SetYawAngleNode"]
+2 [label="WriteNode"]
+3 [label="OrientationNode"]
+0 -> 1
+1 -> 2
+2 -> 3}"""
+    )
+
+
+# - Is button pressed
+def test_ast_is_button_pressed_base():
+    assert (
+        helper("is_button_pressed_base", "Sensors")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="WaitUntilNode"]
+2 [label="IsButtonPressedNode(button: 'ButtonType.LEFT', action: 'ButtonAction.PRESSED')"]
+3 [label="WriteNode"]
+4 [label="LiteralNode('Y')"]
+0 -> 1
+1 -> 2
+1 -> 3
+3 -> 4}"""
+    )
+
+
+def test_ast_is_button_pressed_released():
+    assert (
+        helper("is_button_pressed_released", "Sensors")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="WaitUntilNode"]
+2 [label="IsButtonPressedNode(button: 'ButtonType.LEFT', action: 'ButtonAction.RELEASED')"]
+3 [label="WriteNode"]
+4 [label="LiteralNode('Y')"]
+0 -> 1
+1 -> 2
+1 -> 3
+3 -> 4}"""
+    )
+
+
+def test_ast_is_button_pressed_right():
+    assert (
+        helper("is_button_pressed_right", "Sensors")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="WaitUntilNode"]
+2 [label="IsButtonPressedNode(button: 'ButtonType.RIGHT', action: 'ButtonAction.PRESSED')"]
+3 [label="WriteNode"]
+4 [label="LiteralNode('Y')"]
+0 -> 1
+1 -> 2
+1 -> 3
+3 -> 4}"""
+    )
+
+
+# - Hub angle
+def test_ast_hub_angle_base():
+    assert (
+        helper("hub_angle_base", "Sensors")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="WriteNode"]
+2 [label="HubAngleNode(unit: 'AngleUnit.PITCH')"]
+0 -> 1
+1 -> 2}"""
+    )
+
+
+def test_ast_hub_angle_roll():
+    assert (
+        helper("hub_angle_roll", "Sensors")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="WriteNode"]
+2 [label="HubAngleNode(unit: 'AngleUnit.ROLL')"]
+0 -> 1
+1 -> 2}"""
+    )
+
+
+def test_ast_hub_angle_yaw():
+    assert (
+        helper("hub_angle_yaw", "Sensors")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="WriteNode"]
+2 [label="HubAngleNode(unit: 'AngleUnit.YAW')"]
+0 -> 1
+1 -> 2}"""
+    )
+
+
+# - Timer
+def test_ast_timer():
+    assert (
+        helper("timer", "Sensors")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="WriteNode"]
+2 [label="TimerNode"]
+0 -> 1
+1 -> 2}"""
+    )
+
+
+# - Reset timer
+def test_ast_reset_timer():
+    assert (
+        helper("reset_timer", "Sensors")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="ResetTimerNode"]
+2 [label="WriteNode"]
+3 [label="TimerNode"]
+0 -> 1
+1 -> 2
+2 -> 3}"""
+    )
+
+
+# - Key pressed
+def test_ast_key_pressed():
+    assert (
+        helper("key_pressed", "Sensors")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="WaitUntilNode"]
+2 [label="IsKeyPressedNode(key: 'space')"]
+3 [label="WriteNode"]
+4 [label="LiteralNode('Y')"]
+0 -> 1
+1 -> 2
+1 -> 3
+3 -> 4}"""
+    )
+
+
 # ---------- Operators ----------
 def test_ast_arithmetic():
     assert (

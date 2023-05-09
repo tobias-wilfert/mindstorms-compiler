@@ -93,12 +93,54 @@ motor_pair.move(10.0, 'cm')
 | Set Center Button Light | 8 |
 | Light up Distance Sensor | 3 | 
 | **Control** |  |
+| Wait For Seconds   | 2  |
+| Wait Until  | 1  |
+| Repeat Loop   | 2  |
+| Forever   | 1  |
+| Repeat Until   | 1  |
 | If Then   | 1  |
+| If Then Else   | 1  |
+| Do This And This   | -  |
+| Stop Other Stacks   | -  |
+| Stop | -  |
+| **Sensors** |  |
+| Is Color | 9  |
+| Color | 1 |
+| Is reflected Light | 4 |
+| Reflected Light | 1 |
+| Is Distance | 5 |
+| Distance | 3 |
+| Gesture | 1 |
+| Is Shaken | 3 |
+| Is Hub Orientation | 9 |
+| Hub Orientation | 1 |
+| Set Yaw Angle | 1 |
+| Is Button Pressed | 3 |
+| Hub Angle | 3 |
+| Timer | 1 |
+| Reset Timer | 1 |
+| Key Pressed | - |
 | **Operators** |  |
+| Pick Random Number   | 2  |
 | Plus   | 3 |
 | Minus   | 3  |
 | Multiply   | 3  |
 | Divide   | 3  |
+| Less Than   | 2  |
+| Equal   | 2  |
+| Greater Than   | 2  |
+| And   | 1 |
+| Or   | 1 |
+| Not   | 1 |
+| Is Between   | 2 |
+| Join String   | 2 |
+| Letter Of String   | 2 |
+| Length Of String   | 2 |
+| String Contains | 2 |
+| Mod   | 2 |
+| Round   | 2 |
+| Binary Math Function | 7 |
+| Unary Math Function | 14 |
 | **Variables** |  |
 | Variable   | 2  |
 | Set Variable To   | 2  |

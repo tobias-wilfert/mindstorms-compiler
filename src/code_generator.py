@@ -54,7 +54,24 @@ from src.abstract_syntax_tree.operators import (
     StringContainsNode,
     UnaryMathFunctionNode,
 )
-from src.abstract_syntax_tree.sensors import HubInteractionNode
+from src.abstract_syntax_tree.sensors import (
+    ColorNode,
+    DistanceNode,
+    GestureNode,
+    HubAngleNode,
+    HubInteractionNode,
+    IsButtonPressedNode,
+    IsColorNode,
+    IsDistanceNode,
+    IsKeyPressedNode,
+    IsOrientationNode,
+    IsReflectionNode,
+    OrientationNode,
+    ReflectedLightNode,
+    ResetTimerNode,
+    SetYawAngleNode,
+    TimerNode,
+)
 from src.abstract_syntax_tree.variables import (
     AddItemToListNode,
     ChangeVariableByNode,
@@ -249,6 +266,36 @@ import math
             return self.visit_repeat_until_node(node)
         elif isinstance(node, IfElseNode):
             return self.visit_if_else_node(node)
+        elif isinstance(node, IsColorNode):
+            return self.visit_is_color_node(node)
+        elif isinstance(node, ColorNode):
+            return self.visit_color_node(node)
+        elif isinstance(node, IsReflectionNode):
+            return self.visit_is_reflection_node(node)
+        elif isinstance(node, ReflectedLightNode):
+            return self.visit_reflected_light_node(node)
+        elif isinstance(node, IsDistanceNode):
+            return self.visit_is_distance_node(node)
+        elif isinstance(node, DistanceNode):
+            return self.visit_distance_node(node)
+        elif isinstance(node, GestureNode):
+            return self.visit_gesture_node(node)
+        elif isinstance(node, IsOrientationNode):
+            return self.visit_is_orientation_node(node)
+        elif isinstance(node, OrientationNode):
+            return self.visit_orientation_node(node)
+        elif isinstance(node, SetYawAngleNode):
+            return self.visit_set_yaw_angle_node(node)
+        elif isinstance(node, IsButtonPressedNode):
+            return self.visit_is_button_pressed_node(node)
+        elif isinstance(node, HubAngleNode):
+            return self.visit_hub_angle_node(node)
+        elif isinstance(node, TimerNode):
+            return self.visit_timer_node(node)
+        elif isinstance(node, ResetTimerNode):
+            return self.visit_reset_timer_node(node)
+        elif isinstance(node, IsKeyPressedNode):
+            return self.visit_is_key_pressed_node(node)
         else:
             raise NotImplementedError(f"Currently no code can be generated for {node}")
 
@@ -850,3 +897,73 @@ def _turn_on_pattern(pattern, brightness=100):
         self.visit(node.else_body)
         self.indentation = self.indentation[:-1]
         self.visit(node.next)
+
+    def visit_is_color_node(self, node: IsColorNode):
+        variable = f"color_sensor_{node.port.value[0].lower()}"
+        self.generate_object(variable, "ColorSensor", f"'{node.port.value[0]}'")
+        return f"{variable}.get_color() == {node.color.code()}"
+
+    def visit_color_node(self, node: ColorNode):
+        variable = f"color_sensor_{node.port.value[0].lower()}"
+        self.generate_object(variable, "ColorSensor", f"'{node.port.value[0]}'")
+        mapping = "{None:-1, 'black':0, 'violet':1, 'blue':3, 'cyan':4, 'green':5, 'yellow': 7, 'red':9, 'white':10}"
+        return f"{mapping}[{variable}.get_color()]"
+
+    def visit_is_reflection_node(self, node: IsReflectionNode):
+        variable = f"color_sensor_{node.port.value[0].lower()}"
+        self.generate_object(variable, "ColorSensor", f"'{node.port.value[0]}'")
+        return f"{variable}.get_reflected_light() {node.comparator.value} {self.visit(node.reflection)}"
+
+    def visit_reflected_light_node(self, node: ReflectedLightNode):
+        variable = f"color_sensor_{node.port.value[0].lower()}"
+        self.generate_object(variable, "ColorSensor", f"'{node.port.value[0]}'")
+        return f"{variable}.get_reflected_light()"
+
+    def visit_is_distance_node(self, node: IsDistanceNode):
+        variable = f"distance_sensor_{node.port.value[0].lower()}"
+        self.generate_object(variable, "DistanceSensor", f"'{node.port.value[0]}'")
+        return f"{variable}.get_distance_{node.unit.code()}() {node.comparator.value} {self.visit(node.distance)}"
+
+    def visit_distance_node(self, node: DistanceNode):
+        variable = f"distance_sensor_{node.port.value[0].lower()}"
+        self.generate_object(variable, "DistanceSensor", f"'{node.port.value[0]}'")
+        return f"{variable}.get_distance_{node.unit.code()}()"
+
+    def visit_gesture_node(self, node: GestureNode):
+        self.generate_object("hub", "MSHub", "")
+        return "{None:-1, 'shaken':0, 'tapped':1, 'falling':3}[hub.motion_sensor.get_gesture()]"
+
+    def visit_is_orientation_node(self, node: IsOrientationNode):
+        self.generate_object("hub", "MSHub", "")
+        return f"hub.motion_sensor.get_orientation() == '{node.orientation.value}'"
+
+    def visit_orientation_node(self, node: OrientationNode):
+        self.generate_object("hub", "MSHub", "")
+        return "{'front':0, 'back':1, 'up':2, 'down':3, 'leftside':4, 'rightside':5}[hub.motion_sensor.get_orientation()]"
+
+    def visit_set_yaw_angle_node(self, node: SetYawAngleNode):
+        self.generate_object("hub", "MSHub", "")
+        self.program_code += f"{self.indentation}hub.motion_sensor.reset_yaw_angle()\n"
+        self.visit(node.next)
+
+    def visit_is_button_pressed_node(self, node: IsButtonPressedNode):
+        self.generate_object("hub", "MSHub", "")
+        return f"hub.{node.button.value}_button.is_{node.action.value}()"
+
+    def visit_hub_angle_node(self, node: HubAngleNode):
+        self.generate_object("hub", "MSHub", "")
+        return f"hub.motion_sensor.get_{node.unit.value}_angle()"
+
+    def visit_timer_node(self, node: TimerNode):
+        self.generate_object("timer", "Timer", "")
+        return "timer.now()"
+
+    def visit_reset_timer_node(self, node: ResetTimerNode):
+        self.generate_object("timer", "Timer", "")
+        self.program_code += f"{self.indentation}timer.reset()\n"
+        self.visit(node.next)
+
+    def visit_is_key_pressed_node(self, node: IsKeyPressedNode):
+        raise DeprecationWarning(
+            "Note that key pressed is not currently supported by MINDSTORMS itself."
+        )
