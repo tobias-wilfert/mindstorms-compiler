@@ -1,3 +1,5 @@
+from json import loads
+
 from src.abstract_syntax_tree import AST, CommentNode, LiteralNode, Node, NumericalNode
 from src.abstract_syntax_tree.control import (
     ForeverLoopNode,
@@ -90,6 +92,16 @@ from src.abstract_syntax_tree.sensors import (
     SetYawAngleNode,
     TimerNode,
 )
+from src.abstract_syntax_tree.sound import (
+    ChangeVolumeNode,
+    PlayBeepNode,
+    PlaySoundUntilDoneNode,
+    SetVolumeNode,
+    StartBeepNode,
+    StartSoundNode,
+    StopBeepNode,
+    VolumeNode,
+)
 from src.abstract_syntax_tree.variables import (
     AddItemToListNode,
     ChangeVariableByNode,
@@ -116,9 +128,8 @@ class Visitor:
     best_effort: bool  # If true then the visitor will try to continue even if it encounters a block it can't translate.
     # A comment will be added to the AST to indicate that this has happened.
 
-    def __init__(self, best_effort=True) -> None:
+    def __init__(self, best_effort) -> None:
         self.best_effort = best_effort
-        pass
 
     def visit(self, cst: dict) -> AST:
         # TODO: Need to do something with the variables, list, broadcast and extensions
@@ -153,9 +164,7 @@ class Visitor:
         """
         if not node:  # There is no node return None
             return None
-        node = self.cst[
-            node
-        ]  # TODO: This can and will now break if the thing being references is a variable :/
+        node = self.cst[node]
 
         opcode = node["opcode"]
         if opcode == "flipperevents_whenProgramStarts":
@@ -332,6 +341,30 @@ class Visitor:
             return self.visit_unary_math_function(node)
         elif opcode == "flipperoperator_mathFunc2Params":
             return self.visit_binary_math_function(node)
+        elif opcode == "flippersound_playSoundUntilDone":
+            return self.visit_play_sound(node)
+        elif opcode == "flippersound_playSound":
+            return self.visit_start_sound(node)
+        elif opcode == "flippersound_beepForTime":
+            return self.visit_play_beep(node)
+        elif opcode == "flippersound_custom-piano":
+            return self.visit_piano_node(node)
+        elif opcode == "flippersound_beep":
+            return self.visit_start_beep(node)
+        elif opcode == "flippersound_stopSound":
+            return self.visit_stop_sound(node)
+        elif opcode == "sound_setvolumeto":
+            return self.visit_set_volume(node)
+        elif opcode == "sound_changevolumeby":
+            return self.visit_change_volume(node)
+        elif opcode == "sound_volume":
+            return self.visit_volume(node)
+        elif opcode == "sound_changeeffectby":
+            return self.visit_change_effect(node)
+        elif opcode == "sound_seteffectto":
+            return self.visit_set_effect(node)
+        elif opcode == "sound_cleareffects":
+            return self.visit_clear_effects(node)
         else:
             raise NotImplementedError(opcode)
 
@@ -732,12 +765,8 @@ class Visitor:
         """
         image = self.cst[node["inputs"]["MATRIX"][1]]["fields"][
             "field_flipperdisplay_custom-matrix"
-        ][
-            0
-        ]  # TODO: Need to parse this
-        duration = self.visit_input(
-            node["inputs"]["VALUE"][1]
-        )  # TODO: Need to visit this as if it where an value
+        ][0]
+        duration = self.visit_input(node["inputs"]["VALUE"][1])
         next_node = self.visit_node(node["next"])
         return TurnOnForDurationNode(image, duration, next_node)
 
@@ -1064,7 +1093,6 @@ class Visitor:
         """
         function = UnaryFunction.parse(node["fields"]["OPERATOR"][0])
         num = self.visit_input(node["inputs"]["NUM"][1])
-        # TODO: Parse the second if there are any
         return UnaryMathFunctionNode(function, num)
 
     def visit_binary_math_function(self, node) -> BinaryMathFunctionNode:
@@ -1329,3 +1357,134 @@ class Visitor:
         """
         key = self.cst[node["inputs"]["KEY_OPTION"][1]]["fields"]["KEY_OPTION"][0]
         return IsKeyPressedNode(key)
+
+    def visit_play_sound(self, node) -> PlaySoundUntilDoneNode:
+        """Constructs the AST representation of the PlaySound node.
+
+        :param node: The Node representation.
+        :return: The AST representation.
+        """
+
+        sound_json = self.cst[node["inputs"]["SOUND"][1]]["fields"][
+            "field_flippersound_sound-selector"
+        ][0]
+        sound_name = loads(sound_json)["name"]
+        next_node = self.visit_node(node["next"])
+        return PlaySoundUntilDoneNode(sound_name, next_node)
+
+    def visit_start_sound(self, node) -> StartSoundNode:
+        """Constructs the AST representation of the StartSound node.
+
+        :param node: The Node representation.
+        :return: The AST representation.
+        """
+        sound_json = self.cst[node["inputs"]["SOUND"][1]]["fields"][
+            "field_flippersound_sound-selector"
+        ][0]
+        sound_name = loads(sound_json)["name"]
+        next_node = self.visit_node(node["next"])
+        return StartSoundNode(sound_name, next_node)
+
+    def visit_piano_node(self, node) -> NumericalNode:
+        """Constructs the AST representation of the Piano node.
+
+        :param node: The Node representation.
+        :return: The AST representation.
+        """
+        return NumericalNode(
+            float(node["fields"]["field_flippersound_custom-piano"][0])
+        )
+
+    def visit_play_beep(self, node) -> PlayBeepNode:
+        """Constructs the AST representation of the PlayBeep node.
+
+        :param node: The Node representation.
+        :return: The AST representation.
+        """
+        pitch = self.visit_input(node["inputs"]["NOTE"][1])
+        duration = self.visit_input(node["inputs"]["DURATION"][1])
+        next_node = self.visit_node(node["next"])
+        return PlayBeepNode(pitch, duration, next_node)
+
+    def visit_start_beep(self, node) -> StartBeepNode:
+        """Constructs the AST representation of the StartBeep node.
+
+        :param node: The Node representation.
+        :return: The AST representation.
+        """
+        pitch = self.visit_input(node["inputs"]["NOTE"][1])
+        next_node = self.visit_node(node["next"])
+        return StartBeepNode(pitch, next_node)
+
+    def visit_stop_sound(self, node) -> StopBeepNode:
+        """Constructs the AST representation of the StopSound node.
+
+        :param node: The Node representation.
+        :return: The AST representation.
+        """
+        next_node = self.visit_node(node["next"])
+        return StopBeepNode(next_node)
+
+    def visit_set_volume(self, node) -> SetVolumeNode:
+        """Constructs the AST representation of the SetVolume node.
+
+        :param node: The Node representation.
+        :return: The AST representation.
+        """
+        volume = self.visit_input(node["inputs"]["VOLUME"][1])
+        next_node = self.visit_node(node["next"])
+        return SetVolumeNode(volume, next_node)
+
+    def visit_change_volume(self, node) -> ChangeVolumeNode:
+        """Constructs the AST representation of the ChangeVolume node.
+
+        :param node: The Node representation.
+        :return: The AST representation.
+        """
+        volume = self.visit_input(node["inputs"]["VOLUME"][1])
+        next_node = self.visit_node(node["next"])
+        return ChangeVolumeNode(volume, next_node)
+
+    def visit_volume(self, node) -> VolumeNode:
+        """Constructs the AST representation of the Volume node.
+
+        :param node: The Node representation.
+        :return: The AST representation.
+        """
+        return VolumeNode()
+
+    def visit_change_effect(self, node) -> CommentNode:
+        if not self.best_effort:
+            raise NotImplementedError(
+                "Pitch effects are not supported, use the best_effort flag to generate code without pitch effects."
+            )
+
+        next_node = self.visit_node(node["next"])
+        return CommentNode(
+            "# Placeholder for the CHANGE PITCH block. Note: that pitch effects are not supported in Python at the moment.",
+            next_node,
+        )
+
+    def visit_set_effect(self, node) -> CommentNode:
+        if not self.best_effort:
+            raise NotImplementedError(
+                "Pitch effects are not supported, use the best_effort flag to generate code without pitch effects."
+            )
+
+        next_node = self.visit_node(node["next"])
+        return CommentNode(
+            "# Placeholder for the SET PITCH block. Note: that pitch effects are not supported in Python at the moment.",
+            next_node,
+        )
+
+    def visit_clear_effects(self, node) -> CommentNode:
+        if not self.best_effort:
+            raise NotImplementedError(
+                "Pitch effects are not supported, use the best_effort flag to generate code without pitch effects."
+            )
+
+        next_node = self.visit_node(node["next"])
+        return CommentNode(
+            "# Placeholder for the CLEAR PITCH block. Note: that pitch effects are not supported in Python at the moment.",
+            next_node,
+        )

@@ -24,13 +24,17 @@ def main(
         False,
         help="Indicates if safer code should be outputted, the code might be more verbose.",
     ),
+    best_effort: bool = typer.Option(
+        True,
+        help="Indicates if the code should be generated even if it contains blocks that are not translatable (will be skipped).",
+    ),
 ):
     # Extract the JSON from the input file
     concrete_syntax_tree = filter_json(extract_json(input_filename))
     # print(json.dumps(concrete_syntax_tree, indent=2)) # Print the interesting file content
 
     # Generate the AST
-    visitor = Visitor()
+    visitor = Visitor(best_effort)
     abstract_syntax_tree = visitor.visit(concrete_syntax_tree)
 
     # Output the AST

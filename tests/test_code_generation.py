@@ -23,7 +23,7 @@ def helper(filename: str, directory: str = ".") -> str:
     concrete_syntax_tree = filter_json(
         extract_json(f"tests/inputs/{directory}/{filename}/{filename}.lms")
     )
-    visitor = Visitor()
+    visitor = Visitor(best_effort=True)
     abstract_syntax_tree = visitor.visit(concrete_syntax_tree)
     code_generator = CodeGenerator()
     return code_generator.generate(abstract_syntax_tree)
@@ -1875,6 +1875,297 @@ def test_code_light_up_distance_sensor_port_variable():
 my_variable = 'A'
 # Note: This will fail if the first item in my_variable is not valid port.
 DistanceSensor(my_variable[0].upper()).light_up(100, 100, 100, 100)
+
+"""
+    )
+
+
+# ---------- Sound ----------
+# - Play sound until done base
+# Verified on Hardware
+def test_code_play_sound_until_done_base():
+    assert (
+        helper("play_sound_until_done_base", "Sound")
+        == f"""{includes}
+# Create your objects here.
+app = App()
+hub = MSHub()
+
+# Write your program here.
+app.play_sound('Cat Meow 1')
+hub.light_matrix.write('Y')
+
+"""
+    )
+
+
+# Verified on Hardware
+def test_code_play_sound_until_done_custom():
+    assert (
+        helper("play_sound_until_done_custom", "Sound")
+        == f"""{includes}
+# Create your objects here.
+app = App()
+hub = MSHub()
+
+# Write your program here.
+app.play_sound('Cat Meow 1')
+hub.light_matrix.write('Y')
+
+"""
+    )
+
+
+# - Start sound
+# Verified on Hardware
+def test_code_start_sound_base():
+    assert (
+        helper("start_sound_base", "Sound")
+        == f"""{includes}
+# Create your objects here.
+app = App()
+hub = MSHub()
+
+# Write your program here.
+app.start_sound('Cat Meow 1')
+hub.light_matrix.write('Y')
+
+"""
+    )
+
+
+# Verified on Hardware
+def test_code_start_sound_custom():
+    assert (
+        helper("start_sound_custom", "Sound")
+        == f"""{includes}
+# Create your objects here.
+app = App()
+hub = MSHub()
+
+# Write your program here.
+app.start_sound('Cat Meow 1')
+hub.light_matrix.write('Y')
+
+"""
+    )
+
+
+# - Play beep
+# Verified on Hardware
+def test_code_play_beep_base():
+    assert (
+        helper("play_beep_base", "Sound")
+        == f"""{includes}
+# Create your objects here.
+hub = MSHub()
+
+# Write your program here.
+hub.speaker.beep(60.0, 0.2)
+
+"""
+    )
+
+
+# Verified on Hardware
+def test_code_play_beep_variable():
+    assert (
+        helper("play_beep_variable", "Sound")
+        == f"""{includes}
+# Create your objects here.
+hub = MSHub()
+
+# Write your program here.
+pitch = 60.0
+duration = 0.5
+hub.speaker.beep(pitch, duration)
+
+"""
+    )
+
+
+# - Start beep
+# Verified on Hardware
+def test_code_start_beep_base():
+    assert (
+        helper("start_beep_base", "Sound")
+        == f"""{includes}
+# Create your objects here.
+hub = MSHub()
+
+# Write your program here.
+hub.speaker.start_beep(60.0)
+
+"""
+    )
+
+
+# Verified on Hardware
+def test_code_start_beep_variable():
+    assert (
+        helper("start_beep_variable", "Sound")
+        == f"""{includes}
+# Create your objects here.
+hub = MSHub()
+
+# Write your program here.
+my_variable = 60.0
+hub.speaker.start_beep(my_variable)
+
+"""
+    )
+
+
+# - Stop beep
+# Verified on Hardware
+def test_code_stop_beep():
+    assert (
+        helper("stop_beep", "Sound")
+        == f"""{includes}
+# Create your objects here.
+hub = MSHub()
+
+# Write your program here.
+hub.speaker.start_beep(60.0)
+wait_for_seconds(0.5)
+hub.speaker.stop()
+
+"""
+    )
+
+
+# - Change Pitch
+# Verified on Hardware
+def test_code_change_pitch_effect():
+    assert (
+        helper("change_pitch_effect", "Sound")
+        == f"""{includes}
+# Create your objects here.
+
+# Write your program here.
+# Placeholder for the CHANGE PITCH block. Note: that pitch effects are not supported in Python at the moment.
+
+"""
+    )
+
+
+# - Set Pitch
+# Verified on Hardware
+def test_code_set_pitch_effect():
+    assert (
+        helper("set_pitch_effect", "Sound")
+        == f"""{includes}
+# Create your objects here.
+
+# Write your program here.
+# Placeholder for the SET PITCH block. Note: that pitch effects are not supported in Python at the moment.
+
+"""
+    )
+
+
+# - Clear Sound Effects
+# Verified on Hardware
+def test_code_clear_sound_effects():
+    assert (
+        helper("clear_sound_effects", "Sound")
+        == f"""{includes}
+# Create your objects here.
+
+# Write your program here.
+# Placeholder for the CLEAR PITCH block. Note: that pitch effects are not supported in Python at the moment.
+
+"""
+    )
+
+
+# - Change volume
+# Verified on Hardware
+def test_code_change_volume_base():
+    assert (
+        helper("change_volume_base", "Sound")
+        == f"""{includes}
+# Create your objects here.
+app = App()
+hub = MSHub()
+
+# Write your program here.
+app.play_sound('Cat Meow 1')
+hub.speaker.set_volume(hub.speaker.get_volume() - -10.0)
+app.play_sound('Cat Meow 1')
+
+"""
+    )
+
+
+# Verified on Hardware
+def test_code_change_volume_variable():
+    assert (
+        helper("change_volume_variable", "Sound")
+        == f"""{includes}
+# Create your objects here.
+app = App()
+hub = MSHub()
+
+# Write your program here.
+my_variable = 10.0
+app.play_sound('Cat Meow 1')
+hub.speaker.set_volume(hub.speaker.get_volume() - my_variable)
+app.play_sound('Cat Meow 1')
+
+"""
+    )
+
+
+# - Set volume
+# Verified on Hardware
+def test_code_set_volume_base():
+    assert (
+        helper("set_volume_base", "Sound")
+        == f"""{includes}
+# Create your objects here.
+app = App()
+hub = MSHub()
+
+# Write your program here.
+app.play_sound('Cat Meow 1')
+hub.speaker.set_volume(50.0)
+app.play_sound('Cat Meow 1')
+
+"""
+    )
+
+
+# Verified on Hardware
+def test_code_set_volume_variable():
+    assert (
+        helper("set_volume_variable", "Sound")
+        == f"""{includes}
+# Create your objects here.
+app = App()
+hub = MSHub()
+
+# Write your program here.
+my_variable = 50.0
+app.play_sound('Cat Meow 1')
+hub.speaker.set_volume(my_variable)
+app.play_sound('Cat Meow 1')
+
+"""
+    )
+
+
+# - Volume
+# Verified on Hardware
+def test_code_volume():
+    assert (
+        helper("volume", "Sound")
+        == f"""{includes}
+# Create your objects here.
+hub = MSHub()
+
+# Write your program here.
+hub.light_matrix.write(hub.speaker.get_volume())
 
 """
     )

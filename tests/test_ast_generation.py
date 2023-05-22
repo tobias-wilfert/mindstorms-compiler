@@ -15,7 +15,7 @@ def helper(filename: str, directory: str = ".") -> str:
     concrete_syntax_tree = filter_json(
         extract_json(f"tests/inputs/{directory}/{filename}/{filename}.lms")
     )
-    visitor = Visitor()
+    visitor = Visitor(best_effort=True)
     abstract_syntax_tree = visitor.visit(concrete_syntax_tree)
     return abstract_syntax_tree.tree_representation()
 
@@ -1662,6 +1662,270 @@ def test_ast_light_up_distance_sensor_port_variable():
 1 -> 2
 1 -> 3
 3 -> 4}"""
+    )
+
+
+# ---------- Sound ----------
+# - Play sound until done base
+def test_ast_play_sound_until_done_base():
+    assert (
+        helper("play_sound_until_done_base", "Sound")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="PlaySoundUntilDoneNode(sound: 'Cat Meow 1')"]
+2 [label="WriteNode"]
+3 [label="LiteralNode('Y')"]
+0 -> 1
+1 -> 2
+2 -> 3}"""
+    )
+
+
+def test_ast_play_sound_until_done_custom():
+    assert (
+        helper("play_sound_until_done_custom", "Sound")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="PlaySoundUntilDoneNode(sound: 'Cat Meow 1')"]
+2 [label="WriteNode"]
+3 [label="LiteralNode('Y')"]
+0 -> 1
+1 -> 2
+2 -> 3}"""
+    )
+
+
+# - Start sound
+def test_ast_start_sound_base():
+    assert (
+        helper("start_sound_base", "Sound")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="StartSoundNode(sound: 'Cat Meow 1')"]
+2 [label="WriteNode"]
+3 [label="LiteralNode('Y')"]
+0 -> 1
+1 -> 2
+2 -> 3}"""
+    )
+
+
+def test_ast_start_sound_custom():
+    assert (
+        helper("start_sound_custom", "Sound")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="StartSoundNode(sound: 'Cat Meow 1')"]
+2 [label="WriteNode"]
+3 [label="LiteralNode('Y')"]
+0 -> 1
+1 -> 2
+2 -> 3}"""
+    )
+
+
+# - Play beep
+def test_ast_play_beep_base():
+    assert (
+        helper("play_beep_base", "Sound")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="PlayBeepNode"]
+2 [label="NumericalNode(60.0)"]
+3 [label="NumericalNode(0.2)"]
+0 -> 1
+1 -> 2
+1 -> 3}"""
+    )
+
+
+def test_ast_play_beep_variable():
+    assert (
+        helper("play_beep_variable", "Sound")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="SetVariableToNode(variable:'pitch')"]
+2 [label="NumericalNode(60.0)"]
+3 [label="SetVariableToNode(variable:'duration')"]
+4 [label="NumericalNode(0.5)"]
+5 [label="PlayBeepNode"]
+6 [label="VariableNode(name:'pitch')"]
+7 [label="VariableNode(name:'duration')"]
+0 -> 1
+1 -> 2
+1 -> 3
+3 -> 4
+3 -> 5
+5 -> 6
+5 -> 7}"""
+    )
+
+
+# - Start beep
+def test_ast_start_beep_base():
+    assert (
+        helper("start_beep_base", "Sound")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="StartBeepNode"]
+2 [label="NumericalNode(60.0)"]
+0 -> 1
+1 -> 2}"""
+    )
+
+
+def test_ast_start_beep_variable():
+    assert (
+        helper("start_beep_variable", "Sound")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="SetVariableToNode(variable:'my_variable')"]
+2 [label="NumericalNode(60.0)"]
+3 [label="StartBeepNode"]
+4 [label="VariableNode(name:'my_variable')"]
+0 -> 1
+1 -> 2
+1 -> 3
+3 -> 4}"""
+    )
+
+
+# - Stop beep
+def test_ast_stop_beep():
+    assert (
+        helper("stop_beep", "Sound")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="StartBeepNode"]
+2 [label="NumericalNode(60.0)"]
+3 [label="WaitForSecondsNode"]
+4 [label="NumericalNode(0.5)"]
+5 [label="StopBeepNode"]
+0 -> 1
+1 -> 2
+1 -> 3
+3 -> 4
+3 -> 5}"""
+    )
+
+
+# - Change Pitch
+def test_ast_change_pitch_effect():
+    assert (
+        helper("change_pitch_effect", "Sound")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="CommentNode('# Placeholder for the CHANGE PITCH block. Note: that pitch effects are not supported in Python at the moment.')"]
+0 -> 1}"""
+    )
+
+
+# - Set Pitch
+def test_ast_set_pitch_effect():
+    assert (
+        helper("set_pitch_effect", "Sound")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="CommentNode('# Placeholder for the SET PITCH block. Note: that pitch effects are not supported in Python at the moment.')"]
+0 -> 1}"""
+    )
+
+
+# - Clear Sound Effects
+def test_ast_clear_sound_effects():
+    assert (
+        helper("clear_sound_effects", "Sound")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="CommentNode('# Placeholder for the CLEAR PITCH block. Note: that pitch effects are not supported in Python at the moment.')"]
+0 -> 1}"""
+    )
+
+
+# - Change volume
+def test_ast_change_volume_base():
+    assert (
+        helper("change_volume_base", "Sound")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="PlaySoundUntilDoneNode(sound: 'Cat Meow 1')"]
+2 [label="ChangeVolumeNode"]
+3 [label="NumericalNode(-10.0)"]
+4 [label="PlaySoundUntilDoneNode(sound: 'Cat Meow 1')"]
+0 -> 1
+1 -> 2
+2 -> 3
+2 -> 4}"""
+    )
+
+
+def test_ast_change_volume_variable():
+    assert (
+        helper("change_volume_variable", "Sound")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="SetVariableToNode(variable:'my_variable')"]
+2 [label="NumericalNode(10.0)"]
+3 [label="PlaySoundUntilDoneNode(sound: 'Cat Meow 1')"]
+4 [label="ChangeVolumeNode"]
+5 [label="VariableNode(name:'my_variable')"]
+6 [label="PlaySoundUntilDoneNode(sound: 'Cat Meow 1')"]
+0 -> 1
+1 -> 2
+1 -> 3
+3 -> 4
+4 -> 5
+4 -> 6}"""
+    )
+
+
+# - Set volume
+def test_ast_set_volume_base():
+    assert (
+        helper("set_volume_base", "Sound")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="PlaySoundUntilDoneNode(sound: 'Cat Meow 1')"]
+2 [label="SetVolumeNode"]
+3 [label="NumericalNode(50.0)"]
+4 [label="PlaySoundUntilDoneNode(sound: 'Cat Meow 1')"]
+0 -> 1
+1 -> 2
+2 -> 3
+2 -> 4}"""
+    )
+
+
+def test_ast_set_volume_variable():
+    assert (
+        helper("set_volume_variable", "Sound")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="SetVariableToNode(variable:'my_variable')"]
+2 [label="NumericalNode(50.0)"]
+3 [label="PlaySoundUntilDoneNode(sound: 'Cat Meow 1')"]
+4 [label="SetVolumeNode"]
+5 [label="VariableNode(name:'my_variable')"]
+6 [label="PlaySoundUntilDoneNode(sound: 'Cat Meow 1')"]
+0 -> 1
+1 -> 2
+1 -> 3
+3 -> 4
+4 -> 5
+4 -> 6}"""
+    )
+
+
+# - Volume
+def test_ast_volume():
+    assert (
+        helper("volume", "Sound")
+        == """digraph {rankdir="TB"
+0 [label="WhenProgramStartsNode"]
+1 [label="WriteNode"]
+2 [label="VolumeNode"]
+0 -> 1
+1 -> 2}"""
     )
 
 

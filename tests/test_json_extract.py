@@ -478,6 +478,86 @@ def test_extract_json_light_up_distance_sensor_port_variable():
     helper("light_up_distance_sensor_port_variable", "Light")
 
 
+# ---------- Sound ----------
+# - Play sound until done base
+def test_extract_json_play_sound_until_done_base():
+    helper("play_sound_until_done_base", "Sound")
+
+
+def test_extract_json_play_sound_until_done_custom():
+    helper("play_sound_until_done_custom", "Sound")
+
+
+# - Start sound
+def test_extract_json_start_sound_base():
+    helper("start_sound_base", "Sound")
+
+
+def test_extract_json_start_sound_custom():
+    helper("start_sound_custom", "Sound")
+
+
+# - Play beep
+def test_extract_json_play_beep_base():
+    helper("play_beep_base", "Sound")
+
+
+def test_extract_json_play_beep_variable():
+    helper("play_beep_variable", "Sound")
+
+
+# - Start beep
+def test_extract_json_start_beep_base():
+    helper("start_beep_base", "Sound")
+
+
+def test_extract_json_start_beep_variable():
+    helper("start_beep_variable", "Sound")
+
+
+# - Stop beep
+def test_extract_json_stop_beep():
+    helper("stop_beep", "Sound")
+
+
+# - Change Pitch
+def test_extract_json_change_pitch_effect():
+    helper("change_pitch_effect", "Sound")
+
+
+# - Set Pitch
+def test_extract_json_set_pitch_effect():
+    helper("set_pitch_effect", "Sound")
+
+
+# - Clear Sound Effects
+def test_extract_json_clear_sound_effects():
+    helper("clear_sound_effects", "Sound")
+
+
+# - Change volume
+def test_extract_json_change_volume_base():
+    helper("change_volume_base", "Sound")
+
+
+def test_extract_json_change_volume_variable():
+    helper("change_volume_variable", "Sound")
+
+
+# - Change volume
+def test_extract_json_set_volume_base():
+    helper("set_volume_base", "Sound")
+
+
+def test_extract_json_set_volume_variable():
+    helper("set_volume_variable", "Sound")
+
+
+# - Volume
+def test_extract_json_volume():
+    helper("volume", "Sound")
+
+
 # ---------- Control ----------
 # - Wait for seconds
 def test_extract_json_wait_for_seconds_base():

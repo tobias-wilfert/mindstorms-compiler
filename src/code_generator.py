@@ -72,6 +72,16 @@ from src.abstract_syntax_tree.sensors import (
     SetYawAngleNode,
     TimerNode,
 )
+from src.abstract_syntax_tree.sound import (
+    ChangeVolumeNode,
+    PlayBeepNode,
+    PlaySoundUntilDoneNode,
+    SetVolumeNode,
+    StartBeepNode,
+    StartSoundNode,
+    StopBeepNode,
+    VolumeNode,
+)
 from src.abstract_syntax_tree.variables import (
     AddItemToListNode,
     ChangeVariableByNode,
@@ -296,6 +306,22 @@ import math
             return self.visit_reset_timer_node(node)
         elif isinstance(node, IsKeyPressedNode):
             return self.visit_is_key_pressed_node(node)
+        elif isinstance(node, PlaySoundUntilDoneNode):
+            return self.visit_play_sound_until_done_node(node)
+        elif isinstance(node, StartSoundNode):
+            return self.visit_start_sound_node(node)
+        elif isinstance(node, PlayBeepNode):
+            return self.visit_play_beep_node(node)
+        elif isinstance(node, StartBeepNode):
+            return self.visit_start_beep_node(node)
+        elif isinstance(node, StopBeepNode):
+            return self.visit_stop_beep_node(node)
+        elif isinstance(node, ChangeVolumeNode):
+            return self.visit_change_volume_node(node)
+        elif isinstance(node, SetVolumeNode):
+            return self.visit_set_volume_node(node)
+        elif isinstance(node, VolumeNode):
+            return self.visit_volume_node(node)
         else:
             raise NotImplementedError(f"Currently no code can be generated for {node}")
 
@@ -406,7 +432,7 @@ import math
             # If the direction is counter wise negate the value
             value_code = self.visit(node.value)
             if node.direction == TurnDirection.COUNTERCLOCKWISE:
-                value_code = f"-{value_code}"  # TODO: Do some cashing for these.
+                value_code = f"-{value_code}"
 
             # Add the code and keep exploring
             self.program_code += f"{self.indentation}{variable}.run_to_position(int({value_code}), '{node.direction.code()}')  # Note: This method expects an integer so wee need to convert the value.\n"
@@ -533,7 +559,6 @@ import math
             variable = f"motor_{port.lower()}"
             self.generate_object(variable, "Motor", f"'{port}'")
 
-            # TODO: Do some cashing here
             self.program_code += f"{self.indentation}{variable}.set_default_speed(int({self.visit(node.value)}))  # Note: This method expects an integer so wee need to convert the value.\n"
             self.visit(node.next)
 
@@ -808,7 +833,6 @@ def _turn_on_pattern(pattern, brightness=100):
         return f"{self.visit(node.value)} in {node.variable}"
 
     def visit_pick_random_number_node(self, node: PickRandomNumberNode):
-        # TODO: Need to check if the random module is already imported
         if not "from random import randint" in self.includes:
             self.includes += "from random import randint\n"
         return f"randint(int({self.visit(node.left_hand)}), int({self.visit(node.right_hand)}))"
@@ -967,3 +991,46 @@ def _turn_on_pattern(pattern, brightness=100):
         raise DeprecationWarning(
             "Note that key pressed is not currently supported by MINDSTORMS itself."
         )
+
+    def visit_play_sound_until_done_node(self, node: PlaySoundUntilDoneNode):
+        self.generate_object("app", "App", "")
+        self.program_code += f"{self.indentation}app.play_sound('{node.sound}')\n"
+        self.visit(node.next)
+
+    def visit_start_sound_node(self, node: StartSoundNode):
+        self.generate_object("app", "App", "")
+        self.program_code += f"{self.indentation}app.start_sound('{node.sound}')\n"
+        self.visit(node.next)
+
+    def visit_play_beep_node(self, node: PlayBeepNode):
+        self.generate_object("hub", "MSHub", "")
+        self.program_code += f"{self.indentation}hub.speaker.beep({self.visit(node.pitch)}, {self.visit(node.duration)})\n"
+        self.visit(node.next)
+
+    def visit_start_beep_node(self, node: StartBeepNode):
+        self.generate_object("hub", "MSHub", "")
+        self.program_code += (
+            f"{self.indentation}hub.speaker.start_beep({self.visit(node.pitch)})\n"
+        )
+        self.visit(node.next)
+
+    def visit_stop_beep_node(self, node: StopBeepNode):
+        self.generate_object("hub", "MSHub", "")
+        self.program_code += f"{self.indentation}hub.speaker.stop()\n"
+        self.visit(node.next)
+
+    def visit_change_volume_node(self, node: ChangeVolumeNode):
+        self.generate_object("hub", "MSHub", "")
+        self.program_code += f"{self.indentation}hub.speaker.set_volume(hub.speaker.get_volume() - {self.visit(node.volume)})\n"
+        self.visit(node.next)
+
+    def visit_set_volume_node(self, node: SetVolumeNode):
+        self.generate_object("hub", "MSHub", "")
+        self.program_code += (
+            f"{self.indentation}hub.speaker.set_volume({self.visit(node.volume)})\n"
+        )
+        self.visit(node.next)
+
+    def visit_volume_node(self, node: VolumeNode):
+        self.generate_object("hub", "MSHub", "")
+        return "hub.speaker.get_volume()"

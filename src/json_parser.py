@@ -16,7 +16,6 @@ def extract_json(filename: str) -> dict:
     :return: Returns a dictionary representation of the json
     :rtype: dict
     """
-    # TODO: Check if this only works now because I link it from the correct position?
     with zipfile.ZipFile(filename, "r") as outer_zip:
         with outer_zip.open("scratch.sb3") as inner_zip:
             file_data = io.BytesIO(inner_zip.read())
