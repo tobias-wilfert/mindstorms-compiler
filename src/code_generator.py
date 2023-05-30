@@ -362,9 +362,7 @@ import math
             if node.unit.code() == "degrees":
                 self.program_code += f"{self.indentation}{variable}.run_for_degrees(int({value_code}))  # Note: This method expects an integer so wee need to convert the value.\n"
             else:
-                self.program_code += (
-                    f"{variable}.run_for_{node.unit.code()}({value_code})\n"
-                )
+                self.program_code += f"{self.indentation}{variable}.run_for_{node.unit.code()}({value_code})\n"
 
         self.visit(node.next)
 
@@ -386,9 +384,7 @@ import math
         if node.unit.code() == "degrees":
             self.program_code += f"{self.indentation}\tMotor(port).run_for_degrees(int({value_code}))  # Note: This method expects an integer so wee need to convert the value.\n"
         else:
-            self.program_code += (
-                f"\tMotor(port).run_for_{node.unit.code()}({value_code})\n"
-            )
+            self.program_code += f"{self.indentation}\tMotor(port).run_for_{node.unit.code()}({value_code})\n"
         self.visit(node.next)
 
     def visit_run_motor_tor_duration_node(self, node: RunMotorForDurationNode):
@@ -479,9 +475,7 @@ import math
             self.generate_object(variable, "Motor", f"'{port}'")
 
             if node.direction == TurnDirection.COUNTERCLOCKWISE:
-                self.program_code += (
-                    f"{variable}.start(-{variable}.get_default_speed())\n"
-                )
+                self.program_code += f"{self.indentation}{variable}.start(-{variable}.get_default_speed())\n"
             else:
                 self.program_code += f"{self.indentation}{variable}.start()\n"
             self.visit(node.next)
@@ -654,13 +648,9 @@ import math
     def visit_move_for_duration_node(self, node: MoveForDurationNode):
         value = self.visit(node.value)
         if node.direction == MovementDirection.CLOCKWISE:
-            self.program_code += (
-                f"motor_pair.move({value}, '{node.unit.code()}', 100)\n"
-            )
+            self.program_code += f"{self.indentation}motor_pair.move({value}, '{node.unit.code()}', 100)\n"
         elif node.direction == MovementDirection.COUNTERCLOCKWISE:
-            self.program_code += (
-                f"motor_pair.move({value}, '{node.unit.code()}', -100)\n"
-            )
+            self.program_code += f"{self.indentation}motor_pair.move({value}, '{node.unit.code()}', -100)\n"
         else:
             if node.direction == MovementDirection.BACK:
                 value = f"-{value}"
@@ -714,9 +704,7 @@ import math
         elif isinstance(node.port, VariableNode):
             port = self.visit(node.port)
             self.program_code += f"{self.indentation}# Note: This will fail if the first item in {port} is not valid port.\n"
-            self.program_code += (
-                f"DistanceSensor({node.port.name}[0].upper()).light_up({pattern})\n"
-            )
+            self.program_code += f"{self.indentation}DistanceSensor({node.port.name}[0].upper()).light_up({pattern})\n"
 
         else:
             raise NotImplementedError(
