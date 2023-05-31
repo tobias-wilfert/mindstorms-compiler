@@ -814,7 +814,7 @@ def _turn_on_pattern(pattern, brightness=100):
         self.program_code += f"{self.indentation}if {self.visit(node.condition)}:\n"
         self.indentation += "\t"
         self.visit(node.body)
-        self.indentation[:-1]
+        self.indentation = self.indentation[:-1]
         self.visit(node.next)
 
     def visit_list_contains_node(self, node: ListContainsNode):
